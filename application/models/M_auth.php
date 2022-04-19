@@ -21,13 +21,14 @@ class M_auth extends CI_Model
 			if ($user['is_active'] == 1) {
 				if (password_verify($password, $user['password_user'])) {
 					$data = [
-						'email_user'   => $user['email_user'],
-						'role_user'  	=> $user['role_user'],
-						'is_login' 		=> TRUE,
+						'username'   => $user['username'],
+						'name_user'  => $user['name_user'],
+						'role_user'  => $user['role_user'],
+						'is_login' 	 => TRUE,
 					];
 					$this->session->set_userdata($data);
 					if ($user['role_user'] == 1) {
-						redirect('Admin');
+						redirect('Administrator');
 					} else {
 						redirect('Marketing');
 					}

@@ -79,6 +79,21 @@ class Auth extends CI_Controller
 		}
 	}
 
+	public function logout()
+	{
+		// $session_id = $this->db->get_where('ci_sessions', ['id' => $this->session->session_id]);
+		$session_id = session_id();
+		$this->session->unset_userdata('username');
+		$this->session->unset_userdata('role_user');
+		$this->session->set_flashdata(
+			'message',
+			'<div class="alert alert-success" role="alert">
+		 <div class="alert-body"><strong>Berhasil!</strong> Kamu telah logout.</div>
+		 </div>'
+		);
+		redirect('Auth');
+		$this->db->delete('ci_sessions', ['id' => $session_id]);
+	}
 	public function pagenotfound()
 	{
 		$data['title'] = 'Marak | 404';
