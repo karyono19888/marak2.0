@@ -12,4 +12,36 @@ class M_auth extends CI_Model
 	{
 		$this->db->insert('users', $data);
 	}
+
+	public function login($username, $password)
+	{
+		$user = $this->db->get_where('users', ['username' => $username])->row_array();
+
+		if ($user) {
+			if ($user['is_active'] == 1) {
+				if (password_verify($password, $user['password_user'])) {
+					$data = [
+						'email_user'   => $user['email_user'],
+						'role_user'  	=> $user['role_user'],
+						'is_login' 		=> TRUE,
+					];
+					$this->session->set_userdata($data);
+					if ($user['role_user'] == 1) {
+						redirect('Admin');
+					} else {
+						redirect('Member');
+					}
+				} else {
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Password Salah!</div></div>');
+					redirect('Auth');
+				}
+			} else {
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Email belum diaktivasi.</div></div>');
+				redirect('Auth');
+			}
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Username tidak terdaftar.</div></div>');
+			redirect('Auth');
+		}
+	}
 }

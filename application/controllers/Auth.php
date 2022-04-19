@@ -12,17 +12,31 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
-		$this->load->view('Auth/v_login');
+		$this->form_validation->set_rules('username', 'Username', 'required|trim');
+		$this->form_validation->set_rules('password', 'Password', 'required|trim');
+
+		if ($this->form_validation->run() == false) {
+			$data['title'] 			= 'Marak | Login';
+			$this->load->view('Auth/v_login', $data);
+		} else {
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+
+			$this->record->login($username, $password);
+		}
 	}
 
 	public function forgotpassword()
 	{
-		$this->load->view('Auth/v_forgotpassword');
+		$data['title'] = 'Marak | Forgot Password';
+		$this->load->view('Auth/v_forgotpassword', $data);
 	}
 
 	public function registration()
 	{
-		$this->form_validation->set_rules('username', 'Username', 'required|trim');
+		$this->form_validation->set_rules('username', 'Username', 'required|trim|is_unique[users.username]', [
+			'is_unique' => 'Username sudah terdaftar',
+		]);
 		$this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email|is_unique[users.email_user]', [
 			'is_unique' => 'Email sudah terdaftar',
 		]);
@@ -30,7 +44,9 @@ class Auth extends CI_Controller
 			'matches' 		=> 'Password tidak sama!',
 			'min_length' 	=> 'Password terlalu pendek!'
 		]);
-		$this->form_validation->set_rules('password2', 'Konfirmasi Password', 'required|trim|matches[password]');
+		$this->form_validation->set_rules('password2', 'Konfirmasi Password', 'required|trim|matches[password]', [
+			'matches' 		=> 'Password tidak sama!',
+		]);
 
 
 

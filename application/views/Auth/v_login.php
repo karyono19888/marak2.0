@@ -29,10 +29,11 @@
 								<h2 class="card-title fw-bold mb-1">Welcome to Marak! 👋</h2>
 								<p class="card-text mb-2">Please sign-in to your account and start the adventure</p>
 								<?= $this->session->flashdata('message'); ?>
-								<form class="auth-login-form mt-2" action="index.html" method="POST">
+								<form class="auth-login-form mt-2" action="<?= base_url('Auth'); ?>" method="POST">
 									<div class="mb-1">
 										<label class="form-label" for="username">Username</label>
-										<input class="form-control" id="username" type="text" name="username" placeholder="username" aria-describedby="username" autofocus="" tabindex="1" />
+										<input class="form-control <?= form_error('username') ? 'is-invalid' : ''; ?>" id="username" type="text" name="username" placeholder="username" aria-describedby="username" autofocus="" tabindex="1" />
+										<?= form_error('username', '<small class="text-sm text-danger">', '</small>'); ?>
 									</div>
 									<div class="mb-1">
 										<div class="d-flex justify-content-between">
@@ -40,8 +41,9 @@
 											<a href="<?= base_url('Auth/forgotpassword'); ?>"><small>Forgot Password?</small></a>
 										</div>
 										<div class="input-group input-group-merge form-password-toggle">
-											<input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="2" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
+											<input class="form-control form-control-merge <?= form_error('password') ? 'is-invalid' : ''; ?>" id="password" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="2" /><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span>
 										</div>
+										<?= form_error('password', '<small class="text-sm text-danger">', '</small>'); ?>
 									</div>
 									<div class="mb-1">
 										<div class="form-check">
@@ -49,7 +51,7 @@
 											<label class="form-check-label" for="remember-me"> Remember Me</label>
 										</div>
 									</div>
-									<button class="btn btn-primary w-100" tabindex="4">Sign in</button>
+									<button class="btn btn-primary w-100" type="submit" tabindex="4">Sign in</button>
 								</form>
 								<div class="divider my-2">
 									<div class="divider-text"></div>
