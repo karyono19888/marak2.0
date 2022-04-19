@@ -39,6 +39,7 @@
 	<!-- BEGIN: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets') ?>/css/style.css">
 	<!-- END: Custom CSS-->
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/extensions/sweetalert2.min.css">
 
 </head>
 <!-- END: Head-->

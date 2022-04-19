@@ -87,9 +87,12 @@ class Auth extends CI_Controller
 		$this->session->unset_userdata('role_user');
 		$this->session->set_flashdata(
 			'message',
-			'<div class="alert alert-success" role="alert">
-		 <div class="alert-body"><strong>Berhasil!</strong> Kamu telah logout.</div>
-		 </div>'
+			'<div class="alert alert-success mt-1 alert-validation-msg" role="alert">
+			<div class="alert-body d-flex align-items-center">
+				<i data-feather="check-circle" class="me-50"></i>
+				<span><strong>Success</strong>. Kamu telah logout.</span>
+			</div>
+		</div>'
 		);
 		redirect('Auth');
 		$this->db->delete('ci_sessions', ['id' => $session_id]);

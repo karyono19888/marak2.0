@@ -28,20 +28,27 @@ class M_auth extends CI_Model
 					];
 					$this->session->set_userdata($data);
 					if ($user['role_user'] == 1) {
+						$this->session->set_flashdata('success', 'Login Sukses');
 						redirect('Administrator');
 					} else {
+						$this->session->set_flashdata('success', 'Login Sukses');
 						redirect('Marketing');
 					}
 				} else {
-					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Password Salah!</div></div>');
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+					<div class="alert-body d-flex align-items-center">
+						<i data-feather="info" class="me-50"></i>
+						<span><strong>Invalid</strong> Password salah.</span>
+					</div>
+			 		</div>');
 					redirect('Auth');
 				}
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Email belum diaktivasi.</div></div>');
+				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Invalid</strong> Email belum diaktivasi.</div></div>');
 				redirect('Auth');
 			}
 		} else {
-			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Username tidak terdaftar.</div></div>');
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Invalid</strong> Username tidak terdaftar.</div></div>');
 			redirect('Auth');
 		}
 	}

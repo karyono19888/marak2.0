@@ -26,6 +26,7 @@
 <!-- BEGIN: Page JS-->
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/dashboard-ecommerce.js"></script>
 <!-- END: Page JS-->
+<script src="<?= base_url('assets'); ?>/vendors/js/extensions/sweetalert2.all.min.js"></script>
 
 <script>
 	$(window).on('load', function() {
@@ -39,13 +40,59 @@
 </script>
 
 <script>
-	setTimeout(function() {
-		toastr['success'](
-			'Tetap semangat ya, semoga sehat selalu',
-			'👋 Selamat Datang,  <?= $this->session->userdata('name_user'); ?>!', {
-				closeButton: true,
-				tapToDismiss: false,
+
+</script>
+<?php if ($this->session->flashdata('success')) : ?>
+	<script>
+		Swal.fire({
+			icon: 'success',
+			title: 'Success',
+			text: '<?php echo $this->session->flashdata('success'); ?>',
+			showConfirmButton: false,
+			timer: 1500
+		})
+	</script>
+
+	<script>
+		setTimeout(function() {
+			toastr['success'](
+				'Tetap semangat ya, semoga sehat selalu',
+				'👋 Selamat Datang,  <?= $this->session->userdata('name_user'); ?>!', {
+					closeButton: true,
+					tapToDismiss: false,
+				}
+			);
+		}, 2000);
+	</script>
+<?php endif;
+unset($_SESSION['success']); ?>
+
+<script>
+	function Logout() {
+		Swal.fire({
+			title: 'Logout ?',
+			text: "Yakin mau keluar dari aplikasi ?",
+			icon: 'question',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.assign('<?php echo base_url('Auth/logout') ?>');
 			}
-		);
-	}, 2000);
+		})
+	}
+
+	function pengembangan() {
+		Swal.fire({
+			icon: 'error',
+			title: 'Oops...',
+			text: 'Something went wrong!',
+			customClass: {
+				confirmButton: 'btn btn-primary'
+			},
+			buttonsStyling: false
+		});
+	}
 </script>
