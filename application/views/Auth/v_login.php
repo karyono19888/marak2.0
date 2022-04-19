@@ -13,7 +13,7 @@
 				<div class="auth-wrapper auth-cover">
 					<div class="auth-inner row m-0">
 						<!-- Brand logo-->
-						<a class="brand-logo" href="index.html">
+						<a class="brand-logo" href="#">
 							<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand" width="5%">
 							<h2 class="brand-text text-primary ms-1">MARAK</h2>
 						</a>

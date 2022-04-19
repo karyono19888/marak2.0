@@ -73,9 +73,15 @@ class Auth extends CI_Controller
 				'message',
 				'<div class="alert alert-success" role="alert">
           <div class="alert-body"><strong>Berhasil!</strong> Akun Kamu berhasil terdaftar, silahkan cek email untuk aktivasi akun.</div>
-        </div>'
+			 </div>'
 			);
 			redirect('Auth');
 		}
+	}
+
+	public function pagenotfound()
+	{
+		$data['title'] = 'Marak | 404';
+		$this->load->view('errors/error_404', $data);
 	}
 }

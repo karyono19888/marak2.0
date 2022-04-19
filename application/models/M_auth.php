@@ -29,7 +29,7 @@ class M_auth extends CI_Model
 					if ($user['role_user'] == 1) {
 						redirect('Admin');
 					} else {
-						redirect('Member');
+						redirect('Marketing');
 					}
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Gagal !</strong> Password Salah!</div></div>');
