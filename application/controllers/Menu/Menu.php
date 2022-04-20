@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Administrator extends CI_Controller
+class Menu extends CI_Controller
 {
 	public function __construct()
 	{
@@ -12,18 +12,7 @@ class Administrator extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Administration';
-		$this->load->view('Admin/v_index', $data);
-	}
-
-	public function Menu()
-	{
 		$data['title'] = 'Menu';
 		$this->load->view('Admin/v_menu', $data);
-	}
-
-	public function SubMenu()
-	{
-		echo 'SubMenu';
 	}
 }

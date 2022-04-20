@@ -23,13 +23,13 @@
 			$this->db->order_by('menu_id', 'asc');
 			$queryMenu  = $this->db->get('user_access_menu');
 			?>
-			<?php foreach ($queryMenu->result_array() as $m) : ?>
+			<?php foreach ($queryMenu->result() as $m) : ?>
 				<li class=" navigation-header">
-					<span data-i18n="Apps &amp; Pages"><?= $m['menu_name']; ?></span>
+					<span data-i18n="Apps &amp; Pages"><?= $m->menu_name; ?></span>
 					<i data-feather="more-horizontal"></i>
 
 					<?php
-					$menu_id = $m['id_menu'];
+					$menu_id = $m->id_menu;
 					$this->db->select('*');
 					$this->db->where('menu_id', $menu_id)
 						->where('is_active', 1);
@@ -37,25 +37,25 @@
 					$mainMenu  = $this->db->get('user_sub_menu');
 					?>
 
-					<?php foreach ($mainMenu->result_array() as $sm) : ?>
+					<?php foreach ($mainMenu->result() as $sm) : ?>
 						<?php
 						$this->db->select('*');
 						$this->db
-							->where('menu_parentId', $sm['id'])
+							->where('menu_parentId', $sm->id)
 							->where('is_active', 1);
 						$this->db->join('user_menu', 'id_menu=menu_id', 'left');
 						$subMenu  = $this->db->get('user_sub_menu');
 						?>
 						<?php if ($subMenu->num_rows() > 0) : ?>
-				<li class=" nav-item <?= $this->uri->segment(2) == $sm['menu_nama'] ? 'has-sub sidebar-group-active open' : '' ?>">
-					<a class="d-flex align-items-center" href="<?= $sm['menu_url']; ?>">
-						<i data-feather="<?= $sm['menu_icon']; ?>"></i>
-						<span class="menu-title text-truncate"><?= $sm['menu_nama']; ?></span>
+				<li class=" nav-item <?= $this->uri->segment(2) == $sm->menu_nama ? 'has-sub sidebar-group-active open' : '' ?>">
+					<a class="d-flex align-items-center" href="<?= base_url($sm->menu_url) ?>">
+						<i data-feather="<?= $sm->menu_icon; ?>"></i>
+						<span class="menu-title text-truncate"><?= $sm->menu_nama; ?></span>
 					</a>
 					<ul class="menu-content">
 						<?php foreach ($subMenu->result() as $sub) : ?>
-							<li class="<?= $this->uri->segment(2) == $sm['menu_nama'] ? 'active' : '' ?>">
-								<a class="d-flex align-items-center" href="<?= $sub->menu_url; ?>">
+							<li class="<?= $this->uri->segment(2) == $sub->menu_nama ? 'active' : '' ?>">
+								<a class="d-flex align-items-center" href="<?= base_url($sub->menu_url); ?>">
 									<i data-feather="<?= $sub->menu_sub_icon; ?>"></i>
 									<span class="menu-item text-truncate"><?= $sub->menu_nama; ?></span>
 								</a>
@@ -64,10 +64,10 @@
 					</ul>
 				</li>
 			<?php else : ?>
-				<li class=" nav-item <?= $this->uri->segment(1, 2) == $sm['menu_url'] ? 'active' : '' ?>">
-					<a class="d-flex align-items-center" href="<?= $sm['menu_url']; ?>">
-						<i data-feather="<?= $sm['menu_icon']; ?>"></i>
-						<span class="menu-title text-truncate" data-i18n="Typography"><?= $sm['menu_nama']; ?></span>
+				<li class=" nav-item <?= $this->uri->segment(1) == $sm->menu_url ? 'active' : '' ?>">
+					<a class="d-flex align-items-center" href="<?= base_url($sm->menu_url); ?>">
+						<i data-feather="<?= $sm->menu_icon; ?>"></i>
+						<span class="menu-title text-truncate" data-i18n="Typography"><?= $sm->menu_nama; ?></span>
 					</a>
 				</li>
 			<?php endif; ?>
