@@ -40,8 +40,3 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets') ?>/css/style.css">
 	<!-- END: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/extensions/sweetalert2.min.css">
-
-</head>
-<!-- END: Head-->
-
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">

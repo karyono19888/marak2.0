@@ -1,7 +1,7 @@
 <?php $this->load->view('Components/v_header'); ?>
 
 <!-- BEGIN: Body-->
-
+<?php $this->load->view('Components/v_headerbottom'); ?>
 
 <!-- BEGIN: Header-->
 <?php $this->load->view('Components/v_navbar'); ?>

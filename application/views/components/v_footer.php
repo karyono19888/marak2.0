@@ -14,7 +14,7 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-<script src="<?= base_url('assets'); ?>/vendors/js/charts/apexcharts.min.js"></script>
+
 <script src="<?= base_url('assets'); ?>/vendors/js/extensions/toastr.min.js"></script>
 <!-- END: Page Vendor JS-->
 
@@ -23,9 +23,7 @@
 <script src="<?= base_url('assets'); ?>/js/core/app.js"></script>
 <!-- END: Theme JS-->
 
-<!-- BEGIN: Page JS-->
-<script src="<?= base_url('assets'); ?>/js/scripts/pages/dashboard-ecommerce.js"></script>
-<!-- END: Page JS-->
+
 <script src="<?= base_url('assets'); ?>/vendors/js/extensions/sweetalert2.all.min.js"></script>
 
 <script>

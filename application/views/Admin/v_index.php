@@ -1,7 +1,7 @@
 <?php $this->load->view('Components/v_header'); ?>
 
 <!-- BEGIN: Body-->
-
+<?php $this->load->view('Components/v_headerbottom'); ?>
 
 <!-- BEGIN: Header-->
 <?php $this->load->view('Components/v_navbar'); ?>
@@ -754,4 +754,8 @@
 <!-- END: Content-->
 
 <?php $this->load->view('Components/v_footer'); ?>
+<script src="<?= base_url('assets'); ?>/vendors/js/charts/apexcharts.min.js"></script>
+<!-- BEGIN: Page JS-->
+<script src="<?= base_url('assets'); ?>/js/scripts/pages/dashboard-ecommerce.js"></script>
+<!-- END: Page JS-->
 <?php $this->load->view('Components/v_bottom'); ?>
