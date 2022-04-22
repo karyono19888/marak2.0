@@ -7,7 +7,7 @@ class SubMenu extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
-		$this->load->model('M_administrator', 'record');
+		$this->load->model('M_menu', 'record');
 		if (!$this->session->userdata['is_login'] == TRUE) {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					<div class="alert-body d-flex align-items-center">
@@ -20,7 +20,8 @@ class SubMenu extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'SubMenu';
+		$data['title'] 	= 'SubMenu';
+		$data['mainMenu'] = $this->record->dataSubMenu();
 		$this->load->view('Admin/v_submenu', $data);
 	}
 }

@@ -196,4 +196,12 @@ class M_menu extends CI_Model
 			return json_encode(array('success' => true, 'msg' => 'Hapus data berhasil!'));
 		}
 	}
+
+	public function dataSubMenu()
+	{
+		$this->db->where('menu_parentId', 'Not Null');
+		$this->db->order_by('id', 'asc');
+		$query = $this->db->get('user_sub_menu');
+		return $query;
+	}
 }
