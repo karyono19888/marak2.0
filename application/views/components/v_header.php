@@ -30,6 +30,8 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/themes/semi-dark-layout.css">
 
 	<!-- BEGIN: Page CSS-->
+
+	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/forms/select/select2.min.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/core/menu/menu-types/vertical-menu.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/pages/dashboard-ecommerce.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/plugins/charts/chart-apex.css">
@@ -40,5 +42,3 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets') ?>/css/style.css">
 	<!-- END: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/extensions/sweetalert2.min.css">
-
-	<script src="<?= base_url('assets'); ?>/vendors/js/jquery/jquery.min.js"></script>

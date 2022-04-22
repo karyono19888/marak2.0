@@ -20,8 +20,9 @@ class Menu extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Menu';
-		$data['menu']  = $this->record->dataMenu();
+		$data['title'] 	 = 'Menu';
+		$data['menu']  	 = $this->record->dataMenu();
+		$data['mainmenu']  = $this->record->dataMainMenu();
 		$this->load->view('Admin/v_menu', $data);
 	}
 
@@ -36,7 +37,7 @@ class Menu extends CI_Controller
 	{
 		$id = $this->input->post('id');
 
-		echo $this->record->viewMenu($id);
+		echo $this->record->view($id);
 	}
 
 	public function Update()
@@ -52,5 +53,49 @@ class Menu extends CI_Controller
 		$id = $this->input->post('id');
 
 		echo $this->record->deleteMenu($id);
+	}
+
+	public function TambahMainMenu()
+	{
+		$user_menu 	= $this->input->post('user_menu');
+		$menu_nama 	= $this->input->post('menu_nama');
+		$menu_url 	= $this->input->post('menu_url');
+		$menu_icon 	= $this->input->post('menu_icon');
+		$is_active 	= $this->input->post('is_active');
+
+		echo $this->record->TambahMainMenu($user_menu, $menu_nama, $menu_url, $menu_icon, $is_active);
+	}
+
+	public function ViewMenu()
+	{
+		$id = $this->input->post('id');
+
+		echo $this->record->viewMenu($id);
+	}
+
+	public function selectUserMenu()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response   = $this->record->selectUserMenu($searchTerm);
+		echo json_encode($response);
+	}
+
+	public function UpdateMainMenu()
+	{
+		$user_menu 	= $this->input->post('user_menu');
+		$menu_nama 	= $this->input->post('menu_nama');
+		$menu_url  	= $this->input->post('menu_url');
+		$menu_icon 	= $this->input->post('menu_icon');
+		$is_active 	= $this->input->post('is_active');
+		$id 			= $this->input->post('id');
+
+		echo $this->record->UpdateMainMenu($user_menu, $menu_nama, $menu_url, $menu_icon, $is_active, $id);
+	}
+
+	public function DeleteMainMenu()
+	{
+		$id = $this->input->post('id');
+
+		echo $this->record->DeleteMainMenu($id);
 	}
 }
