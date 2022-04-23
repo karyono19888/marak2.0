@@ -510,6 +510,7 @@
 	});
 </script>
 
+<!-- notif -->
 <script>
 	function notif(word) {
 		Swal.fire({

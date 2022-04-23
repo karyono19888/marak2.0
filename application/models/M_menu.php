@@ -204,4 +204,100 @@ class M_menu extends CI_Model
 		$query = $this->db->get('user_sub_menu');
 		return $query;
 	}
+
+	// data submenu
+
+	public function selectMainMenu($searchTerm = "")
+	{
+		$this->db->select('*');
+		$this->db->where('menu_parentId', 'NOT NULL');
+		$this->db->where("menu_nama like '%" . $searchTerm . "%' ");
+		$this->db->order_by('id', 'asc');
+		$fetched_records = $this->db->get('user_sub_menu');
+		$dataMenu = $fetched_records->result_array();
+		$data = array();
+		foreach ($dataMenu as $m) {
+			$data[] = array(
+				"id"   => $m['id'],
+				"text" => $m['menu_nama']
+			);
+		}
+		return $data;
+	}
+
+	public function TambahSubMenu($main_menu, $menu_nama, $menu_url, $menu_sub_icon, $is_active)
+	{
+		$this->db->select('menu_nama');
+		$this->db->where('menu_nama', $menu_nama);
+		$query  = $this->db->get('user_sub_menu');
+		$row = $query->num_rows();
+		if ($row > 0) {
+			return json_encode(array('success' => false, 'msg' => 'Input data gagal, Nama Menu sudah ada!'));
+		} else {
+			$this->db->trans_start();
+			$this->db->insert('user_sub_menu', array(
+				'menu_parentId' 	=> $main_menu,
+				'menu_nama'   		=> $menu_nama,
+				'menu_url'    		=> $menu_url,
+				'menu_sub_icon' 	=> $menu_sub_icon,
+				'is_active'   		=> $is_active,
+			));
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE) {
+				return json_encode(array('success' => false, 'msg' => 'Input menu gagal!'));
+			} else {
+				return json_encode(array('success' => true, 'msg' => 'Input Menu Berhasil!'));
+			}
+		}
+	}
+
+	public function ViewEditSubMenu($id)
+	{
+		$this->db->select('*');
+		$this->db->where('id', $id);
+		$query  = $this->db->get('user_sub_menu');
+		if ($query) {
+			$row = $query->row();
+			return json_encode(array(
+				'success'        => true,
+				'id'         	  => $row->id,
+				'menu_nama'      => $row->menu_nama,
+				'menu_url'       => $row->menu_url,
+				'menu_sub_icon'  => $row->menu_sub_icon,
+				'menu_sub_icon'  => $row->menu_icon,
+				'is_active'      => $row->is_active,
+			));
+		} else {
+			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
+		}
+	}
+
+	public function UpdateSubMenu($menu_nama, $menu_url, $menu_sub_icon, $is_active, $id)
+	{
+		$this->db->trans_start();
+		$this->db->where('id', $id);
+		$this->db->update('user_sub_menu', array(
+			'menu_nama'   	 => $menu_nama,
+			'menu_url'    	 => $menu_url,
+			'menu_sub_icon' => $menu_sub_icon,
+			'is_active'   	 => $is_active,
+		));
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Input Submenu gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Input SubMenu Berhasil!'));
+		}
+	}
+	public function DeleteSubMenu($id)
+	{
+		$this->db->trans_start();
+		$this->db->delete('user_sub_menu', array('id' => $id));
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Hapus data gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Hapus data berhasil!'));
+		}
+	}
 }
