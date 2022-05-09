@@ -27,7 +27,7 @@
 					<div class="col-xl-4 col-md-6 col-12">
 						<div class="card card-congratulation-medal">
 							<div class="card-body">
-								<h5>Congratulations 🎉 John!</h5>
+								<h5>Congratulations 🎉 <?= $this->session->userdata('nickname'); ?>!</h5>
 								<p class="card-text font-small-3">You have won gold medal</p>
 								<h3 class="mb-75 mt-2 pt-50">
 									<a href="#">$48.9k</a>
@@ -54,12 +54,12 @@
 										<div class="d-flex flex-row">
 											<div class="avatar bg-light-primary me-2">
 												<div class="avatar-content">
-													<i data-feather="trending-up" class="avatar-icon"></i>
+													<i data-feather="bar-chart-2" class="avatar-icon"></i>
 												</div>
 											</div>
 											<div class="my-auto">
 												<h4 class="fw-bolder mb-0">230k</h4>
-												<p class="card-text font-small-3 mb-0">Sales</p>
+												<p class="card-text font-small-3 mb-0">APBN/D/P</p>
 											</div>
 										</div>
 									</div>
@@ -67,12 +67,12 @@
 										<div class="d-flex flex-row">
 											<div class="avatar bg-light-info me-2">
 												<div class="avatar-content">
-													<i data-feather="user" class="avatar-icon"></i>
+													<i data-feather="search" class="avatar-icon"></i>
 												</div>
 											</div>
 											<div class="my-auto">
 												<h4 class="fw-bolder mb-0">8.549k</h4>
-												<p class="card-text font-small-3 mb-0">Customers</p>
+												<p class="card-text font-small-3 mb-0">Prospek</p>
 											</div>
 										</div>
 									</div>
@@ -80,12 +80,12 @@
 										<div class="d-flex flex-row">
 											<div class="avatar bg-light-danger me-2">
 												<div class="avatar-content">
-													<i data-feather="box" class="avatar-icon"></i>
+													<i data-feather="activity" class="avatar-icon"></i>
 												</div>
 											</div>
 											<div class="my-auto">
 												<h4 class="fw-bolder mb-0">1.423k</h4>
-												<p class="card-text font-small-3 mb-0">Products</p>
+												<p class="card-text font-small-3 mb-0">Prognosa</p>
 											</div>
 										</div>
 									</div>
@@ -98,7 +98,7 @@
 											</div>
 											<div class="my-auto">
 												<h4 class="fw-bolder mb-0">$9745</h4>
-												<p class="card-text font-small-3 mb-0">Revenue</p>
+												<p class="card-text font-small-3 mb-0">Close PO</p>
 											</div>
 										</div>
 									</div>

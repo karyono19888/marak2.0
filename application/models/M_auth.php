@@ -21,6 +21,7 @@ class M_auth extends CI_Model
 			if ($user['is_active'] == 1) {
 				if (password_verify($password, $user['password_user'])) {
 					$data = [
+						'nickname'   => $user['nickname'],
 						'username'   => $user['username'],
 						'name_user'  => $user['name_user'],
 						'role_user'  => $user['role_user'],
