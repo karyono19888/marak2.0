@@ -52,4 +52,16 @@ class M_auth extends CI_Model
 			redirect('Auth');
 		}
 	}
+
+	public function cek_login()
+	{
+		if (!$this->session->userdata('username') == true) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+					<div class="alert-body d-flex align-items-center">
+						<i data-feather="info" class="me-50"></i>
+						<span><strong>Expired</strong> Session your login expired.</span>
+					</div></div>');
+			redirect('Auth');
+		}
+	}
 }

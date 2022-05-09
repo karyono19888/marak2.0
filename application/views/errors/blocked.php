@@ -1,7 +1,6 @@
 <?php $this->load->view('errors/layouts/header'); ?>
-
-<!-- Error page-->
-<div class="misc-wrapper"><a class="brand-logo" href="#">
+<div class="misc-wrapper">
+	<a class="brand-logo" href="#">
 		<svg viewBox="0 0 139 95" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="28">
 			<defs>
 				<lineargradient id="linearGradient-1" x1="100%" y1="10.5120544%" x2="50%" y2="89.4879456%">
@@ -29,10 +28,12 @@
 	</a>
 	<div class="misc-inner p-2 p-sm-3">
 		<div class="w-100 text-center">
-			<h2 class="mb-1">404 Page Not Found 🕵🏻‍♀️</h2>
-			<p class="mb-2">Oops! 😖 The requested URL was not found on this server.</p><a class="btn btn-primary mb-2 btn-sm-block" href="<?= base_url('Auth'); ?>">Back to home</a><img class="img-fluid" src="<?= base_url('assets'); ?>/images/pages/error.svg" alt="Error page" />
+			<h2 class="mb-1">Access Blocked! 🔐</h2>
+			<p class="mb-2">
+				The Webtrends Marketing Activity website in Marak uses the default IUSR account credentials to access the web pages it
+				serves.
+			</p><a class="btn btn-primary mb-1 btn-sm-block" href="<?= base_url('Auth/Logout'); ?>">Back to login</a><img class="img-fluid" src="<?= base_url('assets'); ?>/images/pages/not-authorized.svg" alt="Not authorized page" />
 		</div>
 	</div>
 </div>
-<!-- / Error page-->
 <?php $this->load->view('errors/layouts/footer'); ?>

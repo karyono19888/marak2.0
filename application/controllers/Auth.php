@@ -12,6 +12,9 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
+		if ($this->session->userdata('username')) {
+			redirect('');
+		};
 		$this->form_validation->set_rules('username', 'Username', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
@@ -102,4 +105,11 @@ class Auth extends CI_Controller
 		$data['title'] = 'Marak | 404';
 		$this->load->view('errors/error_404', $data);
 	}
+
+	public function Blocked()
+	{
+		$data['title'] = 'Marak | 404';
+		$this->load->view('errors/blocked', $data);
+	}
+
 }
