@@ -83,19 +83,19 @@
 										<div class="profile-tabs d-flex justify-content-between flex-wrap mt-1 mt-md-0">
 											<ul class="nav nav-pills mb-0">
 												<li class="nav-item">
-													<a class="nav-link fw-bold active feed" href="#">
+													<a class="nav-link fw-bold active feed" href="#" id="feed">
 														<span class="d-none d-md-block">Feed</span>
 														<i data-feather="rss" class="d-block d-md-none"></i>
 													</a>
 												</li>
 												<li class="nav-item">
-													<a class="nav-link fw-bold" href="#">
+													<a class="nav-link fw-bold" href="#" id="account">
 														<span class="d-none d-md-block">Account</span>
 														<i data-feather="info" class="d-block d-md-none"></i>
 													</a>
 												</li>
 												<li class="nav-item">
-													<a class="nav-link fw-bold" href="#">
+													<a class="nav-link fw-bold" href="#" id="security">
 														<span class="d-none d-md-block">Security</span>
 														<i data-feather="image" class="d-block d-md-none"></i>
 													</a>
@@ -116,7 +116,7 @@
 					</div>
 				</div>
 				<!--/ profile header -->
-
+				<?= $this->session->flashdata('message'); ?>
 				<!-- profile info section -->
 				<section id="profile-info">
 					<div id="viewProfile"></div>
@@ -129,23 +129,8 @@
 </div>
 <!-- END: Content-->
 
-<div class="sidenav-overlay"></div>
-<div class="drag-target"></div>
 
-<!-- BEGIN: Footer-->
-<footer class="footer footer-static footer-light">
-	<p class="clearfix mb-0"><span class="float-md-start d-block d-md-inline-block mt-25">COPYRIGHT &copy; <?= date('Y'); ?><a class="ms-25" href="#">Marak</a><span class="d-none d-sm-inline-block">, All rights Reserved</span></span><span class="float-md-end d-none d-md-block">Hand-crafted & Made with<i data-feather="heart"></i></span></p>
-</footer>
-<button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
-<!-- END: Footer-->
-
-
-<!-- BEGIN: Vendor JS-->
-<script src="<?= base_url("assets"); ?>/vendors/js/vendors.min.js"></script>
-<!-- BEGIN Vendor JS-->
-
-<!-- BEGIN: Page Vendor JS-->
-<!-- END: Page Vendor JS-->
+<?php $this->load->view('Components/v_footer'); ?>
 
 <!-- BEGIN: Theme JS-->
 <script src="<?= base_url("assets"); ?>/js/core/app-menu.js"></script>
@@ -169,8 +154,17 @@
 <script>
 	$(document).ready(function() {
 		$('#viewProfile').load("<?= base_url('Profile/Feed') ?>");
-		$("button").click(function() {
-			$("#div1").load("demo_test.txt");
+
+		$("#feed").click(function() {
+			$('#viewProfile').load("<?= base_url('Profile/Feed') ?>");
+		});
+
+		$("#account").click(function() {
+			$("#viewProfile").load("<?= base_url('Profile/Account') ?>");
+		});
+
+		$("#security").click(function() {
+			$("#viewProfile").load("<?= base_url('Profile/Security') ?>");
 		});
 		$('.nav-link').on('click', function() {
 			$('.nav-link').removeClass('active');
@@ -178,7 +172,4 @@
 		});
 	});
 </script>
-</body>
-<!-- END: Body-->
-
-</html>
+<?php $this->load->view('Components/v_bottom'); ?>

@@ -20,6 +20,30 @@ class Profile extends CI_Controller
 
 	public function Feed()
 	{
-		$this->load->view('Profile/v_feed');
+		$data['profile'] 	= $this->record->myprofile();
+		$this->load->view('Profile/v_feed', $data);
+	}
+
+	public function Account()
+	{
+		$data['profile'] 	= $this->record->myprofile();
+		$this->load->view('Profile/v_account', $data);
+	}
+
+	public function UpdateAccount()
+	{
+		$id_user 	= $this->input->post('id_user');
+		$name_user 	= $this->input->post('name_user');
+		$email_user = $this->input->post('email_user');
+		$phone 		= $this->input->post('phone');
+		$address 	= $this->input->post('address');
+
+		echo $this->record->UpdateAccount($id_user, $name_user, $email_user, $phone, $address);
+	}
+
+	public function Security()
+	{
+		$data['profile'] 	= $this->record->myprofile();
+		$this->load->view('Profile/v_changepassword', $data);
 	}
 }
