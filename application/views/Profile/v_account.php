@@ -63,5 +63,3 @@
 	</div>
 </div>
 <!--/ profile -->
-
-<script src="<?= base_url('assets'); ?>/js/scripts/pages/page-account-settings-account.js"></script>

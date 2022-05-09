@@ -53,7 +53,7 @@
 				<div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">
 					<a class="dropdown-item" href="<?= base_url('Profile'); ?>"><i class="me-50" data-feather="user"></i> Profile</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="page-account-settings-account.html"><i class="me-50" data-feather="settings"></i> Settings</a>
+					<a class="dropdown-item" href="<?= base_url('Profile'); ?>"><i class="me-50" data-feather="settings"></i> Settings</a>
 					<a class="dropdown-item" href="#"><i class="me-50" data-feather="help-circle"></i> FAQ</a>
 					<a class="dropdown-item" href="#" onclick="Logout()"><i class="me-50" data-feather="power"></i> Logout</a>
 				</div>

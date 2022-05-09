@@ -2,6 +2,7 @@
 
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/core/menu/menu-types/vertical-menu.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/pages/page-profile.css">
+
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
 
@@ -141,6 +142,8 @@
 <script src="<?= base_url("assets"); ?>/js/scripts/pages/page-profile.js"></script>
 <!-- END: Page JS-->
 
+<script src="<?= base_url('assets'); ?>/js/scripts/pages/page-account-settings-account.js"></script>
+
 <script>
 	$(window).on('load', function() {
 		if (feather) {
@@ -171,5 +174,15 @@
 			$(this).addClass('active');
 		});
 	});
+</script>
+<script>
+	$(window).on('load', function() {
+		if (feather) {
+			feather.replace({
+				width: 14,
+				height: 14
+			});
+		}
+	})
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

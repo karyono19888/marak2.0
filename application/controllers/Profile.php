@@ -46,4 +46,13 @@ class Profile extends CI_Controller
 		$data['profile'] 	= $this->record->myprofile();
 		$this->load->view('Profile/v_changepassword', $data);
 	}
+
+	public function ChangePassowrd()
+	{
+		$currentPassword 		= $this->input->post('currentPassword');
+		$newPassword 			= $this->input->post('newPassword');
+		$confirmNewPassword 	= $this->input->post('confirmNewPassword');
+
+		echo $this->record->ChangePassword($currentPassword, $newPassword, $confirmNewPassword);
+	}
 }
