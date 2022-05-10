@@ -29,11 +29,14 @@ class M_auth extends CI_Model
 					];
 					$this->session->set_userdata($data);
 					if ($user['role_user'] == 1) {
-						$this->session->set_flashdata('success', 'Login Sukses');
+						$this->session->set_flashdata('success', 'Login Berhasil');
 						redirect('Administrator');
-					} else {
-						$this->session->set_flashdata('success', 'Login Sukses');
+					} elseif ($user['role_user'] == 2) {
+						$this->session->set_flashdata('success', 'Login Berhasil');
 						redirect('Marketing');
+					} else {
+						$this->session->set_flashdata('success', 'Login Berhasil');
+						redirect('Order');
 					}
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
@@ -44,8 +47,22 @@ class M_auth extends CI_Model
 			 		</div>');
 					redirect('Auth');
 				}
+			} elseif ($user['is_active'] == 2) {
+				$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">
+				<div class="alert-body d-flex align-items-center">
+					<i data-feather="info" class="me-50"></i>
+					<span><strong>Suspend</strong> Username terblokir.</span>
+				</div>
+				 </div>');
+				redirect('Auth');
 			} else {
-				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Invalid</strong> Email belum diaktivasi.</div></div>');
+				$this->session->set_flashdata('message', '
+				<div class="alert alert-danger" role="alert">
+					<div class="alert-body d-flex align-items-center">
+						<i data-feather="info" class="me-50"></i>
+						<span><strong>Invalid</strong> Username sudah tidak aktif.</span>
+					</div></div>
+				');
 				redirect('Auth');
 			}
 		} else {

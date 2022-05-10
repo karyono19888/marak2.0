@@ -55,7 +55,7 @@
 		setTimeout(function() {
 			toastr['success'](
 				'Tetap semangat ya, semoga sehat selalu',
-				'👋 Selamat Datang,  <?= $this->session->userdata('name_user'); ?>!', {
+				'👋 Selamat Datang, <?= $this->session->userdata('name_user'); ?>!', {
 					closeButton: true,
 					tapToDismiss: false,
 				}
