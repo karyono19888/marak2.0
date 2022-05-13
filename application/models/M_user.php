@@ -172,7 +172,7 @@ class M_user extends CI_Model
 		$this->db->delete('users', array('id_user' => $id));
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {
-			return json_encode(array('success' => false, 'msg' => 'Hapus User gagal!'));
+			return json_encode(array('success' => false, 'msg' => 'Hapus User Gagal!'));
 		} else {
 			return json_encode(array('success' => true, 'msg' => 'Hapus User Berhasil!'));
 		}

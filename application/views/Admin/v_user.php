@@ -120,7 +120,7 @@
 					</div>
 					<div class="card-body">
 						<div class="card-datatable table-responsive pt-0">
-							<table class="user-list-table table" id="mytable">
+							<table class="user-list-table table table-borderless" id="mytable">
 								<thead class="table-light">
 									<tr>
 										<th></th>

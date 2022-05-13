@@ -1,121 +1,133 @@
 <div class="row">
 	<!-- left profile info section -->
-	<div class="col-lg-3 col-12 order-2 order-lg-1">
-		<!-- about -->
+	<div class="col-lg-4 col-12 order-2 order-lg-1">
+
 		<div class="card">
 			<div class="card-body">
-				<h5 class="mb-75">Username</h5>
-				<p class="card-text">
-					<?= $profile->username; ?>
-				</p>
-				<div class="mt-2">
-					<h5 class="mb-75">Joined:</h5>
-					<p class="card-text"><?= date('d-m-Y H:i:s', $profile->created_at); ?></p>
+				<div class="d-flex justify-content-around my-2 pt-75">
+					<div class="d-flex align-items-start me-2">
+						<span class="badge bg-light-primary p-75 rounded">
+							<i data-feather="check" class="font-medium-2"></i>
+						</span>
+						<div class="ms-75">
+							<h4 class="mb-0">1.23k</h4>
+							<small>Visit Total</small>
+						</div>
+					</div>
+					<div class="d-flex align-items-start">
+						<span class="badge bg-light-primary p-75 rounded">
+							<i data-feather="briefcase" class="font-medium-2"></i>
+						</span>
+						<div class="ms-75">
+							<h4 class="mb-0">568</h4>
+							<small>Projects Done</small>
+						</div>
+					</div>
 				</div>
-				<div class="mt-2">
-					<h5 class="mb-75">Role:</h5>
-					<p class="card-text"><?= $profile->role_name; ?></p>
-				</div>
-				<div class="mt-2">
-					<h5 class="mb-75">Email:</h5>
-					<p class="card-text"><?= $profile->email_user; ?></p>
-				</div>
-				<div class="mt-2">
-					<h5 class="mb-50">Wilayah:</h5>
-					<p class="card-text mb-0"><?= $profile->state; ?></p>
+				<h4 class="fw-bolder border-bottom pb-50 mb-1">Details</h4>
+				<div class="info-container">
+					<ul class="list-unstyled">
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Username:</span>
+							<span><?= $profile->username; ?></span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Email:</span>
+							<span><?= $profile->email_user; ?></span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Status:</span>
+							<span class="badge bg-light-success">Active</span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Role:</span>
+							<span><?= $profile->role_name; ?></span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Contact:</span>
+							<span><?= $profile->phone; ?></span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Wilayah:</span>
+							<span><?= $profile->state; ?></span>
+						</li>
+						<li class="mb-75">
+							<span class="fw-bolder me-25">Joined:</span>
+							<span><?= date('d-m-Y H:i:s', $profile->created_at); ?></span>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<!--/ about -->
+		<!-- /User Card -->
 	</div>
 	<!--/ left profile info section -->
 
 	<!-- center profile info section -->
-	<div class="col-lg-6 col-12 order-1 order-lg-2">
+	<div class="col-lg-8 col-12 order-1 order-lg-2">
 		<!-- post 1 -->
 		<div class="card">
-			<div class="card-body">
-				<div class="d-flex justify-content-start align-items-center mb-1">
-					<!-- avatar -->
-					<div class="avatar me-1">
-						<img src="<?= $profile->image_user; ?>" alt="avatar img" height="50" width="50" />
-					</div>
-					<!--/ avatar -->
-					<div class="profile-user-info">
-						<h6 class="mb-0"><?= $profile->name_user; ?></h6>
-						<small class="text-muted">12 Dec 2018 at 1:16 AM</small>
-					</div>
-				</div>
-				<p class="card-text">
-					Wonderful Machine· A well-written bio allows viewers to get to know a photographer beyond the work. This
-					can make the difference when presenting to clients who are looking for the perfect fit.
-				</p>
+			<h4 class="card-header">User Activity Timeline</h4>
+			<div class="card-body pt-1">
+				<ul class="timeline ms-50">
+					<li class="timeline-item">
+						<span class="timeline-point timeline-point-indicator"></span>
+						<div class="timeline-event">
+							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+								<h6>User login</h6>
+								<span class="timeline-event-time me-1">12 min ago</span>
+							</div>
+							<p>User login at 2:12pm</p>
+						</div>
+					</li>
+					<li class="timeline-item">
+						<span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
+						<div class="timeline-event">
+							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+								<h6>Meeting with john</h6>
+								<span class="timeline-event-time me-1">45 min ago</span>
+							</div>
+							<p>React Project meeting with john @10:15am</p>
+							<div class="d-flex flex-row align-items-center mb-50">
+								<div class="avatar me-50">
+									<img src="<?= base_url('assets'); ?>/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="38" height="38" />
+								</div>
+								<div class="user-info">
+									<h6 class="mb-0">Leona Watkins (Client)</h6>
+									<p class="mb-0">CEO of pixinvent</p>
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="timeline-item">
+						<span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+						<div class="timeline-event">
+							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+								<h6>Create a new react project for client</h6>
+								<span class="timeline-event-time me-1">2 day ago</span>
+							</div>
+							<p>Add files to new design folder</p>
+						</div>
+					</li>
+					<li class="timeline-item">
+						<span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
+						<div class="timeline-event">
+							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+								<h6>Create Invoices for client</h6>
+								<span class="timeline-event-time me-1">12 min ago</span>
+							</div>
+							<p class="mb-0">Create new Invoices and send to Leona Watkins</p>
+							<div class="d-flex flex-row align-items-center mt-50">
+								<img class="me-1" src="<?= base_url('assets'); ?>/images/icons/pdf.png" alt="data.json" height="25" />
+								<h6 class="mb-0">Invoices.pdf</h6>
+							</div>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 		<!--/ post 1 -->
 
 	</div>
 	<!--/ center profile info section -->
-
-	<!-- right profile info section -->
-	<div class="col-lg-3 col-12 order-3">
-
-
-		<!-- polls card -->
-		<div class="card">
-			<div class="card-body">
-				<h5 class="mb-1">Target</h5>
-				<p class="card-text mb-0">Rp. 30.000.000</p>
-
-				<!-- polls -->
-				<div class="profile-polls-info mt-2">
-					<!-- custom radio -->
-					<div class="d-flex justify-content-between">
-						<div class="form-check">
-							<input type="radio" id="bestActorPoll1" name="bestActorPoll" class="form-check-input" />
-							<label class="form-check-label" for="bestActorPoll1">RDJ</label>
-						</div>
-						<div class="text-end">82%</div>
-					</div>
-					<!--/ custom radio -->
-
-					<!-- progressbar -->
-					<div class="progress progress-bar-primary my-50">
-						<div class="progress-bar" role="progressbar" aria-valuenow="58" aria-valuemin="58" aria-valuemax="100">
-						</div>
-					</div>
-					<!--/ progressbar -->
-
-					<!-- avatar group with tooltip -->
-					<div class=" avatar-group my-1">
-						<div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Tonia Seabold" class="avatar pull-up">
-							<img src="<?= base_url("assets"); ?>/images/portrait/small/avatar-s-12.jpg" alt="Avatar" height="26" width="26" />
-						</div>
-						<div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Carissa Dolle" class="avatar pull-up">
-							<img src="<?= base_url("assets"); ?>/images/portrait/small/avatar-s-5.jpg" alt="Avatar" height="26" width="26" />
-						</div>
-						<div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Kelle Herrick" class="avatar pull-up">
-							<img src="<?= base_url("assets"); ?>/images/portrait/small/avatar-s-9.jpg" alt="Avatar" height="26" width="26" />
-						</div>
-						<div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="Len Bregantini" class="avatar pull-up">
-							<img src="<?= base_url("assets"); ?>/images/portrait/small/avatar-s-10.jpg" alt="Avatar" height="26" width="26" />
-						</div>
-						<div data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="bottom" title="John Doe" class="avatar pull-up">
-							<img src="<?= base_url("assets"); ?>/images/portrait/small/avatar-s-11.jpg" alt="Avatar" height="26" width="26" />
-						</div>
-					</div>
-					<!--/ avatar group with tooltip -->
-				</div>
-			</div>
-		</div>
-		<!--/ polls card -->
-	</div>
-	<!--/ right profile info section -->
-</div>
-
-<!-- reload button -->
-<div class="row">
-	<div class="col-12 text-center">
-		<button type="button" class="btn btn-sm btn-primary block-element border-0 mb-1">Load More</button>
-	</div>
 </div>

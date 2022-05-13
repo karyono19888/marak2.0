@@ -14,7 +14,14 @@ class Visit extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Kunjungan | Marak';
+		$data['visit'] = $this->record->dataVisitAll();
 		$this->load->view('Visit/v_index', $data);
+	}
+
+	public function Tambah()
+	{
+		$data['title'] = 'Tambah Kunjungan | Marak';
+		$this->load->view('Visit/v_tambah', $data);
 	}
 }
