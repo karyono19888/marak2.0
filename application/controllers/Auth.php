@@ -13,7 +13,7 @@ class Auth extends CI_Controller
 	public function index()
 	{
 		if ($this->session->userdata('username')) {
-			redirect('');
+			redirect('Profile');
 		};
 		$this->form_validation->set_rules('username', 'Username', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');

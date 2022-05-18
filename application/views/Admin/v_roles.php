@@ -1,5 +1,6 @@
 <?php $this->load->view('Components/v_header'); ?>
 
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
 
@@ -59,38 +60,48 @@
 
 			<!-- Role cards -->
 			<div class="row">
-				<div class="col-xl-4 col-lg-6 col-md-6">
-					<div class="card">
-						<div class="card-body">
-							<div class="d-flex justify-content-between">
-								<span>Total 4 users</span>
-								<ul class="list-unstyled d-flex align-items-center avatar-group mb-0">
-									<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Vinnie Mostowy" class="avatar avatar-sm pull-up">
-										<img class="rounded-circle" src="<?= base_url('assets'); ?>/images/avatars/2.png" alt="Avatar" />
-									</li>
-									<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Allen Rieske" class="avatar avatar-sm pull-up">
-										<img class="rounded-circle" src="<?= base_url('assets'); ?>/images/avatars/12.png" alt="Avatar" />
-									</li>
-									<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Julee Rossignol" class="avatar avatar-sm pull-up">
-										<img class="rounded-circle" src="<?= base_url('assets'); ?>/images/avatars/6.png" alt="Avatar" />
-									</li>
-									<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="Kaith D'souza" class="avatar avatar-sm pull-up">
-										<img class="rounded-circle" src="<?= base_url('assets'); ?>/images/avatars/11.png" alt="Avatar" />
-									</li>
-								</ul>
-							</div>
-							<div class="d-flex justify-content-between align-items-end mt-1 pt-25">
-								<div class="role-heading">
-									<h4 class="fw-bolder">Administrator</h4>
-									<a href="javascript:;" class="role-edit-modal" data-bs-toggle="modal" data-bs-target="#addRoleModal">
-										<small class="fw-bolder">Edit Role</small>
-									</a>
+				<?php
+				foreach ($role->result_array() as $a) :
+					$this->db->where('role_user', $a['role_id']);
+					$numusers = $this->db->get('users');
+
+					$users = $numusers->result();
+				?>
+					<div class="col-xl-4 col-lg-6 col-md-6">
+						<div class="card">
+							<div class="card-body">
+								<div class="d-flex justify-content-between">
+									<span>Total <?= $numusers->num_rows(); ?> users</span>
+									<ul class="list-unstyled d-flex
+									align-items-center avatar-group mb-0">
+										<?php foreach ($numusers->result() as $key) : ?>
+											<li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" title="<?= $key->name_user; ?>" class="avatar avatar-sm pull-up">
+												<img class="rounded-circle" src="<?= $key->image_user; ?>" alt="Avatar" />
+											</li>
+										<?php endforeach; ?>
+									</ul>
 								</div>
-								<a href="javascript:void(0);" class="text-body"><i data-feather="copy" class="font-medium-5"></i></a>
+								<div class="d-flex justify-content-between align-items-end mt-1 pt-25">
+									<div class="role-heading">
+										<h4 class="fw-bolder"><?= $a['role_name']; ?></h4>
+										<a href="<?= base_url('Admin/Roles/UserAccess/' . $a['role_id'] . ''); ?>" class="role-edit-modal btn btn-sm btn-warning">
+											<small class="fw-bolder">User Access</small>
+										</a>
+										<a href="javascript:;" class="role-edit-modal Edit btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addRoleModal" data-id="<?= $a['role_id']; ?>">
+											<small class="fw-bolder">Edit Role</small>
+										</a>
+										<?php if ($numusers->num_rows() == 0) : ?>
+											<a href="javascript:;" class="role-edit-modal Hapus btn btn-sm btn-danger" data-id="<?= $a['role_id']; ?>">
+												<small class="fw-bolder">Hapus</small>
+											</a>
+										<?php endif; ?>
+									</div>
+									<a href="javascript:void(0);" class="text-body"><i data-feather="copy" class="font-medium-5"></i></a>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				<?php endforeach; ?>
 				<div class="col-xl-4 col-lg-6 col-md-6">
 					<div class="card">
 						<div class="row">
@@ -101,7 +112,7 @@
 							</div>
 							<div class="col-sm-7">
 								<div class="card-body text-sm-end text-center ps-sm-0">
-									<a href="javascript:void(0)" data-bs-target="#addRoleModal" data-bs-toggle="modal" class="stretched-link text-nowrap add-new-role">
+									<a href="javascript:void(0)" data-bs-target="#addRoleModal" data-bs-toggle="modal" class="stretched-link text-nowrap add-new-role Tambah">
 										<span class="btn btn-primary mb-1">Add New Role</span>
 									</a>
 									<p class="mb-0">Add role, if it does not exist</p>
@@ -117,240 +128,69 @@
 			<p class="mb-2">Find all of your company’s administrator accounts and their associate roles.</p>
 			<!-- table -->
 			<div class="card">
-				<div class="table-responsive">
-					<table class="user-list-table table">
-						<thead class="table-light">
-							<tr>
-								<th></th>
-								<th></th>
-								<th>Name</th>
-								<th>Role</th>
-								<th>Plan</th>
-								<th>Billing</th>
-								<th>Status</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-					</table>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="user-list-table table-hover table table-borderless" id="mytable">
+							<thead class="table-light">
+								<tr>
+									<th>No</th>
+									<th>Name User</th>
+									<th>Role</th>
+									<th>Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php $i = 1;
+								foreach ($tablerole->result_array() as $b) : ?>
+									<tr>
+										<td><?= $i++; ?></td>
+										<td><?= $b['name_user']; ?></td>
+										<td><?= $b['role_name']; ?></td>
+										<td>
+											<?php if ($b['is_active'] == 1) : ?>
+												<span class="badge rounded-pill badge-light-primary me-1">Active</span>
+											<?php elseif ($b['is_active'] == 2) : ?>
+												<span class="badge rounded-pill badge-light-warning me-1">Suspend</span>
+											<?php else : ?>
+												<span class="badge rounded-pill badge-light-danger me-1">Not Active</span>
+											<?php endif; ?>
+										</td>
+										<td width="10%">
+											<a href="" type="button" class="btn btn-outline-primary round">Edit</a>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 			<!-- table -->
+
 			<!-- Add Role Modal -->
-			<div class="modal fade" id="addRoleModal" tabindex="-1" aria-hidden="true">
+			<div class="modal fade" id="addRoleModal" tabindex="-1" data-bs-backdrop="false" aria-hidden="true">
 				<div class="modal-dialog modal-lg modal-dialog-centered modal-add-new-role">
 					<div class="modal-content">
 						<div class="modal-header bg-transparent">
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							<button type="button" class="btn-close closeMenu" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body px-5 pb-5">
 							<div class="text-center mb-4">
-								<h1 class="role-title">Add New Role</h1>
+								<h1 class="role-title" id="judul1">Add New Role</h1>
+								<h1 class="role-title" id="judul2">Update Role</h1>
 								<p>Set role permissions</p>
 							</div>
 							<!-- Add role form -->
-							<form id="addRoleForm" class="row" onsubmit="return false">
+							<form id="addRoleForm" class="row" onsubmit="return false" method="POST">
 								<div class="col-12">
-									<label class="form-label" for="modalRoleName">Role Name</label>
-									<input type="text" id="modalRoleName" name="modalRoleName" class="form-control" placeholder="Enter role name" tabindex="-1" data-msg="Please enter role name" />
-								</div>
-								<div class="col-12">
-									<h4 class="mt-2 pt-50">Role Permissions</h4>
-									<!-- Permission table -->
-									<div class="table-responsive">
-										<table class="table table-flush-spacing">
-											<tbody>
-												<tr>
-													<td class="text-nowrap fw-bolder">
-														Administrator Access
-														<span data-bs-toggle="tooltip" data-bs-placement="top" title="Allows a full access to the system">
-															<i data-feather="info"></i>
-														</span>
-													</td>
-													<td>
-														<div class="form-check">
-															<input class="form-check-input" type="checkbox" id="selectAll" />
-															<label class="form-check-label" for="selectAll"> Select All </label>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">User Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="userManagementRead" />
-																<label class="form-check-label" for="userManagementRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="userManagementWrite" />
-																<label class="form-check-label" for="userManagementWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="userManagementCreate" />
-																<label class="form-check-label" for="userManagementCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Content Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="contentManagementRead" />
-																<label class="form-check-label" for="contentManagementRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="contentManagementWrite" />
-																<label class="form-check-label" for="contentManagementWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="contentManagementCreate" />
-																<label class="form-check-label" for="contentManagementCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Disputes Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="dispManagementRead" />
-																<label class="form-check-label" for="dispManagementRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="dispManagementWrite" />
-																<label class="form-check-label" for="dispManagementWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="dispManagementCreate" />
-																<label class="form-check-label" for="dispManagementCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Database Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="dbManagementRead" />
-																<label class="form-check-label" for="dbManagementRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="dbManagementWrite" />
-																<label class="form-check-label" for="dbManagementWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="dbManagementCreate" />
-																<label class="form-check-label" for="dbManagementCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Financial Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="finManagementRead" />
-																<label class="form-check-label" for="finManagementRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="finManagementWrite" />
-																<label class="form-check-label" for="finManagementWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="finManagementCreate" />
-																<label class="form-check-label" for="finManagementCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Reporting</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="reportingRead" />
-																<label class="form-check-label" for="reportingRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="reportingWrite" />
-																<label class="form-check-label" for="reportingWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="reportingCreate" />
-																<label class="form-check-label" for="reportingCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">API Control</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="apiRead" />
-																<label class="form-check-label" for="apiRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="apiWrite" />
-																<label class="form-check-label" for="apiWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="apiCreate" />
-																<label class="form-check-label" for="apiCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Repository Management</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="repoRead" />
-																<label class="form-check-label" for="repoRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="repoWrite" />
-																<label class="form-check-label" for="repoWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="repoCreate" />
-																<label class="form-check-label" for="repoCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-												<tr>
-													<td class="text-nowrap fw-bolder">Payroll</td>
-													<td>
-														<div class="d-flex">
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="payrollRead" />
-																<label class="form-check-label" for="payrollRead"> Read </label>
-															</div>
-															<div class="form-check me-3 me-lg-5">
-																<input class="form-check-input" type="checkbox" id="payrollWrite" />
-																<label class="form-check-label" for="payrollWrite"> Write </label>
-															</div>
-															<div class="form-check">
-																<input class="form-check-input" type="checkbox" id="payrollCreate" />
-																<label class="form-check-label" for="payrollCreate"> Create </label>
-															</div>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<!-- Permission table -->
+									<label for="role_name" class="form-label">Role Name</label>
+									<input type="hidden" name="role_id" id="role_id">
+									<input type="text" id="role_name" name="role_name" class="form-control" placeholder="Enter role name" tabindex="-1" data-msg="Please enter role name" />
 								</div>
 								<div class="col-12 text-center mt-2">
-									<button type="submit" class="btn btn-primary me-1">Submit</button>
+									<button type="submit" class="btn btn-primary me-1" id="save">Save</button>
+									<button type="submit" class="btn btn-primary me-1" id="update">Update</button>
 									<button type="reset" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close">
 										Discard
 									</button>
@@ -369,4 +209,200 @@
 <!-- END: Content-->
 
 <?php $this->load->view('Components/v_footer'); ?>
+
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#mytable').DataTable();
+	});
+</script>
+
+<!-- Tambah hide Menu -->
+<script>
+	$(document).on("click", ".Tambah", function() {
+		$('#judul2').hide();
+		$('#update').hide();
+		$('#judul1').show();
+		$('#save').show();
+	})
+	$(document).on("click", "#save", function() {
+		if (validasi()) {
+			let data = $('#addRoleForm').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('Admin/Roles/Tambah') ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Admin/Roles") ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+
+	function validasi() {
+		let role_name = document.getElementById("role_name").value;
+		if (role_name == "") {
+			notif("Role Name");
+		} else {
+			return true;
+		}
+	}
+</script>
+
+<!-- Edit hide Menu -->
+<script>
+	$(document).on("click", ".Edit", function() {
+		$('#judul2').show();
+		$('#update').show();
+		$('#judul1').hide();
+		$('#save').hide();
+		let id = $(this).data('id');
+		$.ajax({
+			type: 'POST',
+			url: '<?= site_url('Admin/Roles/View') ?>',
+			data: {
+				id: id
+			},
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.success) {
+					$('#role_id').val(data.role_id);
+					$('#role_name').val(data.role_name);
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Warning',
+						text: data.msg,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			}
+		});
+	})
+</script>
+<!-- notif -->
+<script>
+	function notif(word) {
+		Swal.fire({
+			title: 'Perhatian',
+			text: word + ' wajib di isi !',
+			icon: 'info',
+		}).then((result) => {})
+	}
+</script>
+
+<!-- btn close modal -->
+<script>
+	$(document).on("click", ".closeMenu", function() {
+		$('#role_id').val("");
+		$('#role_name').val("");
+	});
+</script>
+
+<!-- update data menu -->
+<script>
+	$(document).on("click", "#update", function() {
+		if (validasi()) {
+			let data = $('#addRoleForm').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('Admin/Roles/Update') ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Admin/Roles") ?>');
+					}, 1500);
+				}
+			});
+		}
+	});
+</script>
+
+<!-- hapus User -->
+<script>
+	$(document).on("click", ".Hapus", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Admin/Roles/Delete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("Admin/Roles") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
+	});
+</script>
 <?php $this->load->view('Components/v_bottom'); ?>
