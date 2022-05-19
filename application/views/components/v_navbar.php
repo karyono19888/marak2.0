@@ -6,6 +6,19 @@
 			</ul>
 			<ul class="nav navbar-nav">
 				<li class="nav-item d-none d-lg-block">
+					<a href="">
+						<i data-feather='calendar'></i>
+						<span id="span" class="fw-bolder"></span>
+					</a>
+					<div class="bookmark-input search-input">
+						<div class="bookmark-input-icon"><i data-feather="search"></i></div>
+						<input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">
+						<ul class="search-list search-list-bookmark"></ul>
+					</div>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav">
+				<li class="nav-item d-none d-lg-block">
 					<div class="bookmark-input search-input">
 						<div class="bookmark-input-icon"><i data-feather="search"></i></div>
 						<input class="form-control input" type="text" placeholder="Bookmark" tabindex="0" data-search="search">

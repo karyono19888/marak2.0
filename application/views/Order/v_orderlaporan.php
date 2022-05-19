@@ -44,7 +44,15 @@
 		</div>
 		<div class="content-body">
 			<!-- Dashboard Ecommerce Starts -->
-			<p>content</p>
+			<div class="misc-wrapper">
+				<div class="misc-inner p-2 p-sm-3">
+					<div class="w-100 text-center">
+						<h2 class="mb-1">We are launching soon 🚀</h2>
+						<p class="mb-3">We're creating something awesome. Please subscribe to get notified when it's ready!</p>
+						<img class="img-fluid" src="<?= base_url('assets'); ?>/images/pages/coming-soon.svg" alt="Coming soon page" />
+					</div>
+				</div>
+			</div>
 			<!-- Dashboard Ecommerce ends -->
 
 		</div>

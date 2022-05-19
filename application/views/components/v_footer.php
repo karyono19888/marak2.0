@@ -38,6 +38,25 @@
 </script>
 
 <script>
+	let span = document.getElementById('span');
+
+	function time() {
+		let options = {
+			weekday: 'long',
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric'
+		};
+		let today = new Date();
+		let d = new Date();
+		let s = d.getSeconds();
+		let m = d.getMinutes();
+		let h = d.getHours();
+		span.textContent = today.toLocaleDateString("en-GB", options) + "  " + ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2);
+	}
+
+	setInterval(time, 1000);
+</script>
 
 </script>
 <?php if ($this->session->flashdata('success')) : ?>

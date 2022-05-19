@@ -1,5 +1,6 @@
 <?php $this->load->view('Components/v_header'); ?>
 
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
 
@@ -44,7 +45,101 @@
 		</div>
 		<div class="content-body">
 			<!-- Dashboard Ecommerce Starts -->
-			<p>content</p>
+			<section class="app-user-list">
+				<div class="row">
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75">09</h3>
+									<span>Total Rencana Kunjungan</span>
+								</div>
+								<div class="avatar bg-light-primary p-50">
+									<span class="avatar-content">
+										<i data-feather="navigation" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75">09</h3>
+									<span>Total Draft</span>
+								</div>
+								<div class="avatar bg-light-warning p-50">
+									<span class="avatar-content">
+										<i data-feather="layers" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75">09</h3>
+									<span>Total Terkunjungi</span>
+								</div>
+								<div class="avatar bg-light-success p-50">
+									<span class="avatar-content">
+										<i data-feather="git-pull-request" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75">12</h3>
+									<span>Total Belum Terkunjungi</span>
+								</div>
+								<div class="avatar bg-light-danger p-50">
+									<span class="avatar-content">
+										<i data-feather="user" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- list and filter start -->
+				<div class="card">
+					<div class="card-header">
+						<h4 class="card-title">Search & Filter</h4>
+						<a href="<?= base_url('Instansi/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
+							<span><i data-feather='plus'></i> Add New Jadwal</span>
+						</a>
+					</div>
+					<div class="card-body">
+						<div class="card-datatable">
+							<table class="table table-hover table-borderless" id="mytable" width="100%">
+								<thead>
+									<tr>
+										<th>#</th>
+										<th>Gol</th>
+										<th>Nama</th>
+										<th>Alamat</th>
+										<th>Provinsi</th>
+										<th>Kab/Kota</th>
+										<th>Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- list and filter end -->
+			</section>
 			<!-- Dashboard Ecommerce ends -->
 
 		</div>
@@ -53,4 +148,10 @@
 <!-- END: Content-->
 
 <?php $this->load->view('Components/v_footer'); ?>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('#mytable').DataTable();
+	});
+</script>
 <?php $this->load->view('Components/v_bottom'); ?>

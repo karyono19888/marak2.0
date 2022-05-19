@@ -153,8 +153,8 @@
 												<?php endif; ?>
 											</td>
 											<td class="text-center" width="20%">
-												<a href="" type="button" class="btn btn-outline-primary round">Edit</a>
-												<a href="" type="button" class="btn btn-outline-danger round">Delete</a>
+												<a href="" type="button" class="btn btn-warning btn-sm">Edit</a>
+												<a href="" type="button" class="btn btn-danger btn-sm">Delete</a>
 											</td>
 										</tr>
 									<?php endforeach; ?>
