@@ -53,7 +53,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalkunjungan; ?></h3>
 									<span>Total Kunjungan</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
@@ -68,12 +68,14 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Kunjungan On Progress</span>
+									<h3 class="fw-bolder mb-75"><?= $totalprognosa; ?></h3>
+									<span>Total Prognosa</span>
 								</div>
+								<?php $presentaseprognosa = round($totalprognosa / $totalkunjungan * 100, 2); ?>
+								<div class="fw-bold text-body-heading <?= $presentaseprognosa > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseprognosa; ?> %</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
-										<i data-feather="search" class="font-medium-4"></i>
+										<i data-feather="trending-up" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -83,9 +85,11 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Kunjungan Close PO</span>
+									<h3 class="fw-bolder mb-75"><?= $totalclosepo; ?></h3>
+									<span>Total Close PO</span>
 								</div>
+								<?php $presentaseclosepo = round($totalclosepo / $totalkunjungan * 100, 2); ?>
+								<div class="fw-bold text-body-heading <?= $presentaseclosepo > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseclosepo; ?> %</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
 										<i data-feather="dollar-sign" class="font-medium-4"></i>

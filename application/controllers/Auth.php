@@ -15,6 +15,12 @@ class Auth extends CI_Controller
 		if ($this->session->userdata('username')) {
 			redirect('Profile');
 		};
+		if (isset($_COOKIE['_secure-3ID']) && isset($_COOKIE['_secure-1US'])) {
+			$id  = $_COOKIE['_secure-3ID'];
+			$key = $_COOKIE['_secure-1US'];
+			$this->record->cek_cookie($id, $key);
+		}
+
 		$this->form_validation->set_rules('username', 'Username', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
@@ -24,8 +30,8 @@ class Auth extends CI_Controller
 		} else {
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
-
-			$this->record->login($username, $password);
+			$remember = $this->input->post('remember-me');
+			$this->record->login($username, $password, $remember);
 		}
 	}
 
@@ -88,6 +94,8 @@ class Auth extends CI_Controller
 		$session_id = session_id();
 		$this->session->unset_userdata('username');
 		$this->session->unset_userdata('role_user');
+		setcookie('_secure-3ID', '', time() - 3600);
+		setcookie('_secure-1US', '', time() - 3600);
 		$this->session->set_flashdata(
 			'message',
 			'<div class="alert alert-success mt-1 alert-validation-msg" role="alert">
@@ -100,6 +108,8 @@ class Auth extends CI_Controller
 		redirect('Auth');
 		$this->db->delete('ci_sessions', ['id' => $session_id]);
 	}
+
+
 	public function pagenotfound()
 	{
 		$data['title'] = 'Marak | 404';

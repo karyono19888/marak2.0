@@ -13,7 +13,7 @@ class M_auth extends CI_Model
 		$this->db->insert('users', $data);
 	}
 
-	public function login($username, $password)
+	public function login($username, $password, $remember)
 	{
 		$user = $this->db->get_where('users', ['username' => $username])->row_array();
 
@@ -29,6 +29,12 @@ class M_auth extends CI_Model
 						'is_login' 	 => TRUE,
 					];
 					$this->session->set_userdata($data);
+
+					if (isset($remember)) {
+						setcookie('_secure-3ID', $user['id_user'], time() + 3600);
+						setcookie('_secure-1US', hash('sha256', $user['username']), time() + 3600);
+					}
+
 					if ($user['role_user'] == 1) {
 						$this->session->set_flashdata('success', 'Login Berhasil');
 						redirect('Administrator');
@@ -49,12 +55,13 @@ class M_auth extends CI_Model
 					redirect('Auth');
 				}
 			} elseif ($user['is_active'] == 2) {
-				$this->session->set_flashdata('message', '<div class="alert alert-warning" role="alert">
+				$this->session->set_flashdata('message',
+				'<div class="alert alert-warning" role="alert">
 				<div class="alert-body d-flex align-items-center">
 					<i data-feather="info" class="me-50"></i>
 					<span><strong>Suspend</strong> Username terblokir.</span>
 				</div>
-				 </div>');
+				</div>');
 				redirect('Auth');
 			} else {
 				$this->session->set_flashdata('message', '
@@ -69,6 +76,14 @@ class M_auth extends CI_Model
 		} else {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert"><div class="alert-body"><strong>Invalid</strong> Username tidak terdaftar.</div></div>');
 			redirect('Auth');
+		}
+	}
+
+	public function cek_cookie($id, $key)
+	{
+		$user = $this->db->get_where('users', ['id_user' => $id])->row_array();
+		if ($key === hash('sha256', $user['username'])) {
+			$this->session->userdata('is_login') == true;
 		}
 	}
 

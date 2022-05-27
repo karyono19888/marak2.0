@@ -25,4 +25,43 @@ class M_visit extends CI_Model
 
 		return $query;
 	}
+
+	public function TotalKunjungan()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		}
+	}
+
+	public function TotalKunjunganPrognosa()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('m_visit_status', 'Prognosa');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('m_visit_status', 'Prognosa');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		}
+	}
+	public function TotalKunjunganClose()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('m_visit_status', 'Close Po');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('m_visit_status', 'Close Po');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		}
+	}
 }

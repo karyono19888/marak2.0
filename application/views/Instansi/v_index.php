@@ -147,7 +147,18 @@
 </div>
 <!-- END: Content-->
 
+
 <?php $this->load->view('Components/v_footer'); ?>
+
+<!-- BEGIN: Page Vendor JS-->
+<script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
+<!-- END: Page Vendor JS-->
+
+<!-- BEGIN: Theme JS-->
+<script src="<?= base_url('assets'); ?>/js/core/app-menu.js"></script>
+<script src="<?= base_url('assets'); ?>/js/core/app.js"></script>
+<!-- END: Theme JS-->
+
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {

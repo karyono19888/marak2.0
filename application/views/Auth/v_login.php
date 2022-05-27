@@ -47,7 +47,7 @@
 									</div>
 									<div class="mb-1">
 										<div class="form-check">
-											<input class="form-check-input" id="remember-me" type="checkbox" tabindex="3" />
+											<input class="form-check-input" id="remember-me" name="remember-me" type="checkbox" tabindex="3" />
 											<label class="form-check-label" for="remember-me"> Remember Me</label>
 										</div>
 									</div>

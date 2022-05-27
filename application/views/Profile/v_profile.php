@@ -105,7 +105,7 @@
 											<!-- edit button -->
 											<button class="btn btn-primary">
 												<i data-feather="edit" class="d-block d-md-none"></i>
-												<span class="fw-bold d-none d-md-block">Edit</span>
+												<span class="fw-bold d-none d-md-block"><i data-feather="grid"></i></span>
 											</button>
 										</div>
 									</div>

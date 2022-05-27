@@ -15,6 +15,9 @@ class Visit extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Kunjungan | Marak';
+		$data['totalkunjungan'] = $this->record->TotalKunjungan();
+		$data['totalprognosa'] = $this->record->TotalKunjunganPrognosa();
+		$data['totalclosepo'] = $this->record->TotalKunjunganClose();
 		$data['visit'] = $this->record->dataVisitAll();
 		$this->load->view('Visit/v_index', $data);
 	}
