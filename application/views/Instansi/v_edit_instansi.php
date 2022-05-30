@@ -130,7 +130,7 @@
 	$(document).ready(function() {
 		$("#wilayah").select2({
 			ajax: {
-				url: '<?= base_url() ?>Instansi/getdatawil',
+				url: '<?= base_url() ?>Wilayah/getdatawil',
 				type: "post",
 				dataType: 'json',
 				delay: 200,
@@ -153,7 +153,7 @@
 		var wilayah_id = $("#wilayah").val();
 		$("#provinsi").select2({
 			ajax: {
-				url: '<?= base_url() ?>Instansi/getdataprov/' + wilayah_id,
+				url: '<?= base_url() ?>Wilayah/getdataprov/' + wilayah_id,
 				type: "post",
 				dataType: 'json',
 				delay: 200,
@@ -176,7 +176,7 @@
 		var id_prov = $("#provinsi").val();
 		$("#kabupaten").select2({
 			ajax: {
-				url: '<?= base_url() ?>Instansi/getdatakab/' + id_prov,
+				url: '<?= base_url() ?>Wilayah/getdatakab/' + id_prov,
 				type: "post",
 				dataType: 'json',
 				delay: 200,

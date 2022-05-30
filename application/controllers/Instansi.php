@@ -23,30 +23,6 @@ class Instansi extends CI_Controller
 		$this->load->view('Instansi/v_index', $data);
 	}
 
-	// Wilayah
-	public function getdatawil()
-	{
-		$searchTerm = $this->input->post('searchTerm');
-		$response   = $this->record->getwil($searchTerm);
-		echo json_encode($response);
-	}
-
-	// Provinsi
-	public function getdataprov($wilayah_id)
-	{
-		$searchTerm = $this->input->post('searchTerm');
-		$response   = $this->record->getprov($wilayah_id, $searchTerm);
-		echo json_encode($response);
-	}
-
-	// Kabupaten
-	public function getdatakab($id_prov)
-	{
-		$searchTerm = $this->input->post('searchTerm');
-		$response   = $this->record->getkab($id_prov, $searchTerm);
-		echo json_encode($response);
-	}
-
 	public function Tambah()
 	{
 		$data['title'] = 'Tambah Instansi | Marak';
