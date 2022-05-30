@@ -57,10 +57,13 @@
 							</div>
 							<div class="card-body">
 								<div class="row">
-									<div class="text-muted">
-										<p>Mohon pastikan tidak ada data instansi yang sama.</p>
+									<div class="alert alert-warning" role="alert">
+										<h4 class="alert-heading">Perhatian !</h4>
+										<div class="alert-body">
+											Pastikan Nama Instansi tidak boleh sama dengan data yang sudah ada.
+										</div>
 									</div>
-									<form id="tambahInstansiForm" class="row gy-1" onsubmit="return false" method="POST">
+									<form id="tambahInstansiForm" class="row gy-1" method="POST" action="">
 										<div class="col-12 col-md-6">
 											<label class="form-label" for="instansi_kategori">Kategori Instansi <span class="text-danger">*</span></label>
 											<select id="instansi_kategori" name="instansi_kategori" class="form-select select2" aria-label="Default select example">
@@ -199,7 +202,7 @@
 			let data = $('#tambahInstansiForm').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= site_url('Instansi/TambahInstansi') ?>',
+				url: '<?= base_url('Instansi/TambahInstansi'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);
@@ -271,11 +274,4 @@
 	}
 </script>
 
-<script>
-	$(document).ready(function() {
-		$('#instansi_nama').autocomplete({
-			source: "<?= site_url('Instansi/get_autocompleteInstansi'); ?>",
-		});
-	});
-</script>
 <?php $this->load->view('Components/v_bottom'); ?>

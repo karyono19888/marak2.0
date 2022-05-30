@@ -15,6 +15,11 @@ class Instansi extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Dashboard | Marak';
+		$data['datainstansi'] = $this->record->index();
+		$data['totalsemuapelanggan'] = $this->record->TotalSemuaPelanggan();
+		$data['totalpemerintahan'] = $this->record->TotalPemerintahan();
+		$data['totalswasta'] = $this->record->TotalSwasta();
+		$data['totalperorangan'] = $this->record->TotalPerorangan();
 		$this->load->view('Instansi/v_index', $data);
 	}
 
@@ -25,6 +30,7 @@ class Instansi extends CI_Controller
 		$response   = $this->record->getwil($searchTerm);
 		echo json_encode($response);
 	}
+
 	// Provinsi
 	public function getdataprov($wilayah_id)
 	{
@@ -59,18 +65,29 @@ class Instansi extends CI_Controller
 		echo $this->record->TambahInstansi($instansi_kategori, $instansi_nama, $instansi_alamat, $wilayah, $provinsi, $kabupaten);
 	}
 
-	public function get_autocompleteInstansi()
+	public function Edit($id)
 	{
-		$insntansi_nama = $this->input->get_post('instansi_nama');
-		if ($insntansi_nama) {
-			$result = $this->record->search_nama_instansi($insntansi_nama);
-			if (count($result) > 0) {
-				foreach ($result as $row)
-					$arr_result[] = array(
-						'instansi_nama' => $row->instansi_nama,
-					);
-				echo json_encode($arr_result);
-			}
-		}
+		$data['title'] = 'Edit Instansi | Marak';
+		$data['editinstansi'] = $this->record->editInstansi($id);
+		$this->load->view('Instansi/v_edit_instansi', $data);
+	}
+
+	public function UpdateInstansi()
+	{
+		$instansi_id 			= $this->input->post('instansi_id');
+		$instansi_kategori 	= $this->input->post('instansi_kategori');
+		$instansi_nama 		= $this->input->post('instansi_nama');
+		$instansi_alamat 		= $this->input->post('instansi_alamat');
+		$wilayah 				= $this->input->post('wilayah');
+		$provinsi 				= $this->input->post('provinsi');
+		$kabupaten 				= $this->input->post('kabupaten');
+
+		echo $this->record->UpdateInstansi($instansi_id, $instansi_kategori, $instansi_nama, $instansi_alamat, $wilayah, $provinsi, $kabupaten);
+	}
+
+	public function Delete()
+	{
+		$id = $this->input->post('id');
+		echo $this->record->Delete($id);
 	}
 }

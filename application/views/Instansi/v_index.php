@@ -51,7 +51,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalsemuapelanggan; ?></h3>
 									<span>Total Semua Pelanggan</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
@@ -66,8 +66,8 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total Instansi</span>
+									<h3 class="fw-bolder mb-75"><?= $totalpemerintahan; ?></h3>
+									<span>Total Pemerintahan</span>
 								</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
@@ -81,7 +81,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalswasta; ?></h3>
 									<span>Total Swasta</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
@@ -96,7 +96,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">12</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalperorangan; ?></h3>
 									<span>Total Perorangan</span>
 								</div>
 								<div class="avatar bg-light-danger p-50">
@@ -132,7 +132,36 @@
 									</tr>
 								</thead>
 								<tbody>
-
+									<?php
+									$i = 1;
+									foreach ($datainstansi->result_array() as $m) :
+									?>
+										<tr>
+											<td class="text-center"><?= $i++; ?></td>
+											<td><?= $m['instansi_kategori']; ?></td>
+											<td><?= $m['instansi_nama']; ?></td>
+											<td><?= $m['instansi_alamat']; ?></td>
+											<td><?= $m['prov_nama']; ?></td>
+											<td><?= $m['kab_nama']; ?></td>
+											<td>
+												<?php if ($m['instansi_lok'] === "Belum Penlok") : ?>
+													<span class="badge badge-light-primary">
+														<i data-feather="unlock" class="me-25"></i>
+														<span><?= $m['instansi_lok']; ?></span>
+													</span>
+												<?php else : ?>
+													<span class="badge badge-light-danger">
+														<i data-feather="lock" class="me-25"></i>
+														<span><?= $m['instansi_lok']; ?></span>
+													</span>
+												<?php endif; ?>
+											</td>
+											<td width="12%">
+												<a href="<?= base_url('Instansi/Edit/' . $m['instansi_id']) ?>" type="button" class="btn btn-warning btn-sm">Edit</a>
+												<a href="#" data-id="<?= $m['instansi_id']; ?>" type="button" class="btn btn-danger btn-sm Hapus">Delete</a>
+											</td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -163,6 +192,55 @@
 <script>
 	$(document).ready(function() {
 		$('#mytable').DataTable();
+	});
+</script>
+
+<!-- hapus User -->
+<script>
+	$(document).on("click", ".Hapus", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete instansi!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Instansi/Delete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("Instansi") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
