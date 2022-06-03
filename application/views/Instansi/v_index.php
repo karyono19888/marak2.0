@@ -128,7 +128,9 @@
 										<th>Provinsi</th>
 										<th>Kab/Kota</th>
 										<th>Status</th>
-										<th>Actions</th>
+										<?php if ($this->session->userdata('role_user') == 1) : ?>
+											<th>Actions</th>
+										<?php endif; ?>
 									</tr>
 								</thead>
 								<tbody>
@@ -156,10 +158,12 @@
 													</span>
 												<?php endif; ?>
 											</td>
-											<td width="12%">
-												<a href="<?= base_url('Instansi/Edit/' . $m['instansi_id']) ?>" type="button" class="btn btn-warning btn-sm">Edit</a>
-												<a href="#" data-id="<?= $m['instansi_id']; ?>" type="button" class="btn btn-danger btn-sm Hapus">Delete</a>
-											</td>
+											<?php if ($this->session->userdata('role_user') == 1) : ?>
+												<td width="12%">
+													<a href="<?= base_url('Instansi/Edit/' . $m['instansi_id']) ?>" type="button" class="btn btn-warning btn-sm">Edit</a>
+													<a href="#" data-id="<?= $m['instansi_id']; ?>" type="button" class="btn btn-danger btn-sm Hapus">Delete</a>
+												</td>
+											<?php endif; ?>
 										</tr>
 									<?php endforeach; ?>
 								</tbody>

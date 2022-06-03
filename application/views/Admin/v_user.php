@@ -140,7 +140,10 @@
 										<tr>
 											<td class="text-center"><?= $i++; ?></td>
 											<td>
-												<img src="<?= $key['image_user']; ?>" class="me-75" height="26" width="26" alt="<?= $key['name_user']; ?>" />
+												<div class="avatar">
+													<img src="<?= $key['image_user']; ?>" height="26" width="26" al="<?= $key['name_user']; ?>" />
+
+												</div>
 												<span class="fw-bold"><?= $key['name_user']; ?></span>
 											</td>
 											<td><?= $key['role_name'];; ?></td>

@@ -75,7 +75,7 @@
 										</div>
 										<div class="col-12">
 											<label class="form-label" for="instansi_nama">Nama Instansi / Swasta / Perorangan <span class="text-danger">*</span></label>
-											<input type="text" id="instansi_nama" name="instansi_nama" class="form-control" placeholder="Masukan Nama dengan lengkap" />
+											<input type="text" id="instansi_nama" name="instansi_nama" class="form-control" placeholder="Masukan Nama dengan lengkap" style="text-transform:capitalize ;" />
 										</div>
 										<div class="col-12">
 											<label class="form-label" for="instansi_alamat">Alamat Lengkap <span class="text-danger">*</span></label>

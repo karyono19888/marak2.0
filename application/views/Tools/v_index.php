@@ -109,6 +109,7 @@
 					</div>
 				</div>
 				<!-- list and filter start -->
+				<?= $this->session->flashdata('message'); ?>
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Search & Filter</h4>
@@ -122,16 +123,64 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Date</th>
 										<th>Role</th>
 										<th>Owner</th>
-										<th>Nama</th>
+										<th>Type</th>
+										<th>Nama File</th>
 										<th>Status</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
+									<?php
+									$i = 1;
+									foreach ($data->result_array() as $a) :
+									?>
+										<tr>
+											<td><?= $i++; ?></td>
+											<td><?= $a['tools_role']; ?></td>
+											<td><?= $a['org_nama']; ?></td>
+											<td><?= $a['tools_type']; ?></td>
+											<td><?= $a['tools_nama']; ?></td>
+											<td>
+												<?php if ($a['tools_status'] === "1") : ?>
+													<span class="badge badge-light-primary">
+														<i data-feather="unlock" class="me-25"></i>
+														<span>Active</span>
+													</span>
+												<?php else : ?>
+													<span class="badge badge-light-danger">
+														<i data-feather="lock" class="me-25"></i>
+														<span>Not Active</span>
+													</span>
+												<?php endif; ?>
+											</td>
+											<td>
+												<div class="btn-group" role="group" aria-label="Basic example">
+													<?php if ($this->session->userdata('role_user') == 1) : ?>
+														<a href="<?= base_url('Tools/Edit/' . $a['tools_id']); ?>" type="button" class="btn btn-outline-warning btn-sm">Edit</a>
+														<button type="button" class="btn btn-outline-danger btn-sm Hapus" data-id="<?= $a['tools_id']; ?>">Delete</button>
+													<?php endif; ?>
+													<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Share</button>
+													<div class="dropdown-menu dropdown-menu-end">
+														<a class="dropdown-item" href="whatsapp://send?text=<?= base_url('/assets/tools/' . $a['tools_upload']); ?>">
+															<i data-feather="twitch" class="text-success"></i>
+															<span>Whatsapp</span>
+														</a>
+														<a class="dropdown-item" href="<?= base_url('/assets/tools/' . $a['tools_upload']); ?>" target="_blank">
+															<i data-feather="file" class="text-danger"></i>
+															<span>Pdf</span>
+														</a>
+														<a class="dropdown-item" href="mailto:?subject=Tools Marakapp&amp;body=Check out this file : <?= base_url('/assets/tools/' . $a['tools_upload']); ?>" title="Share by Email tools Marakapp">
+															<i data-feather="mail" class="text-primary"></i>
+															<span>Email</span>
+														</a>
+													</div>
+												</div>
+											</td>
+										</tr>
 
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -151,6 +200,52 @@
 <script>
 	$(document).ready(function() {
 		$('#mytable').DataTable();
+	});
+
+	$(document).on("click", ".Hapus", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete Tools Permanent!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Tools/Delete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("Tools") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
