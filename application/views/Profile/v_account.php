@@ -4,26 +4,26 @@
 	</div>
 	<div class="card-body py-2 my-25">
 		<!-- header section -->
-		<div class="d-flex">
-			<a href="#" class="me-25">
-				<img src="<?= $profile->image_user; ?>" id="account-upload-img" class="uploadedAvatar rounded me-50" alt="profile image" height="100" width="100" />
-			</a>
-			<!-- upload and reset button -->
-			<div class="d-flex align-items-end mt-75 ms-1">
-				<div>
-					<label for="account-upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
-					<input type="file" id="account-upload" hidden accept="image/*" />
-					<button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
-					<p class="mb-0">Allowed file types: png, jpg, jpeg.</p>
+		<form class="validate-form pt-50" method="POST" id="formAccount" action="<?= base_url('Profile/UpdateAccount'); ?>" enctype="multipart/form-data">
+			<div class="d-flex">
+				<a href="#" class="me-25">
+					<img src="<?= $profile->image_user; ?>" id="account_upload-img" class="uploadedAvatar rounded me-50" alt="profile image" height="100" width="100" />
+				</a>
+				<!-- upload and reset button -->
+				<div class="d-flex align-items-end mt-75 ms-1">
+					<div>
+						<label for="account_upload" class="btn btn-sm btn-primary mb-75 me-75">Upload</label>
+						<input type="file" id="account_upload" name="account_upload" hidden accept="image/*" />
+						<button type="button" id="account-reset" class="btn btn-sm btn-outline-secondary mb-75">Reset</button>
+						<p class="mb-0">Allowed file types: png, jpg, jpeg.</p>
+					</div>
 				</div>
+				<!--/ upload and reset button -->
 			</div>
-			<!--/ upload and reset button -->
-		</div>
-		<!--/ header section -->
+			<!--/ header section -->
 
-		<!-- form -->
-		<form class="validate-form mt-2 pt-50" method="POST" id="formAccount" action="<?= base_url('Profile/UpdateAccount'); ?>">
-			<div class="row">
+			<!-- form -->
+			<div class="row mt-1">
 				<input type="hidden" name="id_user" value="<?= $profile->id_user; ?>">
 				<div class="col-12 col-sm-6 mb-1">
 					<label class="form-label" for="username">Username</label>
@@ -63,3 +63,28 @@
 	</div>
 </div>
 <!--/ profile -->
+<script>
+	$(document).ready(function() {
+		let accountUploadImg = $('#account_upload-img'),
+			accountUploadBtn = $('#account_upload'),
+			accountUserImage = $('.uploadedAvatar'),
+			accountResetBtn = $('#account-reset');
+		if (accountUserImage) {
+			var resetImage = accountUserImage.attr('src');
+			accountUploadBtn.on('change', function(e) {
+				var reader = new FileReader(),
+					files = e.target.files;
+				reader.onload = function() {
+					if (accountUploadImg) {
+						accountUploadImg.attr('src', reader.result);
+					}
+				};
+				reader.readAsDataURL(files[0]);
+			});
+
+			accountResetBtn.on('click', function() {
+				accountUserImage.attr('src', resetImage);
+			});
+		}
+	})
+</script>

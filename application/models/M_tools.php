@@ -47,6 +47,7 @@ class M_tools extends CI_Model
 	public function EditUploadTools($new_data, $tools_id)
 	{
 		$this->db->trans_start();
+		$this->db->set('tools_id');
 		$this->db->where('tools_id', $tools_id);
 		$this->db->update('m_tools', $new_data);
 

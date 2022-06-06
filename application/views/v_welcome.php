@@ -22,7 +22,7 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Selamat Datang <span class="text-primary">"<?= $this->session->userdata('name_user'); ?>"</span></h2>
+						<h2 class="content-header-title float-start mb-0">Hi 👋!, <span class="text-primary">"<?= $this->session->userdata('name_user'); ?>"</span></h2>
 					</div>
 				</div>
 			</div>
@@ -72,7 +72,7 @@
 								<li class="nav-item">
 									<a class="nav-link active" id="payment" data-bs-toggle="pill" href="#faq-payment" aria-expanded="true" role="tab">
 										<i data-feather="credit-card" class="font-medium-3 me-1"></i>
-										<span class="fw-bold">Payment</span>
+										<span class="fw-bold">Marak 2.0</span>
 									</a>
 								</li>
 
@@ -125,8 +125,8 @@
 										<i data-feather="credit-card" class="font-medium-4"></i>
 									</div>
 									<div>
-										<h4 class="mb-0">Payment</h4>
-										<span>Which license do I need?</span>
+										<h4 class="mb-0">Marak 2.0</h4>
+										<span>About Marak 2.0 Web Application</span>
 									</div>
 								</div>
 
@@ -135,102 +135,85 @@
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentOne">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-one" aria-expanded="false" aria-controls="faq-payment-one">
-												Does my subscription automatically renew?
+												Apa itu Marak ?
 											</button>
 										</h2>
 
 										<div id="faq-payment-one" class="collapse accordion-collapse" aria-labelledby="paymentOne" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Pastry pudding cookie toffee bonbon jujubes jujubes powder topping. Jelly beans gummi bears sweet roll
-												bonbon muffin liquorice. Wafer lollipop sesame snaps. Brownie macaroon cookie muffin cupcake candy
-												caramels tiramisu. Oat cake chocolate cake sweet jelly-o brownie biscuit marzipan. Jujubes donut
-												marzipan chocolate bar. Jujubes sugar plum jelly beans tiramisu icing cheesecake.
+												Marketing Activity (Marak) merupakan web aplikasi marketing yang dapat menginput setiap kunjungan/aktivitas marketing.
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentTwo">
 											<button class="accordion-button" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-two" aria-expanded="true" aria-controls="faq-payment-two">
-												Can I store the item on an intranet so everyone has access?
+												Apa Fungsinya Marak?
 											</button>
 										</h2>
-										<div id="faq-payment-two" class="collapse show" aria-labelledby="paymentTwo" data-bs-parent="#faq-payment-qna">
+										<div id="faq-payment-two" class="collapse" aria-labelledby="paymentTwo" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Sweet pie candy jelly. Sesame snaps biscuit sugar plum. Sweet roll topping fruitcake. Caramels
-												liquorice biscuit ice cream fruitcake cotton candy tart. Donut caramels gingerbread jelly-o
-												gingerbread pudding. Gummi bears pastry marshmallow candy canes pie. Pie apple pie carrot cake.
+												Marak berfungsi sebagai memonitoring, mengevaluasi, mengetahui order setiap marketing, mengetahui setiap kunjungan merketing.
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentThree">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-three" aria-expanded="false" aria-controls="faq-payment-three">
-												What does non-exclusive mean?
+												Siapa aja yang bisa akses Marak?
 											</button>
 										</h2>
 										<div id="faq-payment-three" class="collapse" aria-labelledby="paymentThree" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Tart gummies dragée lollipop fruitcake pastry oat cake. Cookie jelly jelly macaroon icing jelly beans
-												soufflé cake sweet. Macaroon sesame snaps cheesecake tart cake sugar plum. Dessert jelly-o sweet
-												muffin chocolate candy pie tootsie roll marzipan.
+												Marak dapat di akses oleh semua Marketing, Team Tender, Administrator, dan Management PT Adyawinsa Electical and Power, Pt Fokus Indo Lighting dan PT Surya Indo Baru.
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentFour">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-four" aria-expanded="false" aria-controls="faq-payment-four">
-												Is the Regular License the same thing as an editorial license?
+												Apa alamat website marak?
 											</button>
 										</h2>
 										<div id="faq-payment-four" class="collapse accordion-collapse" aria-labelledby="paymentFour" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Cheesecake muffin cupcake dragée lemon drops tiramisu cake gummies chocolate cake. Marshmallow tart
-												croissant. Tart dessert tiramisu marzipan lollipop lemon drops. Cake bonbon bonbon gummi bears topping
-												jelly beans brownie jujubes muffin. Donut croissant jelly-o cake marzipan. Liquorice marzipan cookie
-												wafer tootsie roll. Tootsie roll sweet cupcake.
+												Kunjungi halaman website <a href="https://marakapp.co.id/">https://marakapp.co.id/</a>
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentFive">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-five" aria-expanded="false" aria-controls="faq-payment-five">
-												Which license do I need for an end product that is only accessible to paying users?
+												Bagaimana jika lupa Username dan Password?
 											</button>
 										</h2>
 										<div id="faq-payment-five" class="collapse accordion-collapse" aria-labelledby="paymentFive" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-												dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-												aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-												dolore eu fugiat nulla pariatur.
+												Dapat menghubungi 021-89841301 Ext 212 team support ICT atau Administrator.
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentSix">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-six" aria-expanded="false" aria-controls="faq-payment-six">
-												Which license do I need to use an item in a commercial?
+												Apakah ada tools Marketing?
 											</button>
 										</h2>
 										<div id="faq-payment-six" class="collapse accordion-collapse" aria-labelledby="paymentSix" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												At tempor commodo ullamcorper a lacus vestibulum. Ultrices neque ornare aenean euismod. Dui vivamus
-												arcu felis bibendum. Turpis in eu mi bibendum neque egestas congue. Nullam ac tortor vitae purus
-												faucibus ornare suspendisse sed.
+												Pada website Marak terdapat menu tools marketing yang dapat di akses oleh semua marketing.
 											</div>
 										</div>
 									</div>
 									<div class="card accordion-item">
 										<h2 class="accordion-header" id="paymentSeven">
 											<button class="accordion-button collapsed" data-bs-toggle="collapse" role="button" data-bs-target="#faq-payment-seven" aria-expanded="false" aria-controls="faq-payment-seven">
-												Can I re-distribute an item? What about under an Extended License?
+												Apakah tools marketing bisa di share?
 											</button>
 										</h2>
 										<div id="faq-payment-seven" class="collapse" aria-labelledby="paymentSeven" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-												dolore magna aliqua. Euismod lacinia at quis risus sed vulputate odio ut enim. Dictum at tempor
-												commodo ullamcorper a lacus vestibulum.
+												Pada menu tools di table button share, manu dropdown terdapat pilihan share menggunakan Whatsapp, email dan Pdf view.
 											</div>
 										</div>
 									</div>

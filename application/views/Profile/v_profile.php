@@ -65,7 +65,7 @@
 									</div>
 									<!-- profile title -->
 									<div class="profile-title ms-3">
-										<h2 class="text-white"><?= $this->session->userdata('name_user'); ?></h2>
+										<h2 class="text-white"><?= $profile->name_user; ?></h2>
 										<p class="text-white"><?= $profile->role_name; ?></p>
 									</div>
 								</div>
@@ -142,7 +142,7 @@
 <script src="<?= base_url("assets"); ?>/js/scripts/pages/page-profile.js"></script>
 <!-- END: Page JS-->
 
-<script src="<?= base_url('assets'); ?>/js/scripts/pages/page-account-settings-account.js"></script>
+<!-- <script src="<?= base_url('assets'); ?>/js/scripts/pages/page-account-settings-account.js"></script> -->
 
 <script>
 	$(window).on('load', function() {

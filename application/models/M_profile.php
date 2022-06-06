@@ -16,44 +16,21 @@ class M_profile extends CI_Model
 		return $this->db->get('users')->row();
 	}
 
-	public function UpdateAccount($id_user, $name_user, $email_user, $phone, $address)
+	public function UpdateAccount($new_data, $id_user)
 	{
+
 		$this->db->trans_start();
 		$this->db->where('id_user', $id_user);
-		$this->db->update('users', array(
-			'name_user'  => $name_user,
-			'email_user' => $email_user,
-			'phone' 		 => $phone,
-			'address' 	 => $address,
-		));
+		$this->db->update('users', $new_data);
 
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {
-			$this->session->set_flashdata(
-				'message',
-				'<div class="alert alert-danger alert-dismissible fade show" role="alert">
-					<div class="alert-body d-flex align-items-center">
-						<i data-feather="info" class="me-50"></i>
-						<span><strong>Invalid</strong> Data Account Gagal disimpan.</span>
-					</div>
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>'
-			);
-			redirect('Profile');
+			return false;
 		} else {
-			$this->session->set_flashdata(
-				'message',
-				'<div class="alert alert-success alert-dismissible fade show" role="alert">
-					<div class="alert-body d-flex align-items-center">
-						<i data-feather="check" class="me-50"></i>
-						<span><strong>Success</strong> Account berhasil diperbaharui.</span>
-					</div>
-					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-			</div>'
-			);
-			redirect('Profile');
+			return true;
 		}
 	}
+
 	function get_user($username)
 	{
 		$this->db->where('username', $username);

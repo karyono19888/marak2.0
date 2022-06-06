@@ -38,7 +38,80 @@ class Profile extends CI_Controller
 		$phone 		= $this->input->post('phone');
 		$address 	= $this->input->post('address');
 
-		echo $this->record->UpdateAccount($id_user, $name_user, $email_user, $phone, $address);
+		$account_upload 	= $_FILES['account_upload']['name'];
+		$fileName = hash('MD5', $account_upload);
+
+		$config['upload_path']          = FCPATH . '/assets/image/profile/';
+		$config['allowed_types']        = 'gif|jpg|jpeg|png';
+		$config['file_name']            = $fileName;
+		$config['max_size']             = 2048; // 2MB
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('tools_upload')) {
+			$new_data = [
+				'name_user'  => $name_user,
+				'email_user' => $email_user,
+				'phone' 		 => $phone,
+				'address' 	 => $address,
+			];
+
+			// var_dump($fileName);
+			// die;
+
+			if ($this->record->UpdateAccount($new_data, $id_user)) {
+				$this->session->set_flashdata('message', '
+				<div class="alert alert-success" role="alert">
+					<div class="alert-body d-flex align-items-center">
+						<i data-feather="info" class="me-50"></i>
+						<span><strong>Success!</strong> Ubah Profile Berhasil.</span>
+					</div></div>
+				');
+				redirect('Profile');
+			} else {
+				$this->session->set_flashdata('message', '
+				<div class="alert alert-danger" role="alert">
+				<div class="alert-body d-flex align-items-center">
+					<i data-feather="info" class="me-50"></i>
+					<span><strong>Gagal!</strong> Ubah Profile Gagal.</span>
+				</div></div>
+			');
+				redirect(site_url('Profile'));
+			}
+		} else {
+			$new_data = [
+				'name_user'  => $name_user,
+				'email_user' => $email_user,
+				'image_user' => $this->upload->data('file_name'),
+				'phone' 		 => $phone,
+				'address' 	 => $address,
+			];
+
+			var_dump($new_data);
+			die;
+
+			if ($this->record->UpdateAccount($new_data, $id_user)) {
+				$this->upload->data();
+				$this->session->set_flashdata('message', '
+				<div class="alert alert-success" role="alert">
+					<div class="alert-body d-flex align-items-center">
+						<i data-feather="info" class="me-50"></i>
+						<span><strong>Success!</strong> Ubah Data dan Foto Profile Berhasil.</span>
+					</div></div>
+				');
+				redirect('Profile');
+			} else {
+				$this->session->set_flashdata('message', '
+			<div class="alert alert-danger" role="alert">
+			<div class="alert-body d-flex align-items-center">
+				<i data-feather="info" class="me-50"></i>
+				<span><strong>Gagal!</strong> Ubah Profile Gagal.</span>
+			</div></div>
+		');
+				redirect(site_url('Profile'));
+			}
+		}
+
 	}
 
 	public function Security()
