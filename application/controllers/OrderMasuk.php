@@ -14,7 +14,7 @@ class OrderMasuk extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Order Masuk | Marak 2.0';
 		$this->load->view('Order/v_ordermasuk', $data);
 	}
 }

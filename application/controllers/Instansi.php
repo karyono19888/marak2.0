@@ -14,7 +14,7 @@ class Instansi extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Instansi | Marak 2.0';
 		$data['datainstansi'] = $this->record->index();
 		$data['totalsemuapelanggan'] = $this->record->TotalSemuaPelanggan();
 		$data['totalpemerintahan'] = $this->record->TotalPemerintahan();

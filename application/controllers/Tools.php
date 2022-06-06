@@ -14,7 +14,7 @@ class Tools extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Tools | Marak';
+		$data['title'] = 'Tools | Marak 2.0';
 		$data['data']	= $this->record->index();
 		$this->load->view('Tools/v_index', $data);
 	}

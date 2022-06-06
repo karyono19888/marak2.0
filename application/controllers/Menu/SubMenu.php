@@ -14,7 +14,7 @@ class SubMenu extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 	= 'SubMenu';
+		$data['title'] 	= 'SubMenu | Marak 2.0';
 		$data['mainMenu'] = $this->record->dataSubMenu();
 		$this->load->view('Admin/v_submenu', $data);
 	}

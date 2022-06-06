@@ -14,7 +14,7 @@ class User extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 			= 'Dashboard | Marak';
+		$data['title'] 			= 'User | Marak 2.0';
 		$data['user']  			= $this->record->dataUsers();
 		$data['totaluser']  		= $this->record->totalUser();
 		$data['activeuser'] 		= $this->record->activeUser();

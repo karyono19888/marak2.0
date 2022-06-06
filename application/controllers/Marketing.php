@@ -14,7 +14,7 @@ class Marketing extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Dashboard Marketing | Marak 2.0';
 		$this->load->view('Marketing/v_index', $data);
 	}
 }

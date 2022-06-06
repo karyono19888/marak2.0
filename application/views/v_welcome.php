@@ -22,15 +22,7 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">FAQ</h2>
-						<div class="breadcrumb-wrapper">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="">Faq</a>
-								</li>
-								<li class="breadcrumb-item active">Data Faq
-								</li>
-							</ol>
-						</div>
+						<h2 class="content-header-title float-start mb-0">Selamat Datang <span class="text-primary">"<?= $this->session->userdata('name_user'); ?>"</span></h2>
 					</div>
 				</div>
 			</div>
@@ -45,15 +37,14 @@
 		</div>
 		<div class="content-body">
 			<!-- Dashboard Ecommerce Starts -->
-			<!-- search header -->
 			<section id="faq-search-filter">
 				<div class="card faq-search" style="background-image: url('<?= base_url('assets'); ?>/images/banner/banner.png')">
 					<div class="card-body text-center">
 						<!-- main title -->
-						<h2 class="text-primary">Let's answer some questions</h2>
+						<h2 class="text-primary">Welcome to Marak 2.0! 👋</h2>
 
 						<!-- subtitle -->
-						<p class="card-text mb-2">or choose a category to quickly find the help you need</p>
+						<p class="card-text mb-2">let's increase our marketing activities to get as many orders as possible</p>
 
 						<!-- search input -->
 						<form class="faq-search-input">
@@ -642,6 +633,42 @@
 				</div>
 			</section>
 			<!-- / frequently asked questions tabs pills -->
+
+			<!-- contact us -->
+			<section class="faq-contact">
+				<div class="row mt-5 pt-75">
+					<div class="col-12 text-center">
+						<h2>You still have a question?</h2>
+						<p class="mb-3">
+							If you cannot find a question in our FAQ, you can always contact us. We will answer to you shortly!
+						</p>
+					</div>
+					<div class="col-sm-6">
+						<div class="card text-center faq-contact-card shadow-none py-1">
+							<div class="accordion-body">
+								<div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+									<i data-feather="phone-call" class="font-medium-3"></i>
+								</div>
+								<h4>021-89841301 Ext 212</h4>
+								<span class="text-body">We are always happy to help!</span>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6">
+						<div class="card text-center faq-contact-card shadow-none py-1">
+							<div class="accordion-body">
+								<div class="avatar avatar-tag bg-light-primary mb-2 mx-auto">
+									<i data-feather="mail" class="font-medium-3"></i>
+								</div>
+								<h4>ict.aep@adyawinsa.com</h4>
+								<span class="text-body">Best way to get answer faster!</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!--/ contact us -->
+
 			<!-- Dashboard Ecommerce ends -->
 
 		</div>

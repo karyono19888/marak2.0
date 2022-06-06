@@ -14,7 +14,7 @@ class Organisasi extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 		= 'Organisasi | Marak';
+		$data['title'] 		= 'Organisasi | Marak 2.0';
 		$data['organisasi'] 	= $this->record->index();
 		$data['total'] 		= $this->record->totalOrganisasi();
 		$this->load->view('Organisasi/v_index', $data);

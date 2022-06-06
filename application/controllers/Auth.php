@@ -25,7 +25,7 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
 
 		if ($this->form_validation->run() == false) {
-			$data['title'] 			= 'Marak | Login';
+			$data['title'] 			= 'Login - Aplikasi Marak 2.0';
 			$this->load->view('Auth/v_login', $data);
 		} else {
 			$username = $this->input->post('username');

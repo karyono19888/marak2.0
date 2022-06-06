@@ -14,7 +14,7 @@ class Permisson extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Permisson';
+		$data['title'] = 'Permisson | Marak 2.0';
 		$this->load->view('Admin/v_permisson', $data);
 	}
 }

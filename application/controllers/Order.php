@@ -14,7 +14,7 @@ class Order extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Dashboard Order | Marak 2.0';
 		$this->load->view('Order/v_index', $data);
 	}
 }

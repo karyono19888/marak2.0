@@ -14,7 +14,7 @@ class OrderRiwayat extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Order Riwayat | Marak 2.0';
 		$this->load->view('Order/v_orderriwayat', $data);
 	}
 }

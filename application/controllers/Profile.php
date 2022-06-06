@@ -13,8 +13,8 @@ class Profile extends CI_Controller
 
 	public function index()
 	{
+		$data['title'] 	= 'Profile | Marak 2.0';
 		$data['profile'] 	= $this->record->myprofile();
-		$data['title'] 	= 'Profile';
 		$this->load->view('Profile/v_profile', $data);
 	}
 

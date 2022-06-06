@@ -4,7 +4,7 @@
 			<li class="nav-item me-auto">
 				<a class="navbar-brand" href="#">
 					<span class="brand-logo">
-						<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand" width="70%">
+						<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand" width="200%">
 					</span>
 					<h2 class="brand-text">Marak</h2>
 				</a>

@@ -14,7 +14,7 @@ class OrderLaporan extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Laporan | Marak 2.0';
 		$this->load->view('Order/v_orderlaporan', $data);
 	}
 }

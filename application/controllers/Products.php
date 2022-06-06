@@ -14,7 +14,7 @@ class Products extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Kunjungan | Marak';
+		$data['title'] = 'Management Product | Marak 2.0';
 		$this->load->view('Product/v_index', $data);
 	}
 

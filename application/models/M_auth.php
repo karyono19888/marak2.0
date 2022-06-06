@@ -35,16 +35,9 @@ class M_auth extends CI_Model
 						setcookie('_secure-1US', hash('sha256', $user['username']), time() + 3600);
 					}
 
-					if ($user['role_user'] == 1) {
-						$this->session->set_flashdata('success', 'Login Berhasil');
-						redirect('Administrator');
-					} elseif ($user['role_user'] == 2) {
-						$this->session->set_flashdata('success', 'Login Berhasil');
-						redirect('Marketing');
-					} else {
-						$this->session->set_flashdata('success', 'Login Berhasil');
-						redirect('Order');
-					}
+					$this->session->set_flashdata('success', 'Login Berhasil');
+					redirect('Welcome');
+
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					<div class="alert-body d-flex align-items-center">

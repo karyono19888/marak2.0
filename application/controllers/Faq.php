@@ -14,7 +14,7 @@ class Faq extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'FAQ | Marak';
+		$data['title'] = 'FAQ | Marak 2.0';
 		$this->load->view('Faq/v_index', $data);
 	}
 }

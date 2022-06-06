@@ -14,7 +14,7 @@ class Jadwal extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Dashboard | Marak';
+		$data['title'] = 'Jadwal Kunjungan | Marak 2.0';
 		$this->load->view('Jadwal/v_index', $data);
 	}
 }

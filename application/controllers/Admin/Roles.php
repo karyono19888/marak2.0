@@ -13,7 +13,7 @@ class Roles extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 	  = 'Roles';
+		$data['title'] 	  = 'Roles | Marak 2.0';
 		$data['role']  	  = $this->record->index();
 		$data['tablerole']  = $this->record->tableRoles();
 		$this->load->view('Admin/v_roles', $data);

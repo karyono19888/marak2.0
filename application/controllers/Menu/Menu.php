@@ -14,7 +14,7 @@ class Menu extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 	 = 'Menu';
+		$data['title'] 	 = 'Menu | Marak 2.0';
 		$data['menu']  	 = $this->record->dataMenu();
 		$data['mainmenu']  = $this->record->dataMainMenu();
 		$this->load->view('Admin/v_menu', $data);

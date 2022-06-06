@@ -12,7 +12,7 @@ class Administrator extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Administration';
+		$data['title'] = 'Dashboard | Marak 2.0';
 		$this->load->view('Admin/v_index', $data);
 	}
 
