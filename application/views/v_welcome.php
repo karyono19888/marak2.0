@@ -22,7 +22,7 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Hi 👋!, <span class="text-primary">"<?= $this->session->userdata('name_user'); ?>"</span></h2>
+						<h2 class="content-header-title float-start mb-0">Hallo!👋, <span class="text-primary">"<?= $this->session->userdata('name_user'); ?>"</span></h2>
 					</div>
 				</div>
 			</div>
@@ -141,7 +141,7 @@
 
 										<div id="faq-payment-one" class="collapse accordion-collapse" aria-labelledby="paymentOne" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Marketing Activity (Marak) merupakan web aplikasi marketing yang dapat menginput setiap kunjungan/aktivitas marketing.
+												Marketing Activity (Marak) merupakan web aplikasi marketing yang dapat mencatat, memonitoring, mengidentifikasi, mengevaluasi aktivitas marketing. baik itu proses kunjungan, order dan permasalahan yang ada di lapangan secara real time.
 											</div>
 										</div>
 									</div>
@@ -153,7 +153,14 @@
 										</h2>
 										<div id="faq-payment-two" class="collapse" aria-labelledby="paymentTwo" data-bs-parent="#faq-payment-qna">
 											<div class="accordion-body">
-												Marak berfungsi sebagai memonitoring, mengevaluasi, mengetahui order setiap marketing, mengetahui setiap kunjungan merketing.
+												Ada beberapa fungsi dari Marak Web Application diantaranya :
+												<ol>
+													<li>Monitoring semua aktivitas marketing yang berhubungan dengan customer, baik itu kunjungan langsung ke kantor, rumah, atau alamat lain. secara face to face, by phone, meet online dan lainya.</li>
+													<li>Sarana untuk membuat laporan activity mingguan marketing.</li>
+													<li>Sarana tools marketing seperti Browsur, Company Profile dan lainnya yang dapat di download dan di share link. </li>
+													<li>Aplikasi untuk mencatat semua aktivitas marketing.</li>
+													<li>Monitoring pencapaian target achievement order marketing.</li>
+												</ol>
 											</div>
 										</div>
 									</div>

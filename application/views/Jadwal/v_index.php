@@ -112,7 +112,7 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Search & Filter</h4>
-						<a href="<?= base_url('Instansi/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
+						<a href="<?= base_url('Jadwal/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
 							<span><i data-feather='plus'></i> Add New Jadwal</span>
 						</a>
 					</div>
@@ -122,17 +122,75 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Gol</th>
-										<th>Nama</th>
-										<th>Alamat</th>
-										<th>Provinsi</th>
-										<th>Kab/Kota</th>
+										<?php if ($this->session->userdata('role_user') == 1) : ?>
+											<th>Pic</th>
+										<?php endif; ?>
+										<th>Date</th>
+										<th>Type</th>
+										<th>Instansi</th>
+										<th>Activity</th>
+										<th>Kunjungan</th>
+										<th>Agenda</th>
 										<th>Status</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
 								<tbody>
-
+									<?php
+									$i = 1;
+									foreach ($jadwal->result_array() as $key) :
+									?>
+										<tr>
+											<td><?= $i++; ?></td>
+											<?php if ($this->session->userdata('role_user') == 1) : ?>
+												<td><?= $key['name_user']; ?></td>
+											<?php endif; ?>
+											<td><?= $key['date_visit']; ?>, <?= $key['time']; ?></td>
+											<td>
+												<?php if ($key['new_or_update'] === '0') : ?>
+													<span class="badge rounded-pill badge-light-primary me-1">New</span>
+												<?php else : ?>
+													<span class="badge rounded-pill badge-light-warning me-1">Update</span>
+												<?php endif; ?>
+											</td>
+											<td><?= $key['instansi_nama']; ?></td>
+											<td><?= $key['type_act']; ?></td>
+											<td><?= $key['type_alamat']; ?></td>
+											<td><?= $key['acara']; ?></td>
+											<td>
+												<?php if ($key['status'] == "Planning") : ?>
+													<span class="badge rounded-pill badge-light-primary me-1"><?= $key['status']; ?></span>
+												<?php elseif ($key['status'] == "Visited") : ?>
+													<span class="badge rounded-pill badge-light-success me-1"><?= $key['status']; ?></span>
+												<?php else : ?>
+													<span class="badge rounded-pill badge-light-danger me-1"><?= $key['status']; ?></span>
+												<?php endif; ?>
+											</td>
+											<td>
+												<div class="btn-group" role="group" aria-label="Basic example">
+													<?php if ($key['status'] == "Planning") : ?>
+														<a href="<?= base_url('Jadwal/Edit/' . $key['id_jadwal']); ?>" type="button" class="btn btn-outline-warning btn-sm">Edit</a>
+														<button type="button" class="btn btn-outline-danger btn-sm Hapus" data-id="<?= $key['id_jadwal']; ?>">Delete</button>
+													<?php else : ?>
+														<button type="button" class="btn btn-outline-info btn-sm Result" data-id="<?= $key['id_jadwal']; ?>">Result</button>
+													<?php endif; ?>
+													<?php if ($key['status'] == "Planning") : ?>
+														<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Actions</button>
+														<div class="dropdown-menu dropdown-menu-end">
+															<a class="dropdown-item" href="">
+																<i data-feather="twitch" class="text-success"></i>
+																<span>Visited</span>
+															</a>
+															<a class="dropdown-item" href="">
+																<i data-feather="file" class="text-danger"></i>
+																<span>Not Visited</span>
+															</a>
+														</div>
+												</div>
+											<?php endif; ?>
+											</td>
+										</tr>
+									<?php endforeach; ?>
 								</tbody>
 							</table>
 						</div>
@@ -152,6 +210,52 @@
 <script>
 	$(document).ready(function() {
 		$('#mytable').DataTable();
+	});
+
+	$(document).on("click", ".Hapus", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete Jadwal Kunjungan!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Jadwal/Delete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("Jadwal") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
