@@ -117,4 +117,9 @@ class M_instansi extends CI_Model
 			return json_encode(array('success' => true, 'msg' => 'Hapus Instansi Berhasil!'));
 		}
 	}
+
+	public function searchinstansi()
+	{
+		return $this->db->get('m_instansi')->result();
+	}
 }

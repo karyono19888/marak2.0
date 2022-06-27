@@ -1,5 +1,4 @@
 <?php $this->load->view('Components/v_header'); ?>
-
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
@@ -186,7 +185,6 @@
 <!-- BEGIN: Page Vendor JS-->
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <!-- END: Page Vendor JS-->
-
 <!-- BEGIN: Theme JS-->
 <script src="<?= base_url('assets'); ?>/js/core/app-menu.js"></script>
 <script src="<?= base_url('assets'); ?>/js/core/app.js"></script>
@@ -247,4 +245,6 @@
 		})
 	});
 </script>
+
+
 <?php $this->load->view('Components/v_bottom'); ?>

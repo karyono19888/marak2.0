@@ -14,9 +14,41 @@ class Jadwal extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Jadwal Kunjungan | Marak 2.0';
-		$data['jadwal'] = $this->record->dataJadwalKunjungan();
+		$data['title'] 		= 'Jadwal Kunjungan | Marak 2.0';
+		$data['total'] 		= $this->record->totalRencanaKunjungan();
+		$data['totalplan'] 	= $this->record->totalPlanning();
+		$data['totalvisited'] 	= $this->record->totalVisited();
+		$data['totalnotvisit'] 	= $this->record->totalNotVisited();
+		$data['jadwal'] 		= $this->record->dataJadwalKunjungan();
 		$this->load->view('Jadwal/v_index', $data);
+	}
+
+	public function TableJadwal()
+	{
+		$start_date 		= $this->input->post('start_date');
+		$end_date   		= $this->input->post('end_date');
+		$nama_marketing   = $this->input->post('nama_marketing');
+
+
+		if ($start_date == "" && $end_date == "" && $nama_marketing == "") {
+			$table = $this->record->dataJadwalKunjungan();
+			$label = "Search & Filter";
+		} else if ($nama_marketing == "") {
+			$table 		= $this->record->dataJadwalrangeTanggal($start_date, $end_date);
+			$tgl_awal  	= date('d-m-Y', strtotime($start_date));
+			$tgl_akhir 	= date('d-m-Y', strtotime($end_date));
+			$label     	= 'Periode Tanggal ' . $tgl_awal . ' s/d ' . $tgl_akhir;
+		} else {
+			$getNamaMarketing = $this->record->getNamaMarketing($nama_marketing);
+			$table 		= $this->record->dataJadwalrangeTanggaldanMarketing($start_date, $end_date, $nama_marketing);
+			$tgl_awal  	= date('d-m-Y', strtotime($start_date));
+			$tgl_akhir 	= date('d-m-Y', strtotime($end_date));
+			$label     	= 'Periode Tanggal ' . $tgl_awal . ' s/d ' . $tgl_akhir . '<br>Marketing : ' . $getNamaMarketing['name_user'];
+		}
+
+		$data['jadwal'] = $table;
+		$data['label']  = $label;
+		$this->load->view('Jadwal/v_table_jadwal', $data);
 	}
 
 	public function Tambah()
@@ -121,5 +153,26 @@ class Jadwal extends CI_Controller
 		$acara 			= $this->input->post('acara');
 
 		echo $this->record->UpdateJadwalUpdate($id_jadwal, $m_visit_id, $instansi_id, $date_visit, $time, $type_alamat, $type_act, $acara);
+	}
+
+	public function NamaMarketing()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response   = $this->record->NamaMarketing($searchTerm);
+		echo json_encode($response);
+	}
+
+	public function ViewNotVisited()
+	{
+		$id = $this->input->post('id');
+		echo $this->record->ViewNotVisited($id);
+	}
+
+	public function ResultSimpan()
+	{
+		$id_jadwal  = $this->input->post('id_jadwal');
+		$notvisited = $this->input->post('notvisited');
+
+		echo $this->record->ResultSimpan($id_jadwal, $notvisited);
 	}
 }

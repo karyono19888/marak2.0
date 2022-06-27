@@ -1,5 +1,4 @@
 <?php $this->load->view('Components/v_header'); ?>
-
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/components.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
 
@@ -56,13 +55,13 @@
 								<a href="<?= base_url('Instansi'); ?>" class="btn btn-default btn-dark">Back</a>
 							</div>
 							<div class="card-body">
-								<div class="row">
-									<div class="alert alert-warning" role="alert">
-										<h4 class="alert-heading">Perhatian !</h4>
-										<div class="alert-body">
-											Pastikan Nama Instansi tidak boleh sama dengan data yang sudah ada.
-										</div>
+								<div class="alert alert-warning" role="alert">
+									<h4 class="alert-heading">Perhatian !</h4>
+									<div class="alert-body">
+										Pastikan Nama Instansi tidak boleh sama dengan data yang sudah ada.
 									</div>
+								</div>
+								<div class="row">
 									<form id="tambahInstansiForm" class="row gy-1" method="POST" action="">
 										<div class="col-12 col-md-6">
 											<label class="form-label" for="instansi_kategori">Kategori Instansi <span class="text-danger">*</span></label>

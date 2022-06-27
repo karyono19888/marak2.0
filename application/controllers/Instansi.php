@@ -14,12 +14,12 @@ class Instansi extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Instansi | Marak 2.0';
-		$data['datainstansi'] = $this->record->index();
-		$data['totalsemuapelanggan'] = $this->record->TotalSemuaPelanggan();
-		$data['totalpemerintahan'] = $this->record->TotalPemerintahan();
-		$data['totalswasta'] = $this->record->TotalSwasta();
-		$data['totalperorangan'] = $this->record->TotalPerorangan();
+		$data['title'] 					= 'Instansi | Marak 2.0';
+		$data['datainstansi'] 			= $this->record->index();
+		$data['totalsemuapelanggan'] 	= $this->record->TotalSemuaPelanggan();
+		$data['totalpemerintahan']		= $this->record->TotalPemerintahan();
+		$data['totalswasta'] 			= $this->record->TotalSwasta();
+		$data['totalperorangan'] 		= $this->record->TotalPerorangan();
 		$this->load->view('Instansi/v_index', $data);
 	}
 
@@ -66,4 +66,6 @@ class Instansi extends CI_Controller
 		$id = $this->input->post('id');
 		echo $this->record->Delete($id);
 	}
+
+
 }

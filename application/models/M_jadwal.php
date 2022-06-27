@@ -215,4 +215,138 @@ class M_jadwal extends CI_Model
 			return json_encode(array('success' => true, 'msg' => 'Update Jadwal Berhasil!'));
 		}
 	}
+
+	public function dataJadwalrangeTanggal($start_date, $end_date)
+	{
+		$this->db->where("date_visit BETWEEN '$start_date' AND '$end_date'");
+		$this->db->join('users', 'id_user=user_id', 'left');
+		$this->db->join('m_instansi as a', 'a.instansi_id=instansi', 'left');
+		return $this->db->get('m_jadwal_kunjungan');
+	}
+
+	public function NamaMarketing($searchTerm = "")
+	{
+		$this->db->select('*');
+		$this->db->where('role_user', 2);
+		$this->db->where("name_user like '%" . $searchTerm . "%' ");
+		$this->db->order_by('id_user', 'asc');
+		$fetched_records = $this->db->get('users');
+		$datauser = $fetched_records->result_array();
+		$data = array();
+		foreach ($datauser as $user) {
+			$data[] = array(
+				"id"   => $user['id_user'],
+				"text" => $user['name_user']
+			);
+		}
+		return $data;
+	}
+
+	public function getNamaMarketing($nama_marketing)
+	{
+		return $this->db->get_where('users', ['id_user' => $nama_marketing])->row_array();
+	}
+
+	public function dataJadwalrangeTanggaldanMarketing($start_date, $end_date, $nama_marketing)
+	{
+		$this->db->where("date_visit BETWEEN '$start_date' AND '$end_date'");
+		$this->db->like('user_id', $nama_marketing);
+		$this->db->join('users', 'id_user=user_id', 'left');
+		$this->db->join('m_instansi as a', 'a.instansi_id=instansi', 'left');
+		return $this->db->get('m_jadwal_kunjungan');
+	}
+
+	public function totalRencanaKunjungan()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		} else {
+			$this->db->where('user_id', $this->session->userdata('id_user'));
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		}
+	}
+
+	public function totalPlanning()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('status', 'Planning');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		} else {
+			$this->db->where('user_id', $this->session->userdata('id_user'));
+			$this->db->where('status', 'Planning');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		}
+	}
+
+	public function totalVisited()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('status', 'Visited');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		} else {
+			$this->db->where('user_id', $this->session->userdata('id_user'));
+			$this->db->where('status', 'Visited');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		}
+	}
+
+	public function totalNotVisited()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('status', 'Not Visited');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		} else {
+			$this->db->where('user_id', $this->session->userdata('id_user'));
+			$this->db->where('status', 'Not Visited');
+			$query = $this->db->get('m_jadwal_kunjungan');
+			return $query->num_rows();
+		}
+	}
+
+	public function ViewNotVisited($id)
+	{
+		$this->db->select('*');
+		$this->db->join('m_instansi', 'instansi_id=instansi', 'left');
+		$this->db->where('id_jadwal', $id);
+		$query  = $this->db->get('m_jadwal_kunjungan');
+		if ($query) {
+			$row = $query->row();
+			return json_encode(array(
+				'success'         => true,
+				'id_jadwal'       => $row->id_jadwal,
+				'instansi_nama'   => $row->instansi_nama,
+				'result_not_visited'   	=> $row->result_not_visited,
+			));
+		} else {
+			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
+		}
+	}
+
+	public function ResultSimpan($id_jadwal, $notvisited)
+	{
+		$this->db->trans_start();
+		$this->db->where('id_jadwal', $id_jadwal);
+		$data = [
+			'user_id'  					=> $this->session->userdata('id_user'),
+			'result_not_visited'  	=> $notvisited,
+			'status'       			=> "Not Visited",
+			'updated_at' 				=> time()
+		];
+		$this->db->update('m_jadwal_kunjungan', $data);
+
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Updated Result Gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Updated Result Success!'));
+		}
+	}
+
 }

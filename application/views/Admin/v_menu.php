@@ -1,4 +1,5 @@
 <?php $this->load->view('Components/v_header'); ?>
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/components.css">
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/forms/select/select2.min.css">
 <?php $this->load->view('Components/v_headerbottom'); ?>
