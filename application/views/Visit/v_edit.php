@@ -25,12 +25,12 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Tambah Kunjungan Baru</h2>
+						<h2 class="content-header-title float-start mb-0">Edit Kunjungan "<b><?= $data['instansi_nama']; ?></b>"</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="<?= base_url('Marketing'); ?>">Marketing</a>
+								<li class="breadcrumb-item"><a href="#">Data Kunjungan</a>
 								</li>
-								<li class="breadcrumb-item active">Tambah Kunjungan Baru
+								<li class="breadcrumb-item active">Edit Kunjungan
 								</li>
 							</ol>
 						</div>
@@ -65,17 +65,19 @@
 												<label class="form-label" for="basicInput">Provinsi</label>
 												<div class="input-group">
 													<select name="m_visit_prov" id="m_visit_prov" class="form-select">
-														<option value="">- Pilih Provinsi -</option>
+														<option value="<?= $data['id_prov']; ?>"><?= $data['prov_nama']; ?></option>
 													</select>
 												</div>
 											</div>
 										</div>
+										<input type="hidden" name="visit" id="visit" value="<?= $data['m_visit_id']; ?>">
+										<input type="hidden" name="history" id="history" value="<?= $data['m_visit_history_id']; ?>">
 										<div class="col-xl-4 col-sm-6 col-12">
 											<div class="mb-1">
 												<label class="form-label" for="basicInput">Kab/Kota</label>
 												<div class="input-group">
 													<select name="m_visit_kab" id="m_visit_kab" class="form-select">
-														<option value="">- Pilih Kabupaten -</option>
+														<option value="<?= $data['id_kab']; ?>"><?= $data['kab_nama']; ?></option>
 													</select>
 												</div>
 											</div>
@@ -84,10 +86,10 @@
 									<div class="row">
 										<div class="col-xl-8 col-sm-8 col-12">
 											<div class="mb-1">
-												<label class="form-label" for="basicInput">Instansi</label>
-												<div class="invoice-customer">
-													<select class="invoiceto form-select" id="m_visit_instansi" name="m_visit_instansi">
-														<option value="">- Pilih Instansi -</option>
+												<label class="form-label" for="m_visit_instansi">Instansi</label>
+												<div>
+													<select class="form-select" id="m_visit_instansi" name="m_visit_instansi">
+														<option value="<?= $data['instansi_id']; ?>"><?= $data['instansi_nama']; ?></option>
 													</select>
 												</div>
 											</div>
@@ -98,7 +100,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_agenda">Agenda Kunjungan</label>
 												<div class="invoice-customer">
-													<input type="text" name="m_visit_agenda" id="m_visit_agenda" class="form-control" placeholder="contoh : Kunjungan pertama presentasi produk">
+													<input type="text" name="m_visit_agenda" id="m_visit_agenda" class="form-control" placeholder="contoh : Kunjungan pertama presentasi produk" value="<?= $data['m_visit_agenda']; ?>">
 												</div>
 											</div>
 										</div>
@@ -108,7 +110,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_jam_mulai">Jam Mulai</label>
 												<div class="input-group">
-													<input type="text" name="m_visit_jam_mulai" id="m_visit_jam_mulai" class="form-control flatpickr-time" placeholder="HH:MM">
+													<input type="text" name="m_visit_jam_mulai" id="m_visit_jam_mulai" class="form-control flatpickr-time" placeholder="HH:MM" value="<?= $data['m_visit_jam_mulai']; ?>">
 												</div>
 											</div>
 										</div>
@@ -116,7 +118,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_jam_selesai">Jam Selesai</label>
 												<div class="input-group">
-													<input type="text" name="m_visit_jam_selesai" id="m_visit_jam_selesai" class="form-control flatpickr-time" placeholder="HH:MM">
+													<input type="text" name="m_visit_jam_selesai" id="m_visit_jam_selesai" class="form-control flatpickr-time" placeholder="HH:MM" value="<?= $data['m_visit_jam_selesai']; ?>">
 												</div>
 											</div>
 										</div>
@@ -124,7 +126,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_tgl">Tanggal Kunjungan</label>
 												<div class="input-group">
-													<input type="date" name="m_visit_tgl" id="m_visit_tgl" class="form-control date-picker">
+													<input type="date" name="m_visit_tgl" id="m_visit_tgl" class="form-control date-picker" value="<?= $data['m_visit_tgl']; ?>">
 												</div>
 											</div>
 										</div>
@@ -133,42 +135,51 @@
 								<!-- Address and Contact ends -->
 
 								<!-- Product Details starts -->
-								<div class="card-body invoice-padding invoice-product-details">
-									<form class="source-item">
-										<div data-repeater-list="group-a">
-											<div class="repeater-wrapper" data-repeater-item>
-												<div class="row">
-													<div class="col-sm-12 d-flex product-details-border position-relative pe-0">
-														<div class="row w-100 pe-lg-0 pe-1 my-1">
-															<div class="col-lg-4 col-12 mb-lg-0 mt-lg-0 mt-1">
-																<p class="card-text col-title mb-md-50 mb-0">Nama Peserta</p>
-																<input type="text" class="form-control" id="peserta_nama" name="peserta_nama[]" placeholder="Nama Lengkap" />
-															</div>
-															<div class="col-lg-4 col-12 my-lg-0 mt-1">
-																<p class="card-text col-title mb-md-2 mb-0">Jabatan</p>
-																<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]" placeholder="Nama Jabatan" />
-															</div>
-															<div class="col-lg-3 col-12 my-lg-0 mt-1">
-																<p class="card-text col-title mb-md-2 mb-0">Phone/Whatsapp</p>
-																<input type="number" class="form-control" id="peserta_phone" name="peserta_phone[]" placeholder="+61 8123 456 789" />
-															</div>
-														</div>
-														<div class="d-flex flex-column align-items-center justify-content-between border-start invoice-product-actions py-50 px-25">
-															<i data-feather="x" class="cursor-pointer font-medium-3" data-repeater-delete></i>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row mt-1">
-											<div class="col-12 px-0">
-												<button type="button" class="btn btn-primary btn-sm btn-add-new" data-repeater-create>
-													<i data-feather="plus" class="me-25"></i>
-													<span class="align-middle">Add Peserta</span>
-												</button>
-											</div>
-										</div>
-									</form>
+								<div class="card-body">
+									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" id="addpeserta">
+										<i data-feather="plus" class="me-25"></i>
+										<span class="align-middle">Add Peserta</span>
+									</button>
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Nama Peserta</th>
+													<th>Jabatan Peserta</th>
+													<th>Phone Peserta</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+												$i = 1;
+												foreach ($peserta->result_array() as $a) :
+												?>
+													<tr>
+														<td><?= $i++; ?></td>
+														<td>
+															<?= $a['peserta_nama']; ?>
+														</td>
+														<td>
+															<?= $a['peserta_jabatan']; ?>
+														</td>
+														<td>
+															<?= $a['peserta_phone']; ?>
+														</td>
+														<td>
+															<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
+																<i data-feather="edit-2" class="me-20"></i>
+															</button>
+															<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
+																<i data-feather="trash" class="me-20"></i>
+															</a>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
 								<!-- Product Details ends -->
 
@@ -179,7 +190,7 @@
 										<div class="col-12">
 											<div class="my-2">
 												<label for="m_visit_note" class="form-label fw-bold">Notulensi</label>
-												<textarea class="form-control" rows="3" id="m_visit_note" name="m_visit_note"></textarea>
+												<textarea class="form-control" rows="3" id="m_visit_note" name="m_visit_note"><?= $data['m_visit_note']; ?></textarea>
 											</div>
 										</div>
 									</div>
@@ -191,7 +202,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_anggaran_BUMN" name="m_visit_anggaran_BUMN" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_anggaran_BUMN" name="m_visit_anggaran_BUMN" placeholder=" 000.000" value="<?= $data['m_visit_anggaran_BUMN']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -201,7 +212,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prospek" name="m_visit_prospek" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prospek" name="m_visit_prospek" placeholder=" 000.000" value="<?= $data['m_visit_prospek']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -211,7 +222,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prognosa" name="m_visit_prognosa" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prognosa" name="m_visit_prognosa" placeholder=" 000.000" value="<?= $data['m_visit_prognosa']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -221,7 +232,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" id="m_visit_po" name="m_visit_po" placeholder=" 000.000" readonly />
+													<input type="text" class="form-control numeral-mask" id="m_visit_po" name="m_visit_po" placeholder=" 000.000" value="<?= $data['m_visit_po']; ?>" readonly />
 												</div>
 											</div>
 										</div>
@@ -236,7 +247,7 @@
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2"><i data-feather='calendar'></i></span>
 													<select name="m_visit_estimasi_order" id="m_visit_estimasi_order" class="form-select">
-														<option value="">- Pilih Quartal -</option>
+														<option value="<?= $data['m_visit_estimasi_order']; ?>"><?= $data['m_visit_estimasi_order']; ?></option>
 														<option value="Quartal 1">Quartal 1</option>
 														<option value="Quartal 2">Quartal 2</option>
 														<option value="Quartal 3">Quartal 3</option>
@@ -251,7 +262,7 @@
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2"><i data-feather='calendar'></i></span>
 													<select name="m_visit_estimasi_tahun" id="m_visit_estimasi_tahun" class="form-select">
-														<option value="">- Pilih Tahun -</option>
+														<option value="<?= $data['m_visit_estimasi_tahun']; ?>"><?= $data['m_visit_estimasi_tahun']; ?></option>
 														<option value="<?= date('Y'); ?>"><?= date('Y'); ?></option>
 														<option value="<?= date('Y') + 1; ?>"><?= date('Y') + 1; ?></option>
 													</select>
@@ -262,7 +273,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_status">Status</label>
 												<select name="m_visit_status" id="m_visit_status" class="form-select">
-													<option label="">- Pilih Status -</option>
+													<option value="<?= $data['m_visit_status']; ?>"><?= $data['m_visit_status']; ?></option>
 													<option value="Prospek">Prospek</option>
 													<option value="Prognosa">Prognosa</option>
 												</select>
@@ -274,20 +285,14 @@
 								<!-- map show position -->
 								<div class="card-body invoice-padding">
 									<div class="row invoice-sales-total-wrapper">
-										<div class="col-xl-3 col-sm-6 col-12">
-											<button type="button" onclick="getlocation()" id="tombol_maps" class="btn btn-sm btn-primary mb-75"><i data-feather='map-pin'></i> Show Position</button>
-										</div>
-										<div class="col-xl-9 col-sm-6 col-12" id="showmap">
-
-										</div>
 										<div class="row">
-											<div class="col-sm-8">
+											<div class="col-sm-6">
 												<div class="row">
 													<div class="col-xl-6 col-sm-6 col-12">
 														<div class="mb-1">
 															<small class="text-muted"><i>Koordinat Lat</i></small>
 															<div class="input-group mb-2">
-																<input type="text" class="form-control" id="m_visit_koor_lat" name="m_visit_koor_lat" placeholder=" -0.0000000" readonly />
+																<input type="text" class="form-control" id="m_visit_koor_lat" name="m_visit_koor_lat" placeholder=" -0.0000000" readonly value="<?= $data['m_visit_koor_lat']; ?>" />
 															</div>
 														</div>
 													</div>
@@ -295,12 +300,14 @@
 														<div class="mb-1">
 															<small class="text-muted"><i>Koordinat Long</i></small>
 															<div class="input-group mb-2">
-																<input type="text" class="form-control" id="m_visit_koor_long" name="m_visit_koor_long" placeholder=" 000.000000" readonly />
+																<input type="text" class="form-control" id="m_visit_koor_long" name="m_visit_koor_long" placeholder=" 000.000000" readonly value="<?= $data['m_visit_koor_long']; ?>" />
 															</div>
 														</div>
 													</div>
 												</div>
-												<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;  visibility: hidden;"></div>
+											</div>
+											<div class="col-sm-6">
+												<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;"></div>
 											</div>
 										</div>
 									</div>
@@ -315,71 +322,55 @@
 						<div class="col-xl-3 col-md-4 col-12">
 							<div class="card">
 								<div class="card-body">
-									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Simpan</button>
-									<a href="<?= base_url('Visit'); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
+									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Edit Save</button>
+									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_id']); ?>" class="btn btn-outline-primary w-100" type="button">Back Preview</a>
 								</div>
 							</div>
 						</div>
 						<!-- Invoice Add Right ends -->
 					</div>
 				</form>
-				<!-- Add New Customer Sidebar -->
-				<div class="modal modal-slide-in fade" id="add-new-customer-sidebar" aria-hidden="true">
+
+				<!-- Add New peserta Sidebar -->
+				<div class="modal modal-slide-in fade" id="add-new-peserta-sidebar" aria-hidden="true">
 					<div class="modal-dialog sidebar-lg">
 						<div class="modal-content p-0">
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 							<div class="modal-header mb-1">
 								<h5 class="modal-title">
-									<span class="align-middle">Add Instansi</span>
+									<span class="align-middle" id="judulAdd">Add Peserta</span>
+									<span class="align-middle" id="judulEdit">Edit Peserta</span>
 								</h5>
 							</div>
 							<div class="modal-body flex-grow-1">
-								<form method="POST" id="formInstansi">
+								<form method="POST" id="formPeserta">
 									<div class="mb-1">
-										<label for="instansi_kategori" class="form-label">Kategori Instansi</label>
-										<select class="form-select" id="instansi_kategori" name="instansi_kategori">
-											<option value="">- Pilih Kategori -</option>
-											<option value="Pemerintahan">Pemerintahan</option>
-											<option value="Swasta">Swasta</option>
-											<option value="Perorangan">Perorangan</option>
-										</select>
-									</div>
-									<div class="mb-1">
-										<label for="instansi_nama" class="form-label">Nama Instansi/ Swasta/ Perorangan</label>
-										<input type="text" class="form-control" id="instansi_nama" name="instansi_nama" placeholder="Nama instansi lengkap" />
-									</div>
-									<div class="mb-1">
-										<label for="instansi_alamat" class="form-label">Alamat</label>
-										<textarea class="form-control" id="instansi_alamat" name="instansi_alamat" cols="2" rows="2" placeholder="Isi alamat lengkap"></textarea>
+										<label for="peserta_nama" class="form-label">Nama Peserta</label>
+										<input type="text" class="form-control" id="peserta_nama" name="peserta_nama" placeholder="Nama Peserta lengkap" />
 									</div>
 									<div class="mb-1 position-relative">
-										<label for="instansi_wil" class="form-label">Wilayah</label>
-										<select class="form-select" id="instansi_wil" name="instansi_wil">
-											<option value="">- Pilih wilayah -</option>
-										</select>
+										<label for="peserta_jabatan" class="form-label">Jabatan Peserta</label>
+										<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan" placeholder="Nama Jabatan Peserta" />
 									</div>
 									<div class="mb-1 position-relative">
-										<label for="instansi_prov" class="form-label">Provinsi</label>
-										<select class="form-select" id="instansi_prov" name="instansi_prov">
-											<option value="">- Pilih provinsi -</option>
-										</select>
-									</div>
-									<div class="mb-1 position-relative">
-										<label for="instansi_kab" class="form-label">Kabupaten</label>
-										<select class="form-select" id="instansi_kab" name="instansi_kab">
-											<option value="">- Pilih kabapaten -</option>
-										</select>
+										<label for="peserta_phone" class="form-label">Phone Peserta</label>
+										<input type="number" class="form-control" id="peserta_phone" name="peserta_phone" placeholder="+62 812 3456 7890" />
+										<input type="hidden" value="<?= $data['m_visit_id']; ?>" id="m_visit_id" name="m_visit_id">
+										<input type="hidden" value="<?= $data['m_visit_history_id']; ?>" id="m_visit_history_id" name="m_visit_history_id">
+										<input type="hidden" value="<?= $data['m_visit_user_id']; ?>" id="m_visit_user_id" name="m_visit_user_id">
+										<input type="hidden" id="id_peserta" name="id_peserta">
 									</div>
 									<div class="mb-1 d-flex flex-wrap mt-2">
-										<button type="button" class="btn btn-primary me-1" id="tombol_tambah">Add</button>
-										<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-primary me-1" id="tombol_tambah_peserta">Add</button>
+										<button type="button" class="btn btn-warning me-1" id="tombol_edit_peserta">Edit</button>
+										<button type="button" class="btn btn-outline-secondary Cancle" data-bs-dismiss="modal">Cancel</button>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Add New Customer Sidebar -->
+				<!-- /Add New peserta Sidebar -->
 			</section>
 			<!-- Dashboard Ecommerce ends -->
 
@@ -394,7 +385,6 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
-<!-- <script src="<?= base_url('assets'); ?>/js/scripts/maps/map-leaflet.js"></script> -->
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/app-invoice.js"></script>
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
@@ -624,7 +614,7 @@
 			let data = $('#formTambahKunjungan').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('Visit/TambahKunjungan'); ?>',
+				url: '<?= base_url('Visit/EditKunjungan'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);
@@ -646,7 +636,7 @@
 						});
 					}
 					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit") ?>');
+						window.location.assign('<?= site_url("Visit/Preview/" . $data['m_visit_id']) ?>');
 					}, 2000);
 				}
 			});
@@ -661,9 +651,6 @@
 		let m_visit_jam_mulai = document.getElementById("m_visit_jam_mulai").value;
 		let m_visit_jam_selesai = document.getElementById("m_visit_jam_selesai").value;
 		let m_visit_tgl = document.getElementById("m_visit_tgl").value;
-		let peserta_nama = document.getElementById("peserta_nama").value;
-		let peserta_jabatan = document.getElementById("peserta_jabatan").value;
-		let peserta_phone = document.getElementById("peserta_phone").value;
 		let m_visit_note = document.getElementById("m_visit_note").value;
 		let m_visit_anggaran_BUMN = document.getElementById("m_visit_anggaran_BUMN").value;
 		let m_visit_prospek = document.getElementById("m_visit_prospek").value;
@@ -673,7 +660,7 @@
 		let m_visit_status = document.getElementById("m_visit_status").value;
 		let m_visit_koor_lat = document.getElementById("m_visit_koor_lat").value;
 		let m_visit_koor_long = document.getElementById("m_visit_koor_long").value;
-		if ((m_visit_prov == "") || (m_visit_kab == "") || (m_visit_instansi == "") || (m_visit_agenda == "") || (m_visit_jam_mulai == "") || (m_visit_jam_selesai == "") || (m_visit_tgl == "") || (peserta_nama == "") || (peserta_jabatan == "") || (peserta_phone == "") || (m_visit_note == "") || (m_visit_anggaran_BUMN == "") || (m_visit_prospek == "") || (m_visit_prognosa == "") || (m_visit_estimasi_order == "") || (m_visit_estimasi_tahun == "") || (m_visit_status == "") || (m_visit_koor_lat == "") || (m_visit_koor_long == "")) {
+		if ((m_visit_prov == "") || (m_visit_kab == "") || (m_visit_instansi == "") || (m_visit_agenda == "") || (m_visit_jam_mulai == "") || (m_visit_jam_selesai == "") || (m_visit_tgl == "") || (m_visit_note == "") || (m_visit_anggaran_BUMN == "") || (m_visit_prospek == "") || (m_visit_prognosa == "") || (m_visit_estimasi_order == "") || (m_visit_estimasi_tahun == "") || (m_visit_status == "") || (m_visit_koor_lat == "") || (m_visit_koor_long == "")) {
 			if (m_visit_koor_long == "") {
 				notif("Koordinat Long");
 			}
@@ -700,15 +687,6 @@
 			}
 			if (m_visit_note == "") {
 				notif("Notulensi");
-			}
-			if (peserta_phone == "") {
-				notif("Phone Peserta");
-			}
-			if (peserta_jabatan == "") {
-				notif("Jabatan Peserta");
-			}
-			if (peserta_nama == "") {
-				notif("Nama Peserta");
 			}
 			if (m_visit_tgl == "") {
 				notif("Tanggal");
@@ -750,7 +728,7 @@
 
 <script>
 	if ($("#user-location").length) {
-		var userLocation = L.map("user-location").setView([42.35, -71.08], 10);
+		var userLocation = L.map("user-location").setView([<?= $data['m_visit_koor_lat']; ?>, <?= $data['m_visit_koor_long']; ?>], 10);
 		userLocation.locate({
 			setView: true,
 			maxZoom: 18,
@@ -759,7 +737,7 @@
 		function onLocationFound(e) {
 			L.marker(e.latlng)
 				.addTo(userLocation)
-				.bindPopup("You this here <b><?= $this->session->userdata('username'); ?></b> from this location")
+				.bindPopup("You this here <b><?= $data['name_user']; ?></b> from this location")
 				.openPopup();
 		}
 		userLocation.on("locationfound", onLocationFound);
@@ -768,42 +746,6 @@
 			maxZoom: 18,
 		}).addTo(userLocation);
 	}
-</script>
-
-<script>
-	$(document).ready(function(e) {
-		$('.btn-add-new').click(function(e) {
-			e.preventDefault();
-			$('.repeater-wrapper').append(
-				`<div class="row mt-2 remove">
-					<div class="col-sm-12 mt-1 d-flex product-details-border position-relative pe-0">
-						<div class="row w-100 pe-lg-0 pe-1 py-1">
-							<div class="col-lg-4 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
-								<p class="card-text col-title mb-md-50 mb-0">Nama Peserta</p>
-								<input type="text" class="form-control" id="peserta_nama" name="peserta_nama[]" placeholder="Nama Lengkap" />
-							</div>
-							<div class="col-lg-4 col-12 my-lg-0 my-2">
-								<p class="card-text col-title mb-md-2 mb-0">Jabatan</p>
-								<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]" placeholder="Nama Jabatan" />
-							</div>
-							<div class="col-lg-3 col-12 my-lg-0 my-2">
-								<p class="card-text col-title mb-md-2 mb-0">Phone/Whatsapp</p>
-								<input type="number" class="form-control" id="peserta_phone" name="peserta_phone[]" placeholder="+61 8123 456 789" />
-							</div>
-						</div>
-						<div class="d-flex flex-column align-items-center justify-content-between border-start invoice-product-actions py-50 px-25">
-							<i data-feather="x" class="cursor-pointer font-medium-3" data-repeater-delete></i>
-						</div>
-					</div>
-				</div>`
-			);
-		});
-	});
-
-	$(document).on('click', '.invoice-product-actions', function(e) {
-		e.preventDefault();
-		$(this).parents('.remove').remove();
-	});
 </script>
 
 <script>
@@ -826,4 +768,195 @@
 	})
 </script>
 
+
+<!-- edit -->
+<script>
+	$(document).on("click", "#tombol_edit_peserta", function() {
+		if (validasipeserta()) {
+			let data = $('#formPeserta').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('Visit/EditPeserta'); ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+</script>
+
+<!-- add modal -->
+<script>
+	$(document).on("click", "#addpeserta", function() {
+		$('#judulAdd').show();
+		$('#tombol_tambah_peserta').show();
+		$('#judulEdit').hide();
+		$('#tombol_edit_peserta').hide();
+	});
+	$(document).on("click", "#tombol_tambah_peserta", function() {
+		if (validasipeserta()) {
+			let data = $('#formPeserta').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('Visit/TambahPeserta'); ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+
+	function validasipeserta() {
+		let peserta_nama = document.getElementById("peserta_nama").value;
+		let peserta_jabatan = document.getElementById("peserta_jabatan").value;
+		let peserta_phone = document.getElementById("peserta_phone").value;
+		if ((peserta_nama == "") || (peserta_jabatan == "") || (peserta_phone == "")) {
+			if (peserta_phone == "") {
+				notif("Phone Peserta");
+			}
+			if (peserta_jabatan == "") {
+				notif("Jabatan Peserta");
+			}
+			if (peserta_nama == "") {
+				notif("Nama Peserta");
+			}
+		} else {
+			return true;
+		}
+	}
+</script>
+
+<!-- hapus peserta -->
+<script>
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Hapus Permanent Data!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Visit/DeletePeserta') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						let data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Deleted!',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
+	});
+</script>
+
+<!-- edit view -->
+<script>
+	$(document).on("click", ".EditPeserta", function() {
+		$('#judulAdd').hide();
+		$('#tombol_tambah_peserta').hide();
+		$('#judulEdit').show();
+		$('#tombol_edit_peserta').show();
+		let id = $(this).data('id');
+		$.ajax({
+			type: 'POST',
+			url: '<?= site_url('Visit/ViewPeserta') ?>',
+			data: {
+				id: id
+			},
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.success) {
+					$('#id_peserta').val(data.id_peserta);
+					$('#peserta_nama').val(data.peserta_nama);
+					$('#peserta_jabatan').val(data.peserta_jabatan);
+					$('#peserta_phone').val(data.peserta_phone);
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Warning',
+						text: data.msg,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			}
+		});
+	});
+</script>
+
+<script>
+	$(document).on("click", ".Cancle", function() {
+		$('#peserta_nama').val("");
+		$('#peserta_jabatan').val("");
+		$('#peserta_phone').val("");
+	});
+</script>
 <?php $this->load->view('Components/v_bottom'); ?>

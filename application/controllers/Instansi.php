@@ -67,5 +67,17 @@ class Instansi extends CI_Controller
 		echo $this->record->Delete($id);
 	}
 
+	public function TambahInstansiKunjungan()
+	{
+		$instansi_kategori 	= $this->input->post('instansi_kategori');
+		$instansi_nama 		= $this->input->post('instansi_nama');
+		$instansi_alamat 		= $this->input->post('instansi_alamat');
+		$wilayah 				= $this->input->post('instansi_wil');
+		$provinsi 				= $this->input->post('instansi_prov');
+		$kabupaten 				= $this->input->post('instansi_kab');
+
+		echo $this->record->TambahInstansiKunjungan($instansi_kategori, $instansi_nama, $instansi_alamat, $wilayah, $provinsi, $kabupaten);
+	}
+
 
 }

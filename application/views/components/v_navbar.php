@@ -48,7 +48,7 @@
 			</li>
 			<li class="nav-item dropdown dropdown-user"><a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<div class="user-nav d-sm-flex d-none">
-						<span class="user-name fw-bolder"><?= $this->session->userdata('name_user'); ?></span>
+						<span class="user-name fw-bolder" id="nama_user"><?= $this->session->userdata('name_user'); ?></span>
 						<?php
 						$this->db->select('*');
 						$this->db->join('user_role', 'role_id=role_user', 'left');

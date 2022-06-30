@@ -1,5 +1,4 @@
 <?php $this->load->view('Components/v_header'); ?>
-
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
@@ -157,8 +156,8 @@
 												<?php endif; ?>
 											</td>
 											<td class="text-center" width="20%">
-												<a href="" type="button" class="btn btn-warning btn-sm">Edit</a>
-												<a href="" type="button" class="btn btn-danger btn-sm">Delete</a>
+												<a href="<?= base_url('Visit/Preview/' . $key['m_visit_id']); ?>" type="button" class="btn btn-flat-warning btn-sm Edit">Preview</a>
+												<a href="#" type="button" class="btn btn-flat-danger btn-sm Delete" data-id="<?= $key['m_visit_id']; ?>">Delete</a>
 											</td>
 										</tr>
 									<?php endforeach; ?>
@@ -181,6 +180,52 @@
 <script>
 	$(document).ready(function() {
 		$('#mytable').DataTable();
+	});
+
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Hapus Permanent Data!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Visit/Delete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						let data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Deleted!',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?= site_url("Visit") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

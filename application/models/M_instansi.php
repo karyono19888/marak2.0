@@ -122,4 +122,35 @@ class M_instansi extends CI_Model
 	{
 		return $this->db->get('m_instansi')->result();
 	}
+
+	public function TambahInstansiKunjungan($instansi_kategori, $instansi_nama, $instansi_alamat, $wilayah, $provinsi, $kabupaten)
+	{
+		$this->db->select('instansi_nama');
+		$this->db->where('instansi_nama', $instansi_nama);
+		$query  = $this->db->get('m_instansi');
+		$row = $query->num_rows();
+		if ($row > 0) {
+			return json_encode(array('success' => false, 'msg' => 'Tambah Instansi gagal, Nama Instansi sudah ada!'));
+		} else {
+			$this->db->trans_start();
+			$this->db->insert('m_instansi', array(
+				'instansi_kategori'  => $instansi_kategori,
+				'instansi_nama'      => ucwords($instansi_nama),
+				'instansi_alamat'		=> $instansi_alamat,
+				'instansi_wil' 		=> $wilayah,
+				'instansi_prov'   	=> $provinsi,
+				'instansi_kab' 		=> $kabupaten,
+				'instansi_lok' 		=> 'Belum Penlok',
+				'instansi_user_id' 	=> $this->session->userdata('id_user'),
+				'created_at' 			=> time()
+			));
+
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE) {
+				return json_encode(array('success' => false, 'msg' => 'Tambah Instansi gagal!'));
+			} else {
+				return json_encode(array('success' => true, 'msg' => 'Tambah Instansi berhasil!'));
+			}
+		}
+	}
 }

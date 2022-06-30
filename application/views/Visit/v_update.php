@@ -4,6 +4,7 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/plugins/forms/pickers/form-flat-pickr.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/pages/app-invoice.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/maps/leaflet.min.css">
+<link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
 
@@ -25,12 +26,12 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Tambah Kunjungan Baru</h2>
+						<h2 class="content-header-title float-start mb-0">Update Kunjungan</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="<?= base_url('Marketing'); ?>">Marketing</a>
+								<li class="breadcrumb-item"><a href="#">Data Kunjungan</a>
 								</li>
-								<li class="breadcrumb-item active">Tambah Kunjungan Baru
+								<li class="breadcrumb-item active">Update Kunjungan
 								</li>
 							</ol>
 						</div>
@@ -47,6 +48,7 @@
 			</div>
 		</div>
 		<div class="content-body">
+
 			<!-- Dashboard Ecommerce Starts -->
 			<section class="invoice-add-wrapper">
 				<form method="POST" id="formTambahKunjungan">
@@ -54,45 +56,25 @@
 						<!-- Invoice Add Left starts -->
 						<div class="col-xl-9 col-md-8 col-12">
 							<div class="card invoice-preview-card">
-
+								<div class="card-body invoice-padding pb-0">
+									<!-- Header starts -->
+									<div class="d-flex justify-content-start flex-md-row flex-column invoice-spacing mt-0">
+										<div class="col-sm-7">
+											<div class="logo-wrapper">
+												<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand" width="10%">
+												<h3 class="text-primary invoice-logo">Marak</h3>
+											</div>
+											<p class="card-text mb-25"><b><?= $data['instansi_nama']; ?></b></p>
+											<p class="card-text mb-25"><?= $data['instansi_alamat']; ?></p>
+											<p class="card-text mb-0"><?= $data['kab_nama']; ?>, <?= $data['prov_nama']; ?></p>
+										</div>
+									</div>
+									<!-- Header ends -->
+								</div>
 								<hr class="invoice-spacing mt-0" />
 
 								<!-- Address and Contact starts -->
 								<div class="card-body invoice-padding pt-0">
-									<div class="row">
-										<div class="col-xl-4 col-sm-6 col-12">
-											<div class="mb-1">
-												<label class="form-label" for="basicInput">Provinsi</label>
-												<div class="input-group">
-													<select name="m_visit_prov" id="m_visit_prov" class="form-select">
-														<option value="">- Pilih Provinsi -</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="col-xl-4 col-sm-6 col-12">
-											<div class="mb-1">
-												<label class="form-label" for="basicInput">Kab/Kota</label>
-												<div class="input-group">
-													<select name="m_visit_kab" id="m_visit_kab" class="form-select">
-														<option value="">- Pilih Kabupaten -</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-8 col-sm-8 col-12">
-											<div class="mb-1">
-												<label class="form-label" for="basicInput">Instansi</label>
-												<div class="invoice-customer">
-													<select class="invoiceto form-select" id="m_visit_instansi" name="m_visit_instansi">
-														<option value="">- Pilih Instansi -</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
 									<div class="row">
 										<div class="col-xl-8 col-sm-8 col-12">
 											<div class="mb-1">
@@ -133,42 +115,51 @@
 								<!-- Address and Contact ends -->
 
 								<!-- Product Details starts -->
-								<div class="card-body invoice-padding invoice-product-details">
-									<form class="source-item">
-										<div data-repeater-list="group-a">
-											<div class="repeater-wrapper" data-repeater-item>
-												<div class="row">
-													<div class="col-sm-12 d-flex product-details-border position-relative pe-0">
-														<div class="row w-100 pe-lg-0 pe-1 my-1">
-															<div class="col-lg-4 col-12 mb-lg-0 mt-lg-0 mt-1">
-																<p class="card-text col-title mb-md-50 mb-0">Nama Peserta</p>
-																<input type="text" class="form-control" id="peserta_nama" name="peserta_nama[]" placeholder="Nama Lengkap" />
-															</div>
-															<div class="col-lg-4 col-12 my-lg-0 mt-1">
-																<p class="card-text col-title mb-md-2 mb-0">Jabatan</p>
-																<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]" placeholder="Nama Jabatan" />
-															</div>
-															<div class="col-lg-3 col-12 my-lg-0 mt-1">
-																<p class="card-text col-title mb-md-2 mb-0">Phone/Whatsapp</p>
-																<input type="number" class="form-control" id="peserta_phone" name="peserta_phone[]" placeholder="+61 8123 456 789" />
-															</div>
-														</div>
-														<div class="d-flex flex-column align-items-center justify-content-between border-start invoice-product-actions py-50 px-25">
-															<i data-feather="x" class="cursor-pointer font-medium-3" data-repeater-delete></i>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div class="row mt-1">
-											<div class="col-12 px-0">
-												<button type="button" class="btn btn-primary btn-sm btn-add-new" data-repeater-create>
-													<i data-feather="plus" class="me-25"></i>
-													<span class="align-middle">Add Peserta</span>
-												</button>
-											</div>
-										</div>
-									</form>
+								<div class="card-body">
+									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" id="addpeserta">
+										<i data-feather="plus" class="me-25"></i>
+										<span class="align-middle">Add Peserta</span>
+									</button>
+									<div class="table-responsive">
+										<table class="table">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Nama Peserta</th>
+													<th>Jabatan Peserta</th>
+													<th>Phone Peserta</th>
+													<th>Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<?php
+												$i = 1;
+												foreach ($peserta->result_array() as $a) :
+												?>
+													<tr>
+														<td><?= $i++; ?></td>
+														<td>
+															<?= $a['peserta_nama']; ?>
+														</td>
+														<td>
+															<?= $a['peserta_jabatan']; ?>
+														</td>
+														<td>
+															<?= $a['peserta_phone']; ?>
+														</td>
+														<td>
+															<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
+																<i data-feather="edit-2" class="me-20"></i>
+															</button>
+															<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
+																<i data-feather="trash" class="me-20"></i>
+															</a>
+														</td>
+													</tr>
+												<?php endforeach; ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
 								<!-- Product Details ends -->
 
@@ -191,7 +182,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_anggaran_BUMN" name="m_visit_anggaran_BUMN" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_anggaran_BUMN" name="m_visit_anggaran_BUMN" placeholder=" 000.000" value="<?= $data['m_visit_anggaran_BUMN']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -201,7 +192,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prospek" name="m_visit_prospek" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prospek" name="m_visit_prospek" placeholder=" 000.000" value="<?= $data['m_visit_prospek']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -211,7 +202,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prognosa" name="m_visit_prognosa" placeholder=" 000.000" />
+													<input type="text" class="form-control numeral-mask" maxlength="7" id="m_visit_prognosa" name="m_visit_prognosa" placeholder=" 000.000" value="<?= $data['m_visit_prognosa']; ?>" />
 												</div>
 											</div>
 										</div>
@@ -221,7 +212,7 @@
 												<small class="text-muted"><i>Satuan Jutaan</i></small>
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2">Rp</span>
-													<input type="text" class="form-control numeral-mask" id="m_visit_po" name="m_visit_po" placeholder=" 000.000" readonly />
+													<input type="text" class="form-control numeral-mask" id="m_visit_po" name="m_visit_po" placeholder=" 000.000" value="<?= $data['m_visit_po']; ?>" readonly />
 												</div>
 											</div>
 										</div>
@@ -251,7 +242,6 @@
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2"><i data-feather='calendar'></i></span>
 													<select name="m_visit_estimasi_tahun" id="m_visit_estimasi_tahun" class="form-select">
-														<option value="">- Pilih Tahun -</option>
 														<option value="<?= date('Y'); ?>"><?= date('Y'); ?></option>
 														<option value="<?= date('Y') + 1; ?>"><?= date('Y') + 1; ?></option>
 													</select>
@@ -262,7 +252,7 @@
 											<div class="mb-1">
 												<label class="form-label" for="m_visit_status">Status</label>
 												<select name="m_visit_status" id="m_visit_status" class="form-select">
-													<option label="">- Pilih Status -</option>
+													<option value="<?= $data['m_visit_status']; ?>"><?= $data['m_visit_status']; ?></option>
 													<option value="Prospek">Prospek</option>
 													<option value="Prognosa">Prognosa</option>
 												</select>
@@ -315,73 +305,80 @@
 						<div class="col-xl-3 col-md-4 col-12">
 							<div class="card">
 								<div class="card-body">
-									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Simpan</button>
-									<a href="<?= base_url('Visit'); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
+									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Update</button>
+									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_id']); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
 								</div>
 							</div>
 						</div>
 						<!-- Invoice Add Right ends -->
 					</div>
 				</form>
-				<!-- Add New Customer Sidebar -->
-				<div class="modal modal-slide-in fade" id="add-new-customer-sidebar" aria-hidden="true">
+				<!-- Add New peserta Sidebar -->
+				<div class="modal modal-slide-in fade" id="add-new-peserta-sidebar" aria-hidden="true">
 					<div class="modal-dialog sidebar-lg">
 						<div class="modal-content p-0">
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
 							<div class="modal-header mb-1">
 								<h5 class="modal-title">
-									<span class="align-middle">Add Instansi</span>
+									<span class="align-middle" id="judulAdd">Add Peserta</span>
+									<span class="align-middle" id="judulEdit">Edit Peserta</span>
 								</h5>
 							</div>
 							<div class="modal-body flex-grow-1">
-								<form method="POST" id="formInstansi">
+								<form method="POST" id="formPeserta">
 									<div class="mb-1">
-										<label for="instansi_kategori" class="form-label">Kategori Instansi</label>
-										<select class="form-select" id="instansi_kategori" name="instansi_kategori">
-											<option value="">- Pilih Kategori -</option>
-											<option value="Pemerintahan">Pemerintahan</option>
-											<option value="Swasta">Swasta</option>
-											<option value="Perorangan">Perorangan</option>
-										</select>
-									</div>
-									<div class="mb-1">
-										<label for="instansi_nama" class="form-label">Nama Instansi/ Swasta/ Perorangan</label>
-										<input type="text" class="form-control" id="instansi_nama" name="instansi_nama" placeholder="Nama instansi lengkap" />
-									</div>
-									<div class="mb-1">
-										<label for="instansi_alamat" class="form-label">Alamat</label>
-										<textarea class="form-control" id="instansi_alamat" name="instansi_alamat" cols="2" rows="2" placeholder="Isi alamat lengkap"></textarea>
+										<label for="peserta_nama" class="form-label">Nama Peserta</label>
+										<input type="text" class="form-control" id="peserta_nama" name="peserta_nama" placeholder="Nama Peserta lengkap" />
 									</div>
 									<div class="mb-1 position-relative">
-										<label for="instansi_wil" class="form-label">Wilayah</label>
-										<select class="form-select" id="instansi_wil" name="instansi_wil">
-											<option value="">- Pilih wilayah -</option>
-										</select>
+										<label for="peserta_jabatan" class="form-label">Jabatan Peserta</label>
+										<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan" placeholder="Nama Jabatan Peserta" />
 									</div>
 									<div class="mb-1 position-relative">
-										<label for="instansi_prov" class="form-label">Provinsi</label>
-										<select class="form-select" id="instansi_prov" name="instansi_prov">
-											<option value="">- Pilih provinsi -</option>
-										</select>
-									</div>
-									<div class="mb-1 position-relative">
-										<label for="instansi_kab" class="form-label">Kabupaten</label>
-										<select class="form-select" id="instansi_kab" name="instansi_kab">
-											<option value="">- Pilih kabapaten -</option>
-										</select>
+										<label for="peserta_phone" class="form-label">Phone Peserta</label>
+										<input type="number" class="form-control" id="peserta_phone" name="peserta_phone" placeholder="+62 812 3456 7890" />
+										<input type="hidden" value="<?= $data['m_visit_id']; ?>" id="m_visit_id" name="m_visit_id">
+										<input type="hidden" value="<?= $data['m_visit_history_id']; ?>" id="m_visit_history_id" name="m_visit_history_id">
+										<input type="hidden" value="<?= $data['m_visit_user_id']; ?>" id="m_visit_user_id" name="m_visit_user_id">
+										<input type="hidden" id="id_peserta" name="id_peserta">
 									</div>
 									<div class="mb-1 d-flex flex-wrap mt-2">
-										<button type="button" class="btn btn-primary me-1" id="tombol_tambah">Add</button>
-										<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-primary me-1" id="tombol_tambah_peserta">Add</button>
+										<button type="button" class="btn btn-warning me-1" id="tombol_edit_peserta">Edit</button>
+										<button type="button" class="btn btn-outline-secondary Cancle" data-bs-dismiss="modal">Cancel</button>
 									</div>
 								</form>
 							</div>
 						</div>
 					</div>
 				</div>
-				<!-- /Add New Customer Sidebar -->
+				<!-- /Add New peserta Sidebar -->
 			</section>
 			<!-- Dashboard Ecommerce ends -->
+			<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">History Kunjungan "<b><?= $data['instansi_nama']; ?></b>"</h4>
+				</div>
+				<div class="card-body">
+					<div class="card-datatable">
+						<table class="table table-hover table-borderless" id="mytable" width="100%">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>User</th>
+									<th>Date</th>
+									<th>Instansi</th>
+									<th>Agenda</th>
+									<th>Status</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
 
 		</div>
 	</div>
@@ -394,12 +391,15 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
-<!-- <script src="<?= base_url('assets'); ?>/js/scripts/maps/map-leaflet.js"></script> -->
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/app-invoice.js"></script>
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
+<script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
+	$(document).ready(function() {
+		$('#mytable').DataTable();
+	});
 	let timePickr = $('.flatpickr-time');
 	if (timePickr.length) {
 		timePickr.flatpickr({
@@ -407,215 +407,8 @@
 			noCalendar: true
 		});
 	}
-	// provinsi
-	$(document).ready(function() {
-		$("#m_visit_prov").select2({
-			ajax: {
-				url: '<?= base_url('Wilayah/Provinsi'); ?>',
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
-	// kabupaten
-	$("#m_visit_prov").change(function() {
-		var id_prov = $("#m_visit_prov").val();
-		$("#m_visit_kab").select2({
-			ajax: {
-				url: '<?= base_url(); ?>Wilayah/Kabupaten/' + id_prov,
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
-	// instansi
-	$("#m_visit_kab").change(function() {
-		var id_kab = $("#m_visit_kab").val();
-		$("#m_visit_instansi").select2({
-			ajax: {
-				url: '<?= base_url('Wilayah/Instansi/') ?>' + id_kab,
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
 </script>
 
-<!-- intansi wilayah -->
-<script>
-	// wilayah
-	$(document).ready(function() {
-		$("#instansi_wil").select2({
-			ajax: {
-				url: '<?= base_url() ?>Wilayah/getdatawil',
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
-	// Provinsi
-	$("#instansi_wil").change(function() {
-		var wilayah_id = $("#instansi_wil").val();
-		$("#instansi_prov").select2({
-			ajax: {
-				url: '<?= base_url() ?>Wilayah/getdataprov/' + wilayah_id,
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
-	// Kabupaten
-	$("#instansi_prov").change(function() {
-		var id_prov = $("#instansi_prov").val();
-		$("#instansi_kab").select2({
-			ajax: {
-				url: '<?= base_url() ?>Wilayah/getdatakab/' + id_prov,
-				type: "post",
-				dataType: 'json',
-				delay: 200,
-				data: function(params) {
-					return {
-						searchTerm: params.term
-					};
-				},
-				processResults: function(response) {
-					return {
-						results: response
-					};
-				},
-				cache: true
-			}
-		});
-	});
-</script>
-
-<!-- tambah -->
-<script>
-	$(document).on("click", "#tombol_tambah", function() {
-		if (validasi()) {
-			let data = $('#formInstansi').serialize();
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('Instansi/TambahInstansiKunjungan'); ?>',
-				data: data,
-				success: function(response) {
-					var data = JSON.parse(response);
-					if (data.success) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: data.msg,
-							showConfirmButton: false,
-							timer: 1500
-						});
-					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Error',
-							text: data.msg,
-							showConfirmButton: true,
-							timer: 2000
-						});
-					}
-					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/Tambah") ?>');
-					}, 2000);
-				}
-			});
-		}
-	});
-
-	function validasi() {
-		let instansi_kategori = document.getElementById("instansi_kategori").value;
-		let instansi_nama = document.getElementById("instansi_nama").value;
-		let instansi_alamat = document.getElementById("instansi_alamat").value;
-		let instansi_wil = document.getElementById("instansi_wil").value;
-		let instansi_prov = document.getElementById("instansi_prov").value;
-		let instansi_kab = document.getElementById("instansi_kab").value;
-		if ((instansi_kategori == "") || (instansi_nama == "") || (instansi_alamat == "") || (instansi_wil == "") || (instansi_prov == "") || (instansi_kab == "")) {
-			if (instansi_kab == "") {
-				notif("Kabupaten");
-			}
-			if (instansi_prov == "") {
-				notif("Provinsi");
-			}
-			if (instansi_wil == "") {
-				notif("Wilayah");
-			}
-			if (instansi_alamat == "") {
-				notif("Alamat Instansi");
-			}
-			if (instansi_nama == "") {
-				notif("Nama Instansi");
-			}
-			if (instansi_kategori == "") {
-				notif("Kategori Instansi");
-			}
-		} else {
-			return true;
-		}
-	}
-</script>
 
 <!-- tambah kunjungan -->
 <script>
@@ -624,7 +417,7 @@
 			let data = $('#formTambahKunjungan').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('Visit/TambahKunjungan'); ?>',
+				url: '<?= base_url('Visit/UpdateKunjungan'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);
@@ -654,16 +447,10 @@
 	});
 
 	function validasi2() {
-		let m_visit_prov = document.getElementById("m_visit_prov").value;
-		let m_visit_kab = document.getElementById("m_visit_kab").value;
-		let m_visit_instansi = document.getElementById("m_visit_instansi").value;
 		let m_visit_agenda = document.getElementById("m_visit_agenda").value;
 		let m_visit_jam_mulai = document.getElementById("m_visit_jam_mulai").value;
 		let m_visit_jam_selesai = document.getElementById("m_visit_jam_selesai").value;
 		let m_visit_tgl = document.getElementById("m_visit_tgl").value;
-		let peserta_nama = document.getElementById("peserta_nama").value;
-		let peserta_jabatan = document.getElementById("peserta_jabatan").value;
-		let peserta_phone = document.getElementById("peserta_phone").value;
 		let m_visit_note = document.getElementById("m_visit_note").value;
 		let m_visit_anggaran_BUMN = document.getElementById("m_visit_anggaran_BUMN").value;
 		let m_visit_prospek = document.getElementById("m_visit_prospek").value;
@@ -673,7 +460,7 @@
 		let m_visit_status = document.getElementById("m_visit_status").value;
 		let m_visit_koor_lat = document.getElementById("m_visit_koor_lat").value;
 		let m_visit_koor_long = document.getElementById("m_visit_koor_long").value;
-		if ((m_visit_prov == "") || (m_visit_kab == "") || (m_visit_instansi == "") || (m_visit_agenda == "") || (m_visit_jam_mulai == "") || (m_visit_jam_selesai == "") || (m_visit_tgl == "") || (peserta_nama == "") || (peserta_jabatan == "") || (peserta_phone == "") || (m_visit_note == "") || (m_visit_anggaran_BUMN == "") || (m_visit_prospek == "") || (m_visit_prognosa == "") || (m_visit_estimasi_order == "") || (m_visit_estimasi_tahun == "") || (m_visit_status == "") || (m_visit_koor_lat == "") || (m_visit_koor_long == "")) {
+		if ((m_visit_agenda == "") || (m_visit_jam_mulai == "") || (m_visit_jam_selesai == "") || (m_visit_tgl == "") || (m_visit_note == "") || (m_visit_anggaran_BUMN == "") || (m_visit_prospek == "") || (m_visit_prognosa == "") || (m_visit_estimasi_order == "") || (m_visit_estimasi_tahun == "") || (m_visit_status == "") || (m_visit_koor_lat == "") || (m_visit_koor_long == "")) {
 			if (m_visit_koor_long == "") {
 				notif("Koordinat Long");
 			}
@@ -701,15 +488,6 @@
 			if (m_visit_note == "") {
 				notif("Notulensi");
 			}
-			if (peserta_phone == "") {
-				notif("Phone Peserta");
-			}
-			if (peserta_jabatan == "") {
-				notif("Jabatan Peserta");
-			}
-			if (peserta_nama == "") {
-				notif("Nama Peserta");
-			}
 			if (m_visit_tgl == "") {
 				notif("Tanggal");
 			}
@@ -721,15 +499,6 @@
 			}
 			if (m_visit_agenda == "") {
 				notif("Agenda");
-			}
-			if (m_visit_instansi == "") {
-				notif("Instansi");
-			}
-			if (m_visit_kab == "") {
-				notif("Kabupaten");
-			}
-			if (m_visit_prov == "") {
-				notif("Provinsi");
 			}
 		} else {
 			return true;
@@ -771,42 +540,6 @@
 </script>
 
 <script>
-	$(document).ready(function(e) {
-		$('.btn-add-new').click(function(e) {
-			e.preventDefault();
-			$('.repeater-wrapper').append(
-				`<div class="row mt-2 remove">
-					<div class="col-sm-12 mt-1 d-flex product-details-border position-relative pe-0">
-						<div class="row w-100 pe-lg-0 pe-1 py-1">
-							<div class="col-lg-4 col-12 mb-lg-0 mb-2 mt-lg-0 mt-2">
-								<p class="card-text col-title mb-md-50 mb-0">Nama Peserta</p>
-								<input type="text" class="form-control" id="peserta_nama" name="peserta_nama[]" placeholder="Nama Lengkap" />
-							</div>
-							<div class="col-lg-4 col-12 my-lg-0 my-2">
-								<p class="card-text col-title mb-md-2 mb-0">Jabatan</p>
-								<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]" placeholder="Nama Jabatan" />
-							</div>
-							<div class="col-lg-3 col-12 my-lg-0 my-2">
-								<p class="card-text col-title mb-md-2 mb-0">Phone/Whatsapp</p>
-								<input type="number" class="form-control" id="peserta_phone" name="peserta_phone[]" placeholder="+61 8123 456 789" />
-							</div>
-						</div>
-						<div class="d-flex flex-column align-items-center justify-content-between border-start invoice-product-actions py-50 px-25">
-							<i data-feather="x" class="cursor-pointer font-medium-3" data-repeater-delete></i>
-						</div>
-					</div>
-				</div>`
-			);
-		});
-	});
-
-	$(document).on('click', '.invoice-product-actions', function(e) {
-		e.preventDefault();
-		$(this).parents('.remove').remove();
-	});
-</script>
-
-<script>
 	$(document).ready(function() {
 		let m_visit_anggaran_BUMN = $('#m_visit_anggaran_BUMN');
 		let m_visit_prospek = $('#m_visit_prospek');
@@ -824,6 +557,196 @@
 			numeralThousandsGroupStyle: 'thousand'
 		});
 	})
+</script>
+
+<script>
+	$(document).on("click", "#tombol_edit_peserta", function() {
+		if (validasipeserta()) {
+			let data = $('#formPeserta').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('Visit/EditPeserta'); ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+</script>
+
+<!-- add modal -->
+<script>
+	$(document).on("click", "#addpeserta", function() {
+		$('#judulAdd').show();
+		$('#tombol_tambah_peserta').show();
+		$('#judulEdit').hide();
+		$('#tombol_edit_peserta').hide();
+	});
+	$(document).on("click", "#tombol_tambah_peserta", function() {
+		if (validasipeserta()) {
+			let data = $('#formPeserta').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('Visit/TambahPeserta'); ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+
+	function validasipeserta() {
+		let peserta_nama = document.getElementById("peserta_nama").value;
+		let peserta_jabatan = document.getElementById("peserta_jabatan").value;
+		let peserta_phone = document.getElementById("peserta_phone").value;
+		if ((peserta_nama == "") || (peserta_jabatan == "") || (peserta_phone == "")) {
+			if (peserta_phone == "") {
+				notif("Phone Peserta");
+			}
+			if (peserta_jabatan == "") {
+				notif("Jabatan Peserta");
+			}
+			if (peserta_nama == "") {
+				notif("Nama Peserta");
+			}
+		} else {
+			return true;
+		}
+	}
+</script>
+
+<!-- hapus peserta -->
+<script>
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Hapus Permanent Data!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Visit/DeletePeserta') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						let data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Deleted!',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
+	});
+</script>
+
+<!-- edit view -->
+<script>
+	$(document).on("click", ".EditPeserta", function() {
+		$('#judulAdd').hide();
+		$('#tombol_tambah_peserta').hide();
+		$('#judulEdit').show();
+		$('#tombol_edit_peserta').show();
+		let id = $(this).data('id');
+		$.ajax({
+			type: 'POST',
+			url: '<?= site_url('Visit/ViewPeserta') ?>',
+			data: {
+				id: id
+			},
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.success) {
+					$('#id_peserta').val(data.id_peserta);
+					$('#peserta_nama').val(data.peserta_nama);
+					$('#peserta_jabatan').val(data.peserta_jabatan);
+					$('#peserta_phone').val(data.peserta_phone);
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Warning',
+						text: data.msg,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			}
+		});
+	});
+</script>
+
+<script>
+	$(document).on("click", ".Cancle", function() {
+		$('#peserta_nama').val("");
+		$('#peserta_jabatan').val("");
+		$('#peserta_phone').val("");
+	});
 </script>
 
 <?php $this->load->view('Components/v_bottom'); ?>
