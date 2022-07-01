@@ -47,8 +47,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="content-body">
 
+		<div class="content-body">
 			<!-- Dashboard Ecommerce Starts -->
 			<section class="invoice-add-wrapper">
 				<form method="POST" id="formTambahKunjungan">
@@ -115,7 +115,7 @@
 								<!-- Address and Contact ends -->
 
 								<!-- Product Details starts -->
-								<div class="card-body">
+								<div class="card-body invoice-padding pt-0">
 									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" id="addpeserta">
 										<i data-feather="plus" class="me-25"></i>
 										<span class="align-middle">Add Peserta</span>
@@ -124,7 +124,7 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th>#</th>
+													<th>No</th>
 													<th>Nama Peserta</th>
 													<th>Jabatan Peserta</th>
 													<th>Phone Peserta</th>
@@ -132,31 +132,37 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-												$i = 1;
-												foreach ($peserta->result_array() as $a) :
-												?>
-													<tr>
-														<td><?= $i++; ?></td>
-														<td>
-															<?= $a['peserta_nama']; ?>
-														</td>
-														<td>
-															<?= $a['peserta_jabatan']; ?>
-														</td>
-														<td>
-															<?= $a['peserta_phone']; ?>
-														</td>
-														<td>
-															<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
-																<i data-feather="edit-2" class="me-20"></i>
-															</button>
-															<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
-																<i data-feather="trash" class="me-20"></i>
-															</a>
-														</td>
+												<?php if (empty($peserta->result_array())) : ?>
+													<tr class="border-bottom">
+														<td colspan='5' class='text-center'>Data tidak ditemukan.</td>
 													</tr>
-												<?php endforeach; ?>
+												<?php else : ?>
+													<?php
+													$i = 1;
+													foreach ($peserta->result_array() as $a) :
+													?>
+														<tr>
+															<td><?= $i++; ?></td>
+															<td>
+																<?= $a['peserta_nama']; ?>
+															</td>
+															<td>
+																<?= $a['peserta_jabatan']; ?>
+															</td>
+															<td>
+																<?= $a['peserta_phone']; ?>
+															</td>
+															<td>
+																<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
+																	<i data-feather="edit-2" class="me-20"></i>
+																</button>
+																<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
+																	<i data-feather="trash" class="me-20"></i>
+																</a>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
 											</tbody>
 										</table>
 									</div>
@@ -170,7 +176,8 @@
 										<div class="col-12">
 											<div class="my-2">
 												<label for="m_visit_note" class="form-label fw-bold">Notulensi</label>
-												<textarea class="form-control" rows="3" id="m_visit_note" name="m_visit_note"></textarea>
+												<input type="hidden" name="m_visit_note" id="m_visit_note" value="<?= set_value('m_visit_note') ?>">
+												<div id="editor" style="min-height: 100px;"><?= set_value('m_visit_note') ?></div>
 											</div>
 										</div>
 									</div>
@@ -364,8 +371,8 @@
 						<table class="table table-hover table-borderless" id="mytable" width="100%">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>User</th>
+									<th>No</th>
+									<th>History</th>
 									<th>Date</th>
 									<th>Instansi</th>
 									<th>Agenda</th>
@@ -374,6 +381,31 @@
 								</tr>
 							</thead>
 							<tbody>
+								<?php
+								$i = 1;
+								foreach ($history->result_array() as $k) :
+								?>
+									<tr>
+										<td><?= $i++; ?></td>
+										<td><?= $k['m_visit_history'] ?></td>
+										<td><?= $k['m_visit_tgl'] ?></td>
+										<td><?= $k['instansi_nama'] ?></td>
+										<td><?= $k['m_visit_agenda'] ?></td>
+										<td>
+											<?php if ($k['m_visit_status'] == "Close Po") : ?>
+												<span class="badge rounded-pill badge-light-danger me-1"><?= $k['m_visit_status']; ?></span>
+											<?php elseif ($k['m_visit_status'] == "Prognosa") : ?>
+												<span class="badge rounded-pill badge-light-warning me-1"><?= $k['m_visit_status']; ?></span>
+											<?php else : ?>
+												<span class="badge rounded-pill badge-light-primary me-1"><?= $k['m_visit_status']; ?></span>
+											<?php endif; ?>
+										</td>
+										<td>
+											<a href="<?= base_url('Visit/Preview/' . $k['m_visit_history_id']); ?>" type="button" class="btn btn-flat-warning btn-sm Edit">Preview</a>
+										</td>
+
+									</tr>
+								<?php endforeach; ?>
 							</tbody>
 						</table>
 					</div>
@@ -409,6 +441,15 @@
 	}
 </script>
 
+<script>
+	var quill = new Quill('#editor', {
+		theme: 'snow'
+	});
+
+	quill.on('text-change', function(delta, oldDelta, source) {
+		document.querySelector("input[name='m_visit_note']").value = quill.root.innerHTML;
+	});
+</script>
 
 <!-- tambah kunjungan -->
 <script>

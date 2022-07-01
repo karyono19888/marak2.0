@@ -30,21 +30,19 @@
 							</select>
 						</div>
 
-						<div class="col-sm-6">
+						<div class="col-sm-3">
 							<label class="form-label" for="date_visit">Tanggal <span class="text-danger">*</span></label>
-							<div class="input-group input-group-merge">
-								<span class="input-group-text"><i data-feather="calendar"></i></span>
-								<input type="date" id="date_visit" class="form-control" name="date_visit" placeholder="First Name" />
+							<div class="input-group">
+								<input type="date" id="date_visit" class="form-control date-picker" name="date_visit" />
 							</div>
 						</div>
-						<div class="col-sm-4">
+						<div class="col-sm-3">
 							<label class="form-label" for="time">Jam <span class="text-danger">*</span></label>
-							<div class="input-group input-group-merge">
-								<span class="input-group-text"><i data-feather="clock"></i></span>
-								<input type="time" id="time" class="form-control" name="time" placeholder="First Name" />
+							<div class="input-group">
+								<input type="time" id="time" class="form-control flatpickr-time" name="time" />
 							</div>
 						</div>
-						<div class="col-12 col-md-6">
+						<div class="col-sm-3">
 							<label class="form-label" for="type_alamat">Alamat Kunjungan<span class="text-danger">*</span></label>
 							<select id="type_alamat" name="type_alamat" class="form-select" aria-label="Default select example">
 								<option value="">- Pilih -</option>
@@ -53,7 +51,7 @@
 								<option value="Alamat Lain">Alamat lain</option>
 							</select>
 						</div>
-						<div class="col-12 col-md-6">
+						<div class="col-sm-3">
 							<label class="form-label" for="type_act">Activity<span class="text-danger">*</span></label>
 							<select id="type_act" name="type_act" class="form-select" aria-label="Default select example">
 								<option value="">- Pilih -</option>

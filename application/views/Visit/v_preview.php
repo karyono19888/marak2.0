@@ -86,21 +86,27 @@
 										</tr>
 									</thead>
 									<tbody>
-										<?php
-										foreach ($peserta->result_array() as $a) :
-										?>
+										<?php if (empty($peserta->result_array())) : ?>
 											<tr class="border-bottom">
-												<td class="py-1">
-													<p class="card-text fw-bold mb-25"><?= $a['peserta_nama']; ?></p>
-												</td>
-												<td class="py-1">
-													<span class="fw-bold"><?= $a['peserta_jabatan']; ?></span>
-												</td>
-												<td class="py-1">
-													<span class="fw-bold"><?= $a['peserta_phone']; ?></span>
-												</td>
+												<td colspan='3' class='text-center'>Data tidak ditemukan.</td>
 											</tr>
-										<?php endforeach; ?>
+										<?php else : ?>
+											<?php
+											foreach ($peserta->result_array() as $a) :
+											?>
+												<tr class="border-bottom">
+													<td class="py-1">
+														<p class="card-text fw-bold mb-25"><?= $a['peserta_nama']; ?></p>
+													</td>
+													<td class="py-1">
+														<span class="fw-bold"><?= $a['peserta_jabatan']; ?></span>
+													</td>
+													<td class="py-1">
+														<span class="fw-bold"><?= $a['peserta_phone']; ?></span>
+													</td>
+												</tr>
+											<?php endforeach; ?>
+										<?php endif; ?>
 									</tbody>
 								</table>
 							</div>
@@ -211,22 +217,24 @@
 <?php $this->load->view('Components/v_footer'); ?>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
 <script>
-	let userLocation = L.map("user-location").setView([<?= $data['m_visit_koor_long']; ?>, <?= $data['m_visit_koor_lat']; ?>], 10);
-	userLocation.locate({
-		setView: true,
-		maxZoom: 18,
-	});
+	$(document).ready(function() {
+		let long = <?= str_replace(",", ".", $data['m_visit_koor_long']); ?>;
+		let lat = <?= str_replace(",", ".", $data['m_visit_koor_lat']); ?>;
+		let userLocation = L.map("user-location").setView([lat, long], 13);
+		userLocation.locate({
+			setView: true,
+			maxZoom: 18,
+		});
 
-	function onLocationFound(e) {
-		L.marker(e.latlng)
+		L.marker([lat, long])
 			.addTo(userLocation)
 			.bindPopup("Titik kunjungan <b><?= $data['name_user']; ?></b>")
 			.openPopup();
-	}
-	userLocation.on("locationfound", onLocationFound);
-	L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-		attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
-		maxZoom: 18,
-	}).addTo(userLocation);
+
+		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+			maxZoom: 18,
+		}).addTo(userLocation);
+	})
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

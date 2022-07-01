@@ -14,7 +14,6 @@
 <!-- BEGIN Vendor JS-->
 
 <!-- BEGIN: Page Vendor JS-->
-
 <script src="<?= base_url('assets'); ?>/vendors/js/extensions/toastr.min.js"></script>
 <!-- END: Page Vendor JS-->
 
@@ -23,8 +22,25 @@
 <script src="<?= base_url('assets'); ?>/js/core/app.js"></script>
 <!-- END: Theme JS-->
 
-
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/extensions/sweetalert2.all.min.js"></script>
+<script>
+	$(document).ready(function() {
+		let section = $('#section-block');
+		section.block({
+			message: '<div class="d-flex justify-content-center align-items-center"><p class="me-50 mb-0">Please wait...</p><div class="spinner-grow spinner-grow-sm text-white" role="status"></div>',
+			timeout: 1000,
+			css: {
+				backgroundColor: 'transparent',
+				color: '#fff',
+				border: '0'
+			},
+			overlayCSS: {
+				opacity: 0.5
+			}
+		});
+	})
+</script>
 
 <script>
 	$(window).on('load', function() {

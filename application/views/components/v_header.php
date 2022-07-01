@@ -37,7 +37,7 @@
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/plugins/charts/chart-apex.css">
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/plugins/extensions/ext-component-toastr.css">
 	<!-- END: Page CSS-->
-
+	<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 	<!-- BEGIN: Custom CSS-->
 	<link rel="stylesheet" type="text/css" href="<?= base_url('assets') ?>/css/style.css">
 	<!-- END: Custom CSS-->

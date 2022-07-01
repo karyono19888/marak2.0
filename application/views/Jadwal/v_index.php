@@ -1,7 +1,6 @@
 <?php $this->load->view('Components/v_header'); ?>
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/vendors/css/pickers/flatpickr/flatpickr.min.css">
-<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/components.css">
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/plugins/forms/pickers/form-flat-pickr.css">
 <!-- BEGIN: Body-->
@@ -123,13 +122,13 @@
 									<input type="text" id="end_date" name="end_date" class="form-control flatpickr-basic" placeholder="End Date" />
 								</div>
 								<?php if ($this->session->userdata('role_user') == 1) : ?>
-									<div class="col-sm-4 my-1">
+									<div class="col-sm-3 my-1">
 										<select id="nama_marketing" name="nama_marketing" class="form-select select2" aria-label="Default select example">
 											<option value="">- Pilih Nama Maketing -</option>
 										</select>
 									</div>
 								<?php endif; ?>
-								<div class="col-sm-2 my-1">
+								<div class="col-sm-3 my-1">
 									<button class="btn btn-primary" type="button" id="tombol_searching"><i data-feather='search'></i> Search</button>
 									<button onClick="window.location.reload();" class="btn btn-outline-secondary" type="button">Reset</button>
 								</div>
@@ -153,7 +152,6 @@
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="<?= base_url('assets'); ?>/js/scripts/forms/form-select2.js"></script>
-<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 <script>
 	$(document).ready(function() {

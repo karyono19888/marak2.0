@@ -9,17 +9,17 @@
 				<div class="card-body">
 					<form id="tambahJadwalForm" class="row gy-1" method="POST" action="">
 						<div class="alert alert-warning" role="alert">
-							<div class="alert-body"><strong>Perhatian!</strong> Pastikan data Instansi/Swasta/Perorangan sudah terdaftar pada Menu Data Instansi.</div>
+							<div class="alert-body"><strong>Perhatian!</strong> Pastikan data Instansi/ Swasta/ Perorangan sudah terdaftar pada Menu Data Instansi.</div>
 						</div>
 						<div class="col-12">
-							<label class="form-label" for="instansi">Instansi/Swasta/Perorangan<span class="text-danger">*</span></label>
+							<label class="form-label" for="instansi">Instansi/ Swasta/ Perorangan<span class="text-danger">*</span></label>
 							<select id="instansi" name="instansi" class="form-select select2" aria-label="Default select example">
 								<option value="<?= $data['instansi_id']; ?>"><?= $data['instansi_nama']; ?></option>
 							</select>
 						</div>
 						<div class="col-12">
 							<label class="form-label" for="instansi">Alamat<span class="text-danger">*</span></label>
-							<textarea name="alamatinstansi" id="alamatinstansi" cols="30" rows="3" class="form-control" readonly><?= $data['instansi_alamat']; ?></textarea>
+							<textarea name="alamatinstansi" id="alamatinstansi" cols="30" rows="2" class="form-control" readonly><?= $data['instansi_alamat']; ?></textarea>
 						</div>
 						<input type="hidden" id="m_visit_id" name="m_visit_id" value="<?= $data['m_visit_id'] ?>">
 						<div class="col-sm-6">

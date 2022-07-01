@@ -141,6 +141,7 @@ class Visit extends CI_Controller
 		$data['title'] 	= 'Update Kunjungan | Marak 2.0';
 		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_id);
 		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_id);
+		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
 		$this->load->view('Visit/v_update', $data);
 	}
 }

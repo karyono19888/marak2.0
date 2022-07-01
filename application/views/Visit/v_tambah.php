@@ -179,7 +179,8 @@
 										<div class="col-12">
 											<div class="my-2">
 												<label for="m_visit_note" class="form-label fw-bold">Notulensi</label>
-												<textarea class="form-control" rows="3" id="m_visit_note" name="m_visit_note"></textarea>
+												<input type="hidden" name="m_visit_note" id="m_visit_note" value="<?= set_value('m_visit_note') ?>">
+												<div id="editor" style="min-height: 100px;"><?= set_value('m_visit_note') ?></div>
 											</div>
 										</div>
 									</div>
@@ -394,11 +395,20 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
-<!-- <script src="<?= base_url('assets'); ?>/js/scripts/maps/map-leaflet.js"></script> -->
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/app-invoice.js"></script>
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
+<script>
+	var quill = new Quill('#editor', {
+		theme: 'snow'
+	});
+
+	quill.on('text-change', function(delta, oldDelta, source) {
+		document.querySelector("input[name='m_visit_note']").value = quill.root.innerHTML;
+	});
+</script>
+
 <script>
 	let timePickr = $('.flatpickr-time');
 	if (timePickr.length) {

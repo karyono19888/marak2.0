@@ -11,12 +11,14 @@ class M_visit extends CI_Model
 	public function dataVisitAll()
 	{
 		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->join('users', 'id_user=m_visit_user_id', 'left');
 			$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 			$this->db->order_by('m_visit_tgl', 'desc');
 			$query = $this->db->get('m_visit');
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->join('users', 'id_user=m_visit_user_id', 'left');
 			$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 			$this->db->order_by('m_visit_tgl', 'desc');
@@ -29,10 +31,12 @@ class M_visit extends CI_Model
 	public function TotalKunjungan()
 	{
 		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$query = $this->db->get('m_visit');
 			return $query->num_rows();
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$query = $this->db->get('m_visit');
 			return $query->num_rows();
 		}
@@ -41,11 +45,13 @@ class M_visit extends CI_Model
 	public function TotalKunjunganPrognosa()
 	{
 		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->where('m_visit_status', 'Prognosa');
 			$query = $this->db->get('m_visit');
 			return $query->num_rows();
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->where('m_visit_status', 'Prognosa');
 			$query = $this->db->get('m_visit');
 			return $query->num_rows();
@@ -90,8 +96,8 @@ class M_visit extends CI_Model
 			'm_visit_estimasi_order' => $m_visit_estimasi_order,
 			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
 			'm_visit_status'         => $m_visit_status,
-			'm_visit_koor_lat'       => $m_visit_koor_lat,
-			'm_visit_koor_long'      => $m_visit_koor_long,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
 			'm_visit_date_created'   => $now,
 			'm_visit_history'        => 'Add'
 		];
@@ -116,8 +122,8 @@ class M_visit extends CI_Model
 			'm_visit_estimasi_order' => $m_visit_estimasi_order,
 			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
 			'm_visit_status'         => $m_visit_status,
-			'm_visit_koor_lat'       => $m_visit_koor_lat,
-			'm_visit_koor_long'      => $m_visit_koor_long,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
 			'm_visit_date_created'   => $now,
 			'm_visit_history'        => 'Add'
 		];
@@ -175,6 +181,7 @@ class M_visit extends CI_Model
 	public function PreviewdataVisit($m_visit_id)
 	{
 		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 		$this->db->from('m_visit as a');
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
@@ -316,5 +323,17 @@ class M_visit extends CI_Model
 		} else {
 			return json_encode(array('success' => true, 'msg' => 'Edit Data Berhasil!'));
 		}
+	}
+
+	public function PreviewdataHistory($m_visit_id)
+	{
+		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
+		$this->db->order_by('m_visit_tgl', 'desc');
+		return $this->db->get('m_visit_history');
 	}
 }

@@ -25,7 +25,7 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Edit Kunjungan "<b><?= $data['instansi_nama']; ?></b>"</h2>
+						<h2 class="content-header-title float-start mb-0">"<b><?= $data['instansi_nama']; ?></b>"</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#">Data Kunjungan</a>
@@ -135,7 +135,7 @@
 								<!-- Address and Contact ends -->
 
 								<!-- Product Details starts -->
-								<div class="card-body">
+								<div class="card-body invoice-padding pt-0">
 									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" id="addpeserta">
 										<i data-feather="plus" class="me-25"></i>
 										<span class="align-middle">Add Peserta</span>
@@ -144,7 +144,7 @@
 										<table class="table">
 											<thead>
 												<tr>
-													<th>#</th>
+													<th>No</th>
 													<th>Nama Peserta</th>
 													<th>Jabatan Peserta</th>
 													<th>Phone Peserta</th>
@@ -152,31 +152,37 @@
 												</tr>
 											</thead>
 											<tbody>
-												<?php
-												$i = 1;
-												foreach ($peserta->result_array() as $a) :
-												?>
-													<tr>
-														<td><?= $i++; ?></td>
-														<td>
-															<?= $a['peserta_nama']; ?>
-														</td>
-														<td>
-															<?= $a['peserta_jabatan']; ?>
-														</td>
-														<td>
-															<?= $a['peserta_phone']; ?>
-														</td>
-														<td>
-															<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
-																<i data-feather="edit-2" class="me-20"></i>
-															</button>
-															<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
-																<i data-feather="trash" class="me-20"></i>
-															</a>
-														</td>
+												<?php if (empty($peserta->result_array())) : ?>
+													<tr class="border-bottom">
+														<td colspan='5' class='text-center'>Data tidak ditemukan.</td>
 													</tr>
-												<?php endforeach; ?>
+												<?php else : ?>
+													<?php
+													$i = 1;
+													foreach ($peserta->result_array() as $a) :
+													?>
+														<tr>
+															<td><?= $i++; ?></td>
+															<td>
+																<?= $a['peserta_nama']; ?>
+															</td>
+															<td>
+																<?= $a['peserta_jabatan']; ?>
+															</td>
+															<td>
+																<?= $a['peserta_phone']; ?>
+															</td>
+															<td>
+																<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
+																	<i data-feather="edit-2" class="me-20"></i>
+																</button>
+																<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
+																	<i data-feather="trash" class="me-20"></i>
+																</a>
+															</td>
+														</tr>
+													<?php endforeach; ?>
+												<?php endif; ?>
 											</tbody>
 										</table>
 									</div>
@@ -190,7 +196,8 @@
 										<div class="col-12">
 											<div class="my-2">
 												<label for="m_visit_note" class="form-label fw-bold">Notulensi</label>
-												<textarea class="form-control" rows="3" id="m_visit_note" name="m_visit_note"><?= $data['m_visit_note']; ?></textarea>
+												<input type="hidden" name="m_visit_note" id="m_visit_note" value="<?= $data['m_visit_note']; ?>">
+												<div id="editor" style="min-height: 100px;"><?= $data['m_visit_note'] ?></div>
 											</div>
 										</div>
 									</div>
@@ -285,30 +292,28 @@
 								<!-- map show position -->
 								<div class="card-body invoice-padding">
 									<div class="row invoice-sales-total-wrapper">
-										<div class="row">
-											<div class="col-sm-6">
-												<div class="row">
-													<div class="col-xl-6 col-sm-6 col-12">
-														<div class="mb-1">
-															<small class="text-muted"><i>Koordinat Lat</i></small>
-															<div class="input-group mb-2">
-																<input type="text" class="form-control" id="m_visit_koor_lat" name="m_visit_koor_lat" placeholder=" -0.0000000" readonly value="<?= $data['m_visit_koor_lat']; ?>" />
-															</div>
+										<div class="col-sm-6">
+											<div class="row">
+												<div class="col-xl-6 col-sm-6 col-12">
+													<div class="mb-1">
+														<small class="text-muted"><i>Koordinat Lat</i></small>
+														<div class="input-group mb-2">
+															<input type="text" class="form-control" id="m_visit_koor_lat" name="m_visit_koor_lat" placeholder=" -0.0000000" readonly value="<?= $data['m_visit_koor_lat']; ?>" />
 														</div>
 													</div>
-													<div class="col-xl-6 col-sm-6 col-12">
-														<div class="mb-1">
-															<small class="text-muted"><i>Koordinat Long</i></small>
-															<div class="input-group mb-2">
-																<input type="text" class="form-control" id="m_visit_koor_long" name="m_visit_koor_long" placeholder=" 000.000000" readonly value="<?= $data['m_visit_koor_long']; ?>" />
-															</div>
+												</div>
+												<div class="col-xl-6 col-sm-6 col-12">
+													<div class="mb-1">
+														<small class="text-muted"><i>Koordinat Long</i></small>
+														<div class="input-group mb-2">
+															<input type="text" class="form-control" id="m_visit_koor_long" name="m_visit_koor_long" placeholder=" 000.000000" readonly value="<?= $data['m_visit_koor_long']; ?>" />
 														</div>
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-6">
-												<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;"></div>
-											</div>
+										</div>
+										<div class="col-sm-6">
+											<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;"></div>
 										</div>
 									</div>
 								</div>
@@ -389,6 +394,16 @@
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
+<script>
+	var quill = new Quill('#editor', {
+		theme: 'snow'
+	});
+
+	quill.on('text-change', function(delta, oldDelta, source) {
+		document.querySelector("input[name='m_visit_note']").value = quill.root.innerHTML;
+	});
+</script>
+
 <script>
 	let timePickr = $('.flatpickr-time');
 	if (timePickr.length) {
@@ -727,25 +742,25 @@
 </script>
 
 <script>
-	if ($("#user-location").length) {
-		var userLocation = L.map("user-location").setView([<?= $data['m_visit_koor_lat']; ?>, <?= $data['m_visit_koor_long']; ?>], 10);
+	$(document).ready(function() {
+		let long = <?= str_replace(",", ".", $data['m_visit_koor_long']); ?>;
+		let lat = <?= str_replace(",", ".", $data['m_visit_koor_lat']); ?>;
+		let userLocation = L.map("user-location").setView([lat, long], 13);
 		userLocation.locate({
 			setView: true,
 			maxZoom: 18,
 		});
 
-		function onLocationFound(e) {
-			L.marker(e.latlng)
-				.addTo(userLocation)
-				.bindPopup("You this here <b><?= $data['name_user']; ?></b> from this location")
-				.openPopup();
-		}
-		userLocation.on("locationfound", onLocationFound);
+		L.marker([lat, long])
+			.addTo(userLocation)
+			.bindPopup("Titik kunjungan <b><?= $data['name_user']; ?></b>")
+			.openPopup();
+
 		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
 			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
 			maxZoom: 18,
 		}).addTo(userLocation);
-	}
+	})
 </script>
 
 <script>
