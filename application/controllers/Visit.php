@@ -144,4 +144,10 @@ class Visit extends CI_Controller
 		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
 		$this->load->view('Visit/v_update', $data);
 	}
+
+	public function ViewModalHistoryKunjungan()
+	{
+		$id = $this->input->post('id');
+		echo $this->record->ViewModalHistoryKunjungan($id);
+	}
 }

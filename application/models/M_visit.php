@@ -336,4 +336,45 @@ class M_visit extends CI_Model
 		$this->db->order_by('m_visit_tgl', 'desc');
 		return $this->db->get('m_visit_history');
 	}
+
+	public function ViewModalHistoryKunjungan($id)
+	{
+		$this->db->where('m_visit_history_id', $id);
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
+		$this->db->join('m_visit_peserta', 'id_visit_history=m_visit_history_id', 'left');
+		$query  = $this->db->get('m_visit_history');
+		if ($query) {
+			$row = $query->row();
+			return json_encode(array(
+				'success'         		=> true,
+				'm_visit_agenda'    		=> $row->m_visit_agenda,
+				'm_visit_tgl'    			=> date('d F Y', strtotime($row->m_visit_tgl)),
+				'm_visit_jam_mulai' 		=> $row->m_visit_jam_mulai,
+				'm_visit_jam_selesai'   => $row->m_visit_jam_selesai,
+				'm_visit_instansi'   	=> $row->instansi_nama,
+				'instansi_alamat'   		=> $row->instansi_alamat,
+				'kab_nama'   				=> $row->kab_nama,
+				'prov_nama'   				=> $row->prov_nama,
+				'name_user'   				=> $row->name_user,
+				'm_visit_note'   			=> $row->m_visit_note,
+				'm_visit_anggaran_BUMN' => number_format($row->m_visit_anggaran_BUMN, 0, '.', '.'),
+				'm_visit_prospek'   		=> number_format($row->m_visit_prospek, 0, '.', '.'),
+				'm_visit_prognosa'   	=> number_format($row->m_visit_prognosa, 0, '.', '.'),
+				'm_visit_po'   			=> number_format($row->m_visit_po, 0, '.', '.'),
+				'm_visit_estimasi_order' => $row->m_visit_estimasi_order,
+				'm_visit_estimasi_tahun' => $row->m_visit_estimasi_tahun,
+				'm_visit_status'   		=> $row->m_visit_status,
+				'm_visit_koor_lat'   	=> str_replace(",", ".", $row->m_visit_koor_lat),
+				'm_visit_koor_long'   	=> str_replace(",", ".", $row->m_visit_koor_long),
+				'peserta_nama'   			=> $row->peserta_nama,
+				'peserta_jabatan'   		=> $row->peserta_jabatan,
+				'peserta_phone'   		=> $row->peserta_phone,
+			));
+		} else {
+			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
+		}
+	}
 }

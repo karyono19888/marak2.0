@@ -7,11 +7,9 @@
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
-
 <!-- BEGIN: Header-->
 <?php $this->load->view('Components/v_navbar'); ?>
 <!-- END: Header-->
-
 
 <!-- BEGIN: Main Menu-->
 <?php $this->load->view('Components/v_sidebar'); ?>
@@ -381,31 +379,37 @@
 								</tr>
 							</thead>
 							<tbody>
-								<?php
-								$i = 1;
-								foreach ($history->result_array() as $k) :
-								?>
-									<tr>
-										<td><?= $i++; ?></td>
-										<td><?= $k['m_visit_history'] ?></td>
-										<td><?= $k['m_visit_tgl'] ?></td>
-										<td><?= $k['instansi_nama'] ?></td>
-										<td><?= $k['m_visit_agenda'] ?></td>
-										<td>
-											<?php if ($k['m_visit_status'] == "Close Po") : ?>
-												<span class="badge rounded-pill badge-light-danger me-1"><?= $k['m_visit_status']; ?></span>
-											<?php elseif ($k['m_visit_status'] == "Prognosa") : ?>
-												<span class="badge rounded-pill badge-light-warning me-1"><?= $k['m_visit_status']; ?></span>
-											<?php else : ?>
-												<span class="badge rounded-pill badge-light-primary me-1"><?= $k['m_visit_status']; ?></span>
-											<?php endif; ?>
-										</td>
-										<td>
-											<a href="<?= base_url('Visit/Preview/' . $k['m_visit_history_id']); ?>" type="button" class="btn btn-flat-warning btn-sm Edit">Preview</a>
-										</td>
-
+								<?php if (empty($history->result_array())) : ?>
+									<tr class="border-bottom">
+										<td colspan='7' class='text-center'>Data tidak ditemukan.</td>
 									</tr>
-								<?php endforeach; ?>
+								<?php else : ?>
+									<?php
+									$i = 1;
+									foreach ($history->result_array() as $k) :
+									?>
+										<tr>
+											<td><?= $i++; ?></td>
+											<td><?= $k['m_visit_history'] ?></td>
+											<td><?= $k['m_visit_tgl'] ?></td>
+											<td><?= $k['instansi_nama'] ?></td>
+											<td><?= $k['m_visit_agenda'] ?></td>
+											<td>
+												<?php if ($k['m_visit_status'] == "Close Po") : ?>
+													<span class="badge rounded-pill badge-light-danger me-1"><?= $k['m_visit_status']; ?></span>
+												<?php elseif ($k['m_visit_status'] == "Prognosa") : ?>
+													<span class="badge rounded-pill badge-light-warning me-1"><?= $k['m_visit_status']; ?></span>
+												<?php else : ?>
+													<span class="badge rounded-pill badge-light-primary me-1"><?= $k['m_visit_status']; ?></span>
+												<?php endif; ?>
+											</td>
+											<td>
+												<a href="#" type="button" class="btn btn-flat-warning btn-sm PreviewHistory" data-id="<?= $k['m_visit_history_id']; ?>" data-bs-toggle="modal" data-bs-target="#referEarnModal">Preview</a>
+											</td>
+
+										</tr>
+									<?php endforeach; ?>
+								<?php endif; ?>
 							</tbody>
 						</table>
 					</div>
@@ -416,6 +420,139 @@
 	</div>
 </div>
 <!-- END: Content-->
+<!-- refer and earn modal -->
+<div class="modal fade" id="referEarnModal" tabindex="-1" aria-labelledby="referEarnTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered modal-lg modal-refer-earn">
+		<div class="modal-content">
+			<div class="modal-header bg-transparent">
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<h1 class="text-center mb-1" id="m_visit_instansi">Nama Dinas not found</h1>
+						<p class="text-center">
+							<span id="instansi_alamat">alamat not found</span>
+							<br />
+							<span id="kab_nama">Kabupaten not found</span>, <span id="prov_nama">Provinsi not found</span>
+						</p>
+					</div>
+				</div>
+				<hr />
+
+				<div class="row mb-2">
+					<div class="col-sm-7">
+						<h6>Agenda :</h6>
+						<span class="mb-2" id="agenda_isi">nama agenda not found</span>
+					</div>
+					<div class="col-xl-4 mt-xl-0 mt-2">
+						<table>
+							<tbody>
+								<tr>
+									<td class="pe-1">Tanggal</td>
+									<td>: <span id="tgl">YYY:MM:DD</span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Waktu</td>
+									<td>: <span id="jam_start"></span> - <span id="jam_end"></span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Marketing</td>
+									<td>
+										<span class="fw-bold">: <span id="userMkt">Nama Marketing not found</span></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="table-responsive mb-2">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>No</th>
+								<th>Nama Peserta</th>
+								<th>Jabatan Peserta</th>
+								<th>Phone Peserta</th>
+							</tr>
+						</thead>
+						<tbody id="tampil">
+							<tr>
+								<td colspan='4' class="text-center">Data tidak ditemukan</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row mb-2">
+					<div class="col-sm-4">
+						<table>
+							<tbody>
+								<tr>
+									<td class="pe-1">APBN/P/D</td>
+									<td>: <span id="apbn">0000</span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Prospek</td>
+									<td>: <span id="prospek">0000</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-sm-4">
+						<table>
+							<tbody>
+								<tr>
+									<td class="pe-1">Prognosa</td>
+									<td>: <span id="prognosa">0000</span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Close PO</td>
+									<td>: <span id="closepo">0000</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="col-sm-4">
+						<table>
+							<tbody>
+								<tr>
+									<td class="pe-1">Estimasi Order</td>
+									<td>: <span class="fw-bold" id="esorder"></span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Estimasi Tahun</td>
+									<td>: <span id="esthn">0000</span></td>
+								</tr>
+								<tr>
+									<td class="pe-1">Status</td>
+									<td>
+										<span id="status_kunjungan"></span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<hr>
+				<div class="row mb-2">
+					<div class="col-12">
+						<span class="fw-bold">Notulensi</span>
+						:<span id="noted"></span>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-12">
+						<div class="leaflet-map" id="modal-user-location" style="height: 150px; border-radius:5px;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- / refer and earn modal -->
 
 <?php $this->load->view('Components/v_footer'); ?>
 
@@ -428,6 +565,7 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 <script>
 	$(document).ready(function() {
 		$('#mytable').DataTable();
@@ -787,6 +925,86 @@
 		$('#peserta_nama').val("");
 		$('#peserta_jabatan').val("");
 		$('#peserta_phone').val("");
+	});
+</script>
+
+<script>
+	$(document).on("click", ".PreviewHistory", function() {
+		let id = $(this).data('id');
+		no = 1;
+		html = '';
+		$.ajax({
+			type: 'POST',
+			url: '<?= site_url('Visit/ViewModalHistoryKunjungan') ?>',
+			data: {
+				id: id
+			},
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.success) {
+					document.getElementById('m_visit_instansi').innerText = data.m_visit_instansi;
+					document.getElementById('instansi_alamat').innerText = data.instansi_alamat;
+					document.getElementById('kab_nama').innerText = data.kab_nama;
+					document.getElementById('prov_nama').innerText = data.prov_nama;
+					document.getElementById('agenda_isi').innerText = data.m_visit_agenda;
+					document.getElementById('tgl').innerText = data.m_visit_tgl;
+					document.getElementById('jam_start').innerText = data.m_visit_jam_mulai;
+					document.getElementById('jam_end').innerText = data.m_visit_jam_selesai;
+					document.getElementById('userMkt').innerText = data.name_user;
+					// for (i = 0; i < data.peserta_nama; i++) {
+					// 	html += '<tr>' +
+					// 		'<td>' + [no++] + '</td>' +
+					// 		'<td>' + data.peserta_nama + '</td>' +
+					// 		'<td>' + data.peserta_jabatan + '</td>' +
+					// 		'<td>' + data.peserta_phone + '</td>' +
+					// 		'</tr>'
+					// }
+					// $('#tampil').html(html);
+					document.getElementById('apbn').innerText = data.m_visit_anggaran_BUMN;
+					document.getElementById('prospek').innerText = data.m_visit_prospek;
+					document.getElementById('prognosa').innerText = data.m_visit_prognosa;
+					document.getElementById('closepo').innerText = data.m_visit_po;
+					document.getElementById('esorder').innerText = data.m_visit_estimasi_order;
+					document.getElementById('esthn').innerText = data.m_visit_estimasi_tahun;
+					document.getElementById('noted').innerHTML = data.m_visit_note;
+					if (data.m_visit_status == "Prospek") {
+						html = '<span class="badge rounded-pill badge-light-primary me-1">' + data.m_visit_status + '</span>';
+						document.getElementById('status_kunjungan').innerHTML = html;
+					} else if (data.m_visit_status == "Prognosa") {
+						html = '<span class="badge rounded-pill badge-light-warning me-1">' + data.m_visit_status + '</span>';
+						document.getElementById('status_kunjungan').innerHTML = html;
+					} else {
+						html = '<span class="badge rounded-pill badge-light-danger me-1">' + data.m_visit_status + '</span>';
+						document.getElementById('status_kunjungan').innerHTML = html;
+					}
+
+					let userLocation1 = L.map("modal-user-location").setView([data.m_visit_koor_lat, data.m_visit_koor_long], 13);
+					userLocation1.locate({
+						setView: true,
+						maxZoom: 18,
+					});
+
+					L.marker([data.m_visit_koor_lat, data.m_visit_koor_long])
+						.addTo(userLocation1)
+						.bindPopup("Titik Input <b>" + data.name_user + "</b>")
+						.openPopup();
+
+					L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+						attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+						maxZoom: 18,
+					}).addTo(userLocation1);
+
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Warning',
+						text: data.msg,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			}
+		});
 	});
 </script>
 

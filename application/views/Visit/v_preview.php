@@ -80,6 +80,7 @@
 								<table class="table">
 									<thead>
 										<tr>
+											<th class="py-1">No</th>
 											<th class="py-1">Nama Peserta</th>
 											<th class="py-1">Jabatan Peserta</th>
 											<th class="py-1">Phone Peserta</th>
@@ -92,9 +93,11 @@
 											</tr>
 										<?php else : ?>
 											<?php
+											$i = 1;
 											foreach ($peserta->result_array() as $a) :
 											?>
 												<tr class="border-bottom">
+													<td class="py-1"><?= $i++; ?></td>
 													<td class="py-1">
 														<p class="card-text fw-bold mb-25"><?= $a['peserta_nama']; ?></p>
 													</td>
@@ -118,7 +121,7 @@
 											<tbody>
 												<tr>
 													<td class="pe-1">APBN/P/D</td>
-													<td><span class="fw-bold">: <?= number_format($data['m_visit_anggaran_BUMN'], 0, '.', '.'); ?></span></td>
+													<td><span>: <?= number_format($data['m_visit_anggaran_BUMN'], 0, '.', '.'); ?></span></td>
 												</tr>
 												<tr>
 													<td class="pe-1">Prospek</td>
