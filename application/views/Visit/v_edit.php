@@ -328,7 +328,7 @@
 							<div class="card">
 								<div class="card-body">
 									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Edit Save</button>
-									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_id']); ?>" class="btn btn-outline-primary w-100" type="button">Back Preview</a>
+									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_history_id']); ?>" class="btn btn-outline-primary w-100" type="button">Back Preview</a>
 								</div>
 							</div>
 						</div>
@@ -554,7 +554,7 @@
 	});
 </script>
 
-<!-- tambah -->
+<!-- tambah intansi -->
 <script>
 	$(document).on("click", "#tombol_tambah", function() {
 		if (validasi()) {
@@ -622,7 +622,7 @@
 	}
 </script>
 
-<!-- tambah kunjungan -->
+<!-- edit save kunjungan -->
 <script>
 	$(document).on("click", "#tombol_add", function() {
 		if (validasi2()) {
@@ -651,7 +651,7 @@
 						});
 					}
 					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/Preview/" . $data['m_visit_id']) ?>');
+						window.location.assign('<?= site_url("Visit/Preview/" . $data['m_visit_history_id']) ?>');
 					}, 2000);
 				}
 			});
@@ -813,7 +813,7 @@
 						});
 					}
 					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_history_id']); ?>');
 					}, 2000);
 				}
 			});
@@ -856,7 +856,7 @@
 						});
 					}
 					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+						window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_history_id']); ?>');
 					}, 2000);
 				}
 			});
@@ -923,7 +923,7 @@
 							});
 						}
 						setTimeout(() => {
-							window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_id']); ?>');
+							window.location.assign('<?= site_url("Visit/Edit/" . $data['m_visit_history_id']); ?>');
 						}, 1500);
 					}
 				});

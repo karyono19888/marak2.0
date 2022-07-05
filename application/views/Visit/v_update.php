@@ -49,7 +49,7 @@
 		<div class="content-body">
 			<!-- Dashboard Ecommerce Starts -->
 			<section class="invoice-add-wrapper">
-				<form method="POST" id="formTambahKunjungan">
+				<form method="POST" id="formUpdateKunjungan">
 					<div class="row invoice-add">
 						<!-- Invoice Add Left starts -->
 						<div class="col-xl-9 col-md-8 col-12">
@@ -79,6 +79,10 @@
 												<label class="form-label" for="m_visit_agenda">Agenda Kunjungan</label>
 												<div class="invoice-customer">
 													<input type="text" name="m_visit_agenda" id="m_visit_agenda" class="form-control" placeholder="contoh : Kunjungan pertama presentasi produk">
+													<input type="hidden" name="id" value="<?= $data['m_visit_id']; ?>">
+													<input type="hidden" name="m_visit_instansi" value="<?= $data['m_visit_instansi']; ?>">
+													<input type="hidden" name="m_visit_prov" value="<?= $data['m_visit_prov']; ?>">
+													<input type="hidden" name="m_visit_kab" value="<?= $data['m_visit_kab']; ?>">
 												</div>
 											</div>
 										</div>
@@ -114,49 +118,45 @@
 
 								<!-- Product Details starts -->
 								<div class="card-body invoice-padding pt-0">
-									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" id="addpeserta">
+									<button type="button" class="btn btn-outline-secondary btn-sm btn-add-new mb-1" id="addpeserta">
 										<i data-feather="plus" class="me-25"></i>
-										<span class="align-middle">Add Peserta</span>
+										<span class="align-middle">Add Column Peserta</span>
 									</button>
 									<div class="table-responsive">
+										<small class="text-muted"><i><span class="text-danger">*</span> Tambahkan kolom input peserta sesuai dengan jumlah peserta</i></small>
 										<table class="table">
 											<thead>
 												<tr>
-													<th>No</th>
 													<th>Nama Peserta</th>
 													<th>Jabatan Peserta</th>
 													<th>Phone Peserta</th>
 													<th>Actions</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody id="viewpeserta">
 												<?php if (empty($peserta->result_array())) : ?>
 													<tr class="border-bottom">
-														<td colspan='5' class='text-center'>Data tidak ditemukan.</td>
+														<td colspan='4' class='text-center'>Data tidak ditemukan.</td>
 													</tr>
 												<?php else : ?>
 													<?php
-													$i = 1;
 													foreach ($peserta->result_array() as $a) :
 													?>
 														<tr>
-															<td><?= $i++; ?></td>
 															<td>
-																<?= $a['peserta_nama']; ?>
+																<input type="text" value="<?= $a['peserta_nama']; ?>" class="form-control" id="peserta_nama" name="peserta_nama[]">
+																<input type="hidden" value="<?= $a['id_peserta']; ?>" id="id_peserta" name="id_peserta[]">
 															</td>
 															<td>
-																<?= $a['peserta_jabatan']; ?>
+																<input type="text" value="<?= $a['peserta_jabatan']; ?>" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]">
 															</td>
 															<td>
-																<?= $a['peserta_phone']; ?>
+																<input type="text" value="<?= $a['peserta_phone']; ?>" class="form-control" id="peserta_phone" name="peserta_phone[]">
 															</td>
 															<td>
-																<button type="button" class="btn btn-sm btn-flat-warning EditPeserta" data-bs-toggle="modal" data-bs-target="#add-new-peserta-sidebar" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" data-id="<?= $a['id_peserta']; ?>">
-																	<i data-feather="edit-2" class="me-20"></i>
+																<button type="button" class="btn btn-sm btn-icon btn-icon rounded-circle btn-flat-success">
+																	<i data-feather="check"></i>
 																</button>
-																<a class="btn btn-sm btn-flat-danger Delete" href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" data-id="<?= $a['id_peserta']; ?>">
-																	<i data-feather="trash" class="me-20"></i>
-																</a>
 															</td>
 														</tr>
 													<?php endforeach; ?>
@@ -232,7 +232,7 @@
 												<div class="input-group input-group-merge mb-2">
 													<span class="input-group-text" id="basic-addon-search2"><i data-feather='calendar'></i></span>
 													<select name="m_visit_estimasi_order" id="m_visit_estimasi_order" class="form-select">
-														<option value="">- Pilih Quartal -</option>
+														<option value="<?= $data['m_visit_estimasi_order']; ?>"><?= $data['m_visit_estimasi_order']; ?></option>
 														<option value="Quartal 1">Quartal 1</option>
 														<option value="Quartal 2">Quartal 2</option>
 														<option value="Quartal 3">Quartal 3</option>
@@ -311,55 +311,15 @@
 							<div class="card">
 								<div class="card-body">
 									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Update</button>
-									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_id']); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
+									<a href="<?= base_url('Visit/Preview/' . $data['m_visit_history_id']); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
 								</div>
 							</div>
 						</div>
 						<!-- Invoice Add Right ends -->
 					</div>
 				</form>
-				<!-- Add New peserta Sidebar -->
-				<div class="modal modal-slide-in fade" id="add-new-peserta-sidebar" aria-hidden="true">
-					<div class="modal-dialog sidebar-lg">
-						<div class="modal-content p-0">
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">×</button>
-							<div class="modal-header mb-1">
-								<h5 class="modal-title">
-									<span class="align-middle" id="judulAdd">Add Peserta</span>
-									<span class="align-middle" id="judulEdit">Edit Peserta</span>
-								</h5>
-							</div>
-							<div class="modal-body flex-grow-1">
-								<form method="POST" id="formPeserta">
-									<div class="mb-1">
-										<label for="peserta_nama" class="form-label">Nama Peserta</label>
-										<input type="text" class="form-control" id="peserta_nama" name="peserta_nama" placeholder="Nama Peserta lengkap" />
-									</div>
-									<div class="mb-1 position-relative">
-										<label for="peserta_jabatan" class="form-label">Jabatan Peserta</label>
-										<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan" placeholder="Nama Jabatan Peserta" />
-									</div>
-									<div class="mb-1 position-relative">
-										<label for="peserta_phone" class="form-label">Phone Peserta</label>
-										<input type="number" class="form-control" id="peserta_phone" name="peserta_phone" placeholder="+62 812 3456 7890" />
-										<input type="hidden" value="<?= $data['m_visit_id']; ?>" id="m_visit_id" name="m_visit_id">
-										<input type="hidden" value="<?= $data['m_visit_history_id']; ?>" id="m_visit_history_id" name="m_visit_history_id">
-										<input type="hidden" value="<?= $data['m_visit_user_id']; ?>" id="m_visit_user_id" name="m_visit_user_id">
-										<input type="hidden" id="id_peserta" name="id_peserta">
-									</div>
-									<div class="mb-1 d-flex flex-wrap mt-2">
-										<button type="button" class="btn btn-primary me-1" id="tombol_tambah_peserta">Add</button>
-										<button type="button" class="btn btn-warning me-1" id="tombol_edit_peserta">Edit</button>
-										<button type="button" class="btn btn-outline-secondary Cancle" data-bs-dismiss="modal">Cancel</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- /Add New peserta Sidebar -->
 			</section>
-			<!-- Dashboard Ecommerce ends -->
+			<!-- history kunjungan -->
 			<div class="card">
 				<div class="card-header">
 					<h4 class="card-title">History Kunjungan "<b><?= $data['instansi_nama']; ?></b>"</h4>
@@ -420,12 +380,12 @@
 	</div>
 </div>
 <!-- END: Content-->
-<!-- refer and earn modal -->
+<!-- peserta modal -->
 <div class="modal fade" id="referEarnModal" tabindex="-1" aria-labelledby="referEarnTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered modal-lg modal-refer-earn">
 		<div class="modal-content">
 			<div class="modal-header bg-transparent">
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				<button type="button" class="btn-close closePreview" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
 				<div class="row">
@@ -479,7 +439,12 @@
 						</thead>
 						<tbody id="tampil">
 							<tr>
-								<td colspan='4' class="text-center">Data tidak ditemukan</td>
+								<td colspan='4' class="text-center">
+									<form method="POST" id="formtampilPeserta">
+										<input type="hidden" id="pesertaId" name="pesertaId">
+										<a href="#" type="button" class="btn btn-sm btn-primary" id="button-peserta">Tampilkan Data Peserta</a>
+									</form>
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -562,6 +527,7 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/app-invoice.js"></script>
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
+<script src="<?= base_url('assets'); ?>/js/geo-min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
@@ -593,7 +559,7 @@
 <script>
 	$(document).on("click", "#tombol_add", function() {
 		if (validasi2()) {
-			let data = $('#formTambahKunjungan').serialize();
+			let data = $('#formUpdateKunjungan').serialize();
 			$.ajax({
 				type: 'POST',
 				url: '<?= base_url('Visit/UpdateKunjungan'); ?>',
@@ -697,24 +663,42 @@
 </script>
 
 <script>
-	if ($("#user-location").length) {
-		var userLocation = L.map("user-location").setView([42.35, -71.08], 10);
-		userLocation.locate({
-			setView: true,
-			maxZoom: 18,
+	if (geo_position_js.init()) {
+		geo_position_js.getCurrentPosition(success_callback, error_callback, {
+			enableHighAccuracy: true
 		});
+	} else {
+		alert("Functionality not available");
+	}
 
-		function onLocationFound(e) {
-			L.marker(e.latlng)
-				.addTo(userLocation)
-				.bindPopup("You this here <b><?= $this->session->userdata('username'); ?></b> from this location")
-				.openPopup();
+	function success_callback(p) {
+		if ($("#user-location").length) {
+			var userLocation = L.map("user-location").setView([p.coords.latitude.toFixed(2), p.coords.longitude.toFixed(2)], 10);
+			userLocation.locate({
+				setView: true,
+				maxZoom: 18,
+			});
+
+			function onLocationFound(e) {
+				L.marker(e.latlng)
+					.addTo(userLocation)
+					.bindPopup("You this here <b><?= $this->session->userdata('username'); ?></b> from this location")
+					.openPopup();
+			}
+			userLocation.on("locationfound", onLocationFound);
+			L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+				attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+				maxZoom: 18,
+			}).addTo(userLocation);
 		}
-		userLocation.on("locationfound", onLocationFound);
-		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
-			maxZoom: 18,
-		}).addTo(userLocation);
+	}
+
+	function error_callback(p) {
+		Swal.fire({
+			icon: 'error',
+			title: 'GPS Tidak Aktif',
+			text: p.message,
+		});
 	}
 </script>
 
@@ -739,192 +723,17 @@
 </script>
 
 <script>
-	$(document).on("click", "#tombol_edit_peserta", function() {
-		if (validasipeserta()) {
-			let data = $('#formPeserta').serialize();
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('Visit/EditPeserta'); ?>',
-				data: data,
-				success: function(response) {
-					var data = JSON.parse(response);
-					if (data.success) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: data.msg,
-							showConfirmButton: false,
-							timer: 1500
-						});
-					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Error',
-							text: data.msg,
-							showConfirmButton: true,
-							timer: 2000
-						});
-					}
-					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
-					}, 2000);
-				}
-			});
-		}
-	});
-</script>
-
-<!-- add modal -->
-<script>
-	$(document).on("click", "#addpeserta", function() {
-		$('#judulAdd').show();
-		$('#tombol_tambah_peserta').show();
-		$('#judulEdit').hide();
-		$('#tombol_edit_peserta').hide();
-	});
-	$(document).on("click", "#tombol_tambah_peserta", function() {
-		if (validasipeserta()) {
-			let data = $('#formPeserta').serialize();
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('Visit/TambahPeserta'); ?>',
-				data: data,
-				success: function(response) {
-					var data = JSON.parse(response);
-					if (data.success) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: data.msg,
-							showConfirmButton: false,
-							timer: 1500
-						});
-					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Error',
-							text: data.msg,
-							showConfirmButton: true,
-							timer: 2000
-						});
-					}
-					setTimeout(() => {
-						window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
-					}, 2000);
-				}
-			});
-		}
-	});
-
-	function validasipeserta() {
-		let peserta_nama = document.getElementById("peserta_nama").value;
-		let peserta_jabatan = document.getElementById("peserta_jabatan").value;
-		let peserta_phone = document.getElementById("peserta_phone").value;
-		if ((peserta_nama == "") || (peserta_jabatan == "") || (peserta_phone == "")) {
-			if (peserta_phone == "") {
-				notif("Phone Peserta");
-			}
-			if (peserta_jabatan == "") {
-				notif("Jabatan Peserta");
-			}
-			if (peserta_nama == "") {
-				notif("Nama Peserta");
-			}
-		} else {
-			return true;
-		}
-	}
-</script>
-
-<!-- hapus peserta -->
-<script>
-	$(document).on("click", ".Delete", function() {
-		let id = $(this).data('id');
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "Hapus Permanent Data!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				$.ajax({
-					type: 'POST',
-					url: '<?= site_url('Visit/DeletePeserta') ?>',
-					data: {
-						id: id
-					},
-					success: function(response) {
-						let data = JSON.parse(response);
-						if (data.success) {
-							SweetAlert.fire({
-								icon: 'success',
-								title: 'Deleted!',
-								text: data.msg,
-								showConfirmButton: false,
-								timer: 1500
-							});
-						} else {
-							SweetAlert.fire({
-								icon: 'error',
-								title: 'Error',
-								text: data.msg,
-								showConfirmButton: false,
-								timer: 1500
-							});
-						}
-						setTimeout(() => {
-							window.location.assign('<?= site_url("Visit/ViewUpdate/" . $data['m_visit_id']); ?>');
-						}, 1500);
-					}
-				});
-			}
-		})
-	});
-</script>
-
-<!-- edit view -->
-<script>
-	$(document).on("click", ".EditPeserta", function() {
-		$('#judulAdd').hide();
-		$('#tombol_tambah_peserta').hide();
-		$('#judulEdit').show();
-		$('#tombol_edit_peserta').show();
-		let id = $(this).data('id');
-		$.ajax({
-			type: 'POST',
-			url: '<?= site_url('Visit/ViewPeserta') ?>',
-			data: {
-				id: id
-			},
-			success: function(response) {
-				let data = JSON.parse(response);
-				if (data.success) {
-					$('#id_peserta').val(data.id_peserta);
-					$('#peserta_nama').val(data.peserta_nama);
-					$('#peserta_jabatan').val(data.peserta_jabatan);
-					$('#peserta_phone').val(data.peserta_phone);
-				} else {
-					Swal.fire({
-						icon: 'warning',
-						title: 'Warning',
-						text: data.msg,
-						showConfirmButton: false,
-						timer: 1500
-					});
-				}
-			}
-		});
-	});
-</script>
-
-<script>
-	$(document).on("click", ".Cancle", function() {
-		$('#peserta_nama').val("");
-		$('#peserta_jabatan').val("");
-		$('#peserta_phone').val("");
+	$(document).on("click", ".closePreview", function() {
+		let tampilPeserta = "";
+		tampilPeserta += '<tr>' +
+			'<td colspan="4" class="text-center">' +
+			'<form method="POST" id="formtampilPeserta">' +
+			'<input type="hidden" id="pesertaId" name="pesertaId">' +
+			'<a href="#" type="button" class="btn btn-sm btn-primary" id="button-peserta">Tampilkan Data Peserta</a>' +
+			'</form>' +
+			'</td>' +
+			'</tr>'
+		$('#tampil').html(tampilPeserta);
 	});
 </script>
 
@@ -951,15 +760,7 @@
 					document.getElementById('jam_start').innerText = data.m_visit_jam_mulai;
 					document.getElementById('jam_end').innerText = data.m_visit_jam_selesai;
 					document.getElementById('userMkt').innerText = data.name_user;
-					// for (i = 0; i < data.peserta_nama; i++) {
-					// 	html += '<tr>' +
-					// 		'<td>' + [no++] + '</td>' +
-					// 		'<td>' + data.peserta_nama + '</td>' +
-					// 		'<td>' + data.peserta_jabatan + '</td>' +
-					// 		'<td>' + data.peserta_phone + '</td>' +
-					// 		'</tr>'
-					// }
-					// $('#tampil').html(html);
+					document.getElementById('pesertaId').value = data.m_visit_history_id;
 					document.getElementById('apbn').innerText = data.m_visit_anggaran_BUMN;
 					document.getElementById('prospek').innerText = data.m_visit_prospek;
 					document.getElementById('prognosa').innerText = data.m_visit_prognosa;
@@ -1006,6 +807,67 @@
 			}
 		});
 	});
+
+	$(document).on("click", "#button-peserta", function() {
+		let pesertaId = $('#formtampilPeserta').serialize();
+		let tampilPeserta = "";
+		no = 1;
+		$.ajax({
+			type: "post",
+			url: "<?= site_url('Visit/viewPesertaTable'); ?>",
+			data: pesertaId,
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.rows == "") {
+					tampilPeserta += '<tr>' +
+						'<td colspan="4" class="text-center"> Data tidak ditemukan </td>' +
+						'</tr>'
+				} else {
+					for (i = 0; i < data.rows.length; i++) {
+						tampilPeserta += '<tr>' +
+							'<td>' + [no++] + '</td>' +
+							'<td>' + data.rows[i].peserta_nama + '</td>' +
+							'<td>' + data.rows[i].peserta_jabatan + '</td>' +
+							'<td>' + data.rows[i].peserta_phone + '</td>' +
+							'</tr>'
+					}
+				}
+				$('#tampil').html(tampilPeserta);
+			}
+		});
+
+	})
 </script>
 
+<script>
+	$(document).ready(function(e) {
+		$('.btn-add-new').click(function(e) {
+			e.preventDefault();
+			$('#viewpeserta').append(
+				`<tr class="remove">
+				<td>
+					<input type="hidden" id="id_peserta" name="id_peserta[]">
+					<input type="text" class="form-control" id="peserta_nama" name="peserta_nama[]" placeholder="Nama Lengkap">
+				</td>
+				<td>
+					<input type="text" class="form-control" id="peserta_jabatan" name="peserta_jabatan[]" placeholder="Nama Jabatan Lengkap">
+				</td>
+				<td>
+					<input type="text" class="form-control" id="peserta_phone" name="peserta_phone[]" placeholder="+62 8123 456 789">
+				</td>
+				<td>
+					<button type="button" class="btn x btn-sm btn-icon btn-icon rounded-circle btn-danger">
+						<i data-feather="x"></i>
+					</button>
+				</td>
+			</tr>`
+			);
+		})
+	})
+
+	$(document).on('click', '.x', function(e) {
+		e.preventDefault();
+		$(this).parents('.remove').remove();
+	});
+</script>
 <?php $this->load->view('Components/v_bottom'); ?>

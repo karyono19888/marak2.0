@@ -59,19 +59,19 @@ class Visit extends CI_Controller
 		echo $this->record->Delete($id);
 	}
 
-	public function Preview($m_visit_id)
+	public function Preview($m_visit_history_id)
 	{
 		$data['title'] 	= 'Preview Kunjungan | Marak 2.0';
-		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_id);
-		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_id);
+		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_history_id);
+		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_history_id);
 		$this->load->view('Visit/v_preview', $data);
 	}
 
-	public function Edit($m_visit_id)
+	public function Edit($m_visit_history_id)
 	{
 		$data['title'] 	= 'Edit Kunjungan | Marak 2.0';
-		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_id);
-		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_id);
+		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_history_id);
+		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_history_id);
 		$this->load->view('Visit/v_edit', $data);
 	}
 
@@ -136,12 +136,12 @@ class Visit extends CI_Controller
 		echo $this->record->EditKunjungan($visit, $history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
 
-	public function ViewUpdate($m_visit_id)
+	public function ViewUpdate($m_visit_history_id)
 	{
 		$data['title'] 	= 'Update Kunjungan | Marak 2.0';
-		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_id);
-		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_id);
-		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
+		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_history_id);
+		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_history_id);
+		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_history_id);
 		$this->load->view('Visit/v_update', $data);
 	}
 
@@ -149,5 +149,38 @@ class Visit extends CI_Controller
 	{
 		$id = $this->input->post('id');
 		echo $this->record->ViewModalHistoryKunjungan($id);
+	}
+
+	public function viewPesertaTable()
+	{
+		$id = $this->input->post('pesertaId');
+		echo $this->record->viewPesertaTable($id);
+	}
+
+	public function UpdateKunjungan()
+	{
+		$id 							= $this->input->post('id');
+		$m_visit_prov 				= $this->input->post('m_visit_prov');
+		$m_visit_kab 				= $this->input->post('m_visit_kab');
+		$m_visit_instansi 		= $this->input->post('m_visit_instansi');
+		$m_visit_agenda 			= $this->input->post('m_visit_agenda');
+		$m_visit_jam_mulai 		= $this->input->post('m_visit_jam_mulai');
+		$m_visit_jam_selesai 	= $this->input->post('m_visit_jam_selesai');
+		$m_visit_tgl 				= $this->input->post('m_visit_tgl');
+		$id_peserta 				= $this->input->post('id_peserta');
+		$peserta_nama 				= $this->input->post('peserta_nama');
+		$peserta_jabatan 			= $this->input->post('peserta_jabatan');
+		$peserta_phone 			= $this->input->post('peserta_phone');
+		$m_visit_note 				= $this->input->post('m_visit_note');
+		$m_visit_anggaran_BUMN 	= $this->input->post('m_visit_anggaran_BUMN');
+		$m_visit_prospek 			= $this->input->post('m_visit_prospek');
+		$m_visit_prognosa 		= $this->input->post('m_visit_prognosa');
+		$m_visit_estimasi_order = $this->input->post('m_visit_estimasi_order');
+		$m_visit_estimasi_tahun = $this->input->post('m_visit_estimasi_tahun');
+		$m_visit_status 			= $this->input->post('m_visit_status');
+		$m_visit_koor_lat 		= $this->input->post('m_visit_koor_lat');
+		$m_visit_koor_long 		= $this->input->post('m_visit_koor_long');
+
+		echo $this->record->UpdateKunjungan($id, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $id_peserta, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
 }

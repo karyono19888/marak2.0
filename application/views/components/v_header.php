@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+<html class="loading" lang="en" data-textdirection="ltr" id="section-block">
 <!-- BEGIN: Head-->
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
-	<meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
-	<meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
-	<meta name="author" content="PIXINVENT">
+	<meta name="description" content="Marak Marketing aktivity, aplikasi aktivitas marketing &amp; modern responsive with unlimited possibilities.">
+	<meta name="keywords" content="Marak, Marakapp, marak, marakapp, marketing fokus, fokus indo lighting, pt fokus indo lighting, PT Fokus Indo Lighting, PT FOKUS INDO LIGHTING">
+	<meta name="author" content="Marak Marketing Activity">
 	<title><?= $title; ?></title>
 	<link rel="apple-touch-icon" href="<?= base_url('assets'); ?>/images/ico/apple-icon-120.png">
 	<link rel="shortcut icon" type="image/x-icon" href="<?= base_url('assets'); ?>/images/logo/favicon.ico">

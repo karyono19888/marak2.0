@@ -203,8 +203,8 @@
 						<div class="card">
 							<div class="card-body">
 								<a href="<?= base_url('Visit'); ?>" class="btn btn-primary w-100 mb-75"> Back</a>
-								<a class="btn btn-outline-secondary w-100 mb-75" href="<?= base_url('Visit/Edit/') . $data['m_visit_id']; ?>"> Edit </a>
-								<a class="btn btn-success w-100" href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_id']; ?>"> Update Kunjungan </a>
+								<a class="btn btn-outline-secondary w-100 mb-75" href="<?= base_url('Visit/Edit/') . $data['m_visit_history_id']; ?>"> Edit </a>
+								<a class="btn btn-success w-100" href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_history_id']; ?>"> Update Kunjungan </a>
 							</div>
 						</div>
 					</div>

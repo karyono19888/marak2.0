@@ -397,6 +397,7 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
 <script src="<?= base_url('assets'); ?>/js/scripts/pages/app-invoice.js"></script>
 <script src="<?= base_url('assets'); ?>/js/geolocation.js"></script>
+<script src="<?= base_url('assets'); ?>/js/geo-min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
 <script>
@@ -759,24 +760,42 @@
 </script>
 
 <script>
-	if ($("#user-location").length) {
-		var userLocation = L.map("user-location").setView([42.35, -71.08], 10);
-		userLocation.locate({
-			setView: true,
-			maxZoom: 18,
+	if (geo_position_js.init()) {
+		geo_position_js.getCurrentPosition(success_callback, error_callback, {
+			enableHighAccuracy: true
 		});
+	} else {
+		alert("Functionality not available");
+	}
 
-		function onLocationFound(e) {
-			L.marker(e.latlng)
-				.addTo(userLocation)
-				.bindPopup("You this here <b><?= $this->session->userdata('username'); ?></b> from this location")
-				.openPopup();
+	function success_callback(p) {
+		if ($("#user-location").length) {
+			var userLocation = L.map("user-location").setView([p.coords.latitude.toFixed(2), p.coords.longitude.toFixed(2)], 18);
+			userLocation.locate({
+				setView: true,
+				maxZoom: 18,
+			});
+
+			function onLocationFound(e) {
+				L.marker(e.latlng)
+					.addTo(userLocation)
+					.bindPopup("You this here <b><?= $this->session->userdata('username'); ?></b> from this location")
+					.openPopup();
+			}
+			userLocation.on("locationfound", onLocationFound);
+			L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+				attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+				maxZoom: 18,
+			}).addTo(userLocation);
 		}
-		userLocation.on("locationfound", onLocationFound);
-		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
-			maxZoom: 18,
-		}).addTo(userLocation);
+	}
+
+	function error_callback(p) {
+		Swal.fire({
+			icon: 'error',
+			title: 'GPS Tidak Aktif',
+			text: p.message,
+		});
 	}
 </script>
 

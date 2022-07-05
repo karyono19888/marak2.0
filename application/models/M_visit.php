@@ -136,7 +136,6 @@ class M_visit extends CI_Model
 		));
 
 		$result = array();
-		$detail = array();
 		foreach ($peserta_nama as $key => $val) {
 			$result[] = array(
 				'peserta_nama'  	=> $peserta_nama[$key],
@@ -178,11 +177,11 @@ class M_visit extends CI_Model
 		}
 	}
 
-	public function PreviewdataVisit($m_visit_id)
+	public function PreviewdataVisit($m_visit_history_id)
 	{
-		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('m_visit_history_id', $m_visit_history_id);
 		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
-		$this->db->from('m_visit as a');
+		$this->db->from('m_visit_history as a');
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
 		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
@@ -191,9 +190,9 @@ class M_visit extends CI_Model
 		return $query->row_array();
 	}
 
-	public function PreviewdataPeserta($m_visit_id)
+	public function PreviewdataPeserta($m_visit_history_id)
 	{
-		$this->db->where('id_visit', $m_visit_id);
+		$this->db->where('id_visit_history', $m_visit_history_id);
 		return $this->db->get('m_visit_peserta');
 	}
 
@@ -259,7 +258,7 @@ class M_visit extends CI_Model
 			'peserta_phone' 		=> $peserta_phone,
 			'id_visit'   			=> $m_visit_id,
 			'id_visit_history' 	=> $m_visit_history_id,
-			'created_at' 			=> time()
+			'updated_at' 			=> time()
 		));
 
 		$this->db->trans_complete();
@@ -325,10 +324,11 @@ class M_visit extends CI_Model
 		}
 	}
 
-	public function PreviewdataHistory($m_visit_id)
+	public function PreviewdataHistory($m_visit_history_id)
 	{
-		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('m_visit_history_id', $m_visit_history_id);
 		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->where('m_visit_user_id', $this->session->userdata('id_user'),);
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
 		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
@@ -350,6 +350,7 @@ class M_visit extends CI_Model
 			$row = $query->row();
 			return json_encode(array(
 				'success'         		=> true,
+				'm_visit_history_id'    => $row->m_visit_history_id,
 				'm_visit_agenda'    		=> $row->m_visit_agenda,
 				'm_visit_tgl'    			=> date('d F Y', strtotime($row->m_visit_tgl)),
 				'm_visit_jam_mulai' 		=> $row->m_visit_jam_mulai,
@@ -369,12 +370,127 @@ class M_visit extends CI_Model
 				'm_visit_status'   		=> $row->m_visit_status,
 				'm_visit_koor_lat'   	=> str_replace(",", ".", $row->m_visit_koor_lat),
 				'm_visit_koor_long'   	=> str_replace(",", ".", $row->m_visit_koor_long),
+				'id_peserta'   			=> $row->id_peserta,
 				'peserta_nama'   			=> $row->peserta_nama,
 				'peserta_jabatan'   		=> $row->peserta_jabatan,
 				'peserta_phone'   		=> $row->peserta_phone,
 			));
 		} else {
 			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
+		}
+	}
+
+	public function viewPesertaTable($id)
+	{
+		$this->db->where('id_visit_history', $id);
+		$query  = $this->db->get('m_visit_peserta');
+
+
+		$data = array();
+		foreach ($query->result() as $row) {
+			array_push($data, $row);
+		}
+
+		$result = array();
+		$result['rows']  = $data;
+
+
+		return json_encode($result);
+	}
+
+	public function UpdateKunjungan($id, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $id_peserta, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long)
+	{
+		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+		$now1 = date('Y-m-d', strtotime($m_visit_tgl));
+		$ref_date = strtotime($now1);
+		$week_of_year = date('W', $ref_date);
+		$now = date('Y-m-d H:i:s');
+
+		$this->db->trans_start();
+		$data = [
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Update'
+		];
+		$this->db->where('m_visit_id', $id);
+		$this->db->update('m_visit', $data);
+
+		$data2 = [
+			'm_visit_id'           	 => $id,
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Update'
+		];
+
+		$this->db->insert('m_visit_history', $data2);
+		$id_visit_history = $this->db->insert_id();
+
+		$this->db->insert('m_visit_group', array(
+			'history'   => $id_visit_history,
+			'visit'  	=> $id,
+		));
+
+		$this->db->where('m_visit_id', $id);
+		$dataid = [
+			'm_visit_history_id' => $id_visit_history,
+		];
+
+		$this->db->update('m_visit', $dataid);
+
+		$result = array();
+		foreach ($id_peserta as $key => $val) {
+			$result[] = array(
+				'id_peserta'  		=> $id_peserta[$key],
+				'peserta_nama'  	=> $peserta_nama[$key],
+				'peserta_jabatan' => $peserta_jabatan[$key],
+				'peserta_phone'   => $peserta_phone[$key],
+				'id_users'      	=> $this->session->userdata('id_user'),
+				'id_visit'      	=> $id,
+				'id_visit_history' => $id_visit_history,
+				'created_at'    	=> time(),
+			);
+		}
+		$this->db->insert_batch('m_visit_peserta', $result);
+
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Update data gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Update data berhasil!'));
 		}
 	}
 }
