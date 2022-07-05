@@ -157,7 +157,9 @@
 											</td>
 											<td class="text-center" width="20%">
 												<a href="<?= base_url('Visit/Preview/' . $key['m_visit_history_id']); ?>" type="button" class="btn btn-flat-warning btn-sm Edit">Preview</a>
-												<a href="#" type="button" class="btn btn-flat-danger btn-sm Delete" data-id="<?= $key['m_visit_id']; ?>">Delete</a>
+												<?php if ($this->session->userdata('role_user') == 1) : ?>
+													<a href="#" type="button" class="btn btn-flat-danger btn-sm Delete" data-id="<?= $key['m_visit_id']; ?>">Delete</a>
+												<?php endif; ?>
 											</td>
 										</tr>
 									<?php endforeach; ?>

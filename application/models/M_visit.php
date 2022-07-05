@@ -196,6 +196,25 @@ class M_visit extends CI_Model
 		return $this->db->get('m_visit_peserta');
 	}
 
+	public function PreviewdataUpdateVisit($m_visit_id)
+	{
+		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->from('m_visit_history as a');
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
+	public function PreviewdataUpdatePeserta($m_visit_history_id)
+	{
+		$this->db->where('id_visit_history', $m_visit_history_id);
+		return $this->db->get('m_visit_peserta');
+	}
+
 	public function TambahPeserta($m_visit_id, $m_visit_history_id, $m_visit_user_id, $peserta_nama, $peserta_jabatan, $peserta_phone)
 	{
 		$this->db->trans_start();
@@ -324,11 +343,11 @@ class M_visit extends CI_Model
 		}
 	}
 
-	public function PreviewdataHistory($m_visit_history_id)
+	public function PreviewdataHistory($m_visit_id)
 	{
-		$this->db->where('m_visit_history_id', $m_visit_history_id);
+		$this->db->where('m_visit_id', $m_visit_id);
 		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
-		$this->db->where('m_visit_user_id', $this->session->userdata('id_user'),);
+		$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
 		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
@@ -398,7 +417,7 @@ class M_visit extends CI_Model
 		return json_encode($result);
 	}
 
-	public function UpdateKunjungan($id, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $id_peserta, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long)
+	public function UpdateKunjungan($id, $id_history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long)
 	{
 		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
 		$now1 = date('Y-m-d', strtotime($m_visit_tgl));
@@ -464,6 +483,13 @@ class M_visit extends CI_Model
 			'visit'  	=> $id,
 		));
 
+		$datajadwal = [
+			'status'  				=> 'Visited',
+			'date_visit_done'  	=> $m_visit_tgl,
+		];
+		$this->db->where('vis_his_id', $id_history);
+		$this->db->update('m_jadwal_kunjungan', $datajadwal);
+
 		$this->db->where('m_visit_id', $id);
 		$dataid = [
 			'm_visit_history_id' => $id_visit_history,
@@ -472,9 +498,8 @@ class M_visit extends CI_Model
 		$this->db->update('m_visit', $dataid);
 
 		$result = array();
-		foreach ($id_peserta as $key => $val) {
+		foreach ($peserta_nama as $key => $val) {
 			$result[] = array(
-				'id_peserta'  		=> $id_peserta[$key],
 				'peserta_nama'  	=> $peserta_nama[$key],
 				'peserta_jabatan' => $peserta_jabatan[$key],
 				'peserta_phone'   => $peserta_phone[$key],

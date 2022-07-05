@@ -23,6 +23,7 @@
 					<th>Actions</th>
 				</tr>
 			</thead>
+
 			<tbody>
 				<?php
 				$i = 1;
@@ -58,14 +59,16 @@
 							<div class="btn-group" role="group" aria-label="Basic example">
 								<?php if ($key['status'] == "Planning") : ?>
 									<a href="<?= base_url('Jadwal/Edit/' . $key['id_jadwal']); ?>" type="button" class="btn btn-outline-warning btn-sm">Edit</a>
-									<button type="button" class="btn btn-outline-danger btn-sm Hapus" data-id="<?= $key['id_jadwal']; ?>">Delete</button>
+									<?php if ($this->session->userdata('role_user') == 1) : ?>
+										<button type="button" class="btn btn-outline-danger btn-sm Hapus" data-id="<?= $key['id_jadwal']; ?>">Delete</button>
+									<?php endif; ?>
 								<?php else : ?>
-									<button type="button" class="btn btn-outline-info btn-sm Result viewResult" data-id="<?= $key['id_jadwal']; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">View Result</button>
+									<button type="button" class="btn btn-outline-info btn-sm Result viewResult" data-id="<?= $key['id_jadwal']; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Preview</button>
 								<?php endif; ?>
 								<?php if ($key['status'] == "Planning") : ?>
 									<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Actions</button>
 									<div class="dropdown-menu dropdown-menu-end">
-										<a class="dropdown-item" href="<?= $key['visit_id'] == 0 ? '' . base_url('Visit/Tambah') . '' : '' . base_url('Visit/Update/' . $key['visit_id']) . '' ?>">
+										<a class="dropdown-item" href="<?= $key['visit_id'] == 0 ? '' . base_url('Jadwal/tambahBaruKunjungan/' . $key['id_jadwal']) . '' : '' . base_url('Visit/ViewUpdate/' . $key['visit_id']) . '' ?>">
 											<span class="text-info">Visited</span>
 										</a>
 										<a class="dropdown-item Notvisited" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-id="<?= $key['id_jadwal']; ?>">
@@ -192,7 +195,6 @@
 	$(document).on("click", "#tombol_simpan", function() {
 		if (validasiupdate()) {
 			let data = $('#formResult').serialize();
-			alert(data);
 			$.ajax({
 				type: 'POST',
 				url: '<?= site_url('Jadwal/ResultSimpan') ?>',

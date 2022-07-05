@@ -22,6 +22,7 @@
 							<textarea name="alamatinstansi" id="alamatinstansi" cols="30" rows="2" class="form-control" readonly><?= $data['instansi_alamat']; ?></textarea>
 						</div>
 						<input type="hidden" id="m_visit_id" name="m_visit_id" value="<?= $data['m_visit_id'] ?>">
+						<input type="hidden" id="m_visit_history_id" name="m_visit_history_id" value="<?= $data['m_visit_history_id'] ?>">
 						<div class="col-sm-6">
 							<label class="form-label" for="date_visit">Tanggal <span class="text-danger">*</span></label>
 							<div class="input-group input-group-merge">

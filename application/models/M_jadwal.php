@@ -11,13 +11,17 @@ class M_jadwal extends CI_Model
 	public function dataJadwalKunjungan()
 	{
 		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(date_visit)', date('Y'));
 			$this->db->join('users', 'id_user=user_id', 'left');
 			$this->db->join('m_instansi as a', 'a.instansi_id=instansi', 'left');
+			$this->db->order_by('date_visit', 'desc');
 			$query = $this->db->get('m_jadwal_kunjungan');
 		} else {
 			$this->db->where('user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(date_visit)', date('Y'));
 			$this->db->join('users', 'id_user=user_id', 'left');
 			$this->db->join('m_instansi as a', 'a.instansi_id=instansi', 'left');
+			$this->db->order_by('date_visit', 'desc');
 			$query = $this->db->get('m_jadwal_kunjungan');
 		}
 		return $query;
@@ -74,12 +78,13 @@ class M_jadwal extends CI_Model
 		}
 	}
 
-	public function TambahJadwalUpdate($instansi_id, $m_visit_id, $date_visit, $time, $type_alamat, $type_act, $acara)
+	public function TambahJadwalUpdate($instansi_id, $m_visit_id, $m_visit_history_id, $date_visit, $time, $type_alamat, $type_act, $acara)
 	{
 		$this->db->trans_start();
 		$this->db->insert('m_jadwal_kunjungan', array(
 			'user_id'  		=> $this->session->userdata('id_user'),
 			'visit_id'		=> $m_visit_id,
+			'vis_his_id'	=> $m_visit_history_id,
 			'type_act'  	=> $type_act,
 			'type_alamat'  => $type_alamat,
 			'instansi'  	=> $instansi_id,
@@ -346,6 +351,118 @@ class M_jadwal extends CI_Model
 			return json_encode(array('success' => false, 'msg' => 'Updated Result Gagal!'));
 		} else {
 			return json_encode(array('success' => true, 'msg' => 'Updated Result Success!'));
+		}
+	}
+
+	public function dataTambahBaruKunjungan($id_jadwal)
+	{
+		$this->db->where('id_jadwal', $id_jadwal);
+		$this->db->where('YEAR(date_visit)', date('Y'));
+		$this->db->from('m_jadwal_kunjungan as a');
+		$this->db->join('m_instansi', 'instansi_id=instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'user_id=id_user', 'left');
+		return $this->db->get()->row_array();
+	}
+
+	public function SimpanKunjungan($id_jadwal, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long)
+	{
+		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+		$now1 = date('Y-m-d', strtotime($m_visit_tgl));
+		$ref_date = strtotime($now1);
+		$week_of_year = date('W', $ref_date);
+		$now = date('Y-m-d H:i:s');
+		$this->db->trans_start();
+		$data = [
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Add'
+		];
+		$this->db->insert('m_visit', $data);
+		$id_visit = $this->db->insert_id();
+
+		$data2 = [
+			'm_visit_id'           	 => $id_visit,
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Add'
+		];
+		$this->db->insert('m_visit_history', $data2);
+		$id_visit_history = $this->db->insert_id();
+
+		$this->db->insert('m_visit_group', array(
+			'history'   => $id_visit_history,
+			'visit'  			=> $id_visit,
+		));
+
+		$result = array();
+		foreach ($peserta_nama as $key => $val) {
+			$result[] = array(
+				'peserta_nama'  	=> $peserta_nama[$key],
+				'peserta_jabatan' => $peserta_jabatan[$key],
+				'peserta_phone'   => $peserta_phone[$key],
+				'id_users'      	=> $this->session->userdata('id_user'),
+				'id_visit'      	=> $id_visit,
+				'id_visit_history' => $id_visit_history,
+				'created_at'    	=> time(),
+			);
+		}
+		$this->db->insert_batch('m_visit_peserta', $result);
+
+		$this->db->where('m_visit_id', $id_visit);
+		$dataid = [
+			'm_visit_history_id' => $id_visit_history,
+		];
+		$this->db->update('m_visit', $dataid);
+
+		$datajadwal = [
+			'visit_id'  			=> $id_visit,
+			'vis_his_id'  			=> $id_visit_history,
+			'status'  				=> 'Visited',
+			'date_visit_done'  	=> $m_visit_tgl,
+		];
+		$this->db->where('id_jadwal', $id_jadwal);
+		$this->db->update('m_jadwal_kunjungan', $datajadwal);
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Input data gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Input data berhasil!'));
 		}
 	}
 

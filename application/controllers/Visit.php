@@ -136,12 +136,13 @@ class Visit extends CI_Controller
 		echo $this->record->EditKunjungan($visit, $history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
 
-	public function ViewUpdate($m_visit_history_id)
+	public function ViewUpdate($m_visit_id)
 	{
 		$data['title'] 	= 'Update Kunjungan | Marak 2.0';
-		$data['data'] 		= $this->record->PreviewdataVisit($m_visit_history_id);
-		$data['peserta'] 	= $this->record->PreviewdataPeserta($m_visit_history_id);
-		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_history_id);
+		$id = $this->db->get_where('m_visit', ['m_visit_id' => $m_visit_id])->row_array();
+		$data['data'] 		= $this->record->PreviewdataUpdateVisit($m_visit_id);
+		$data['peserta'] 	= $this->record->PreviewdataUpdatePeserta($id['m_visit_history_id']);
+		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
 		$this->load->view('Visit/v_update', $data);
 	}
 
@@ -160,6 +161,7 @@ class Visit extends CI_Controller
 	public function UpdateKunjungan()
 	{
 		$id 							= $this->input->post('id');
+		$id_history 				= $this->input->post('id_history');
 		$m_visit_prov 				= $this->input->post('m_visit_prov');
 		$m_visit_kab 				= $this->input->post('m_visit_kab');
 		$m_visit_instansi 		= $this->input->post('m_visit_instansi');
@@ -167,7 +169,6 @@ class Visit extends CI_Controller
 		$m_visit_jam_mulai 		= $this->input->post('m_visit_jam_mulai');
 		$m_visit_jam_selesai 	= $this->input->post('m_visit_jam_selesai');
 		$m_visit_tgl 				= $this->input->post('m_visit_tgl');
-		$id_peserta 				= $this->input->post('id_peserta');
 		$peserta_nama 				= $this->input->post('peserta_nama');
 		$peserta_jabatan 			= $this->input->post('peserta_jabatan');
 		$peserta_phone 			= $this->input->post('peserta_phone');
@@ -181,6 +182,6 @@ class Visit extends CI_Controller
 		$m_visit_koor_lat 		= $this->input->post('m_visit_koor_lat');
 		$m_visit_koor_long 		= $this->input->post('m_visit_koor_long');
 
-		echo $this->record->UpdateKunjungan($id, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $id_peserta, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
+		echo $this->record->UpdateKunjungan($id, $id_history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
 }

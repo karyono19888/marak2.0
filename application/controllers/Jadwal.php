@@ -14,12 +14,12 @@ class Jadwal extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 		= 'Jadwal Kunjungan | Marak 2.0';
-		$data['total'] 		= $this->record->totalRencanaKunjungan();
-		$data['totalplan'] 	= $this->record->totalPlanning();
+		$data['title'] 			= 'Jadwal Kunjungan | Marak 2.0';
+		$data['total'] 			= $this->record->totalRencanaKunjungan();
+		$data['totalplan'] 		= $this->record->totalPlanning();
 		$data['totalvisited'] 	= $this->record->totalVisited();
 		$data['totalnotvisit'] 	= $this->record->totalNotVisited();
-		$data['jadwal'] 		= $this->record->dataJadwalKunjungan();
+		$data['jadwal'] 			= $this->record->dataJadwalKunjungan();
 		$this->load->view('Jadwal/v_index', $data);
 	}
 
@@ -89,15 +89,16 @@ class Jadwal extends CI_Controller
 
 	public function TambahJadwalUpdate()
 	{
-		$instansi_id 	= $this->input->post('instansi');
-		$m_visit_id 	= $this->input->post('m_visit_id');
-		$date_visit 	= $this->input->post('date_visit');
-		$time 			= $this->input->post('time');
-		$type_alamat 	= $this->input->post('type_alamat');
-		$type_act 		= $this->input->post('type_act');
-		$acara 			= $this->input->post('acara');
+		$instansi_id 			= $this->input->post('instansi');
+		$m_visit_id 			= $this->input->post('m_visit_id');
+		$m_visit_history_id 	= $this->input->post('m_visit_history_id');
+		$date_visit 			= $this->input->post('date_visit');
+		$time 					= $this->input->post('time');
+		$type_alamat 			= $this->input->post('type_alamat');
+		$type_act 				= $this->input->post('type_act');
+		$acara 					= $this->input->post('acara');
 
-		echo $this->record->TambahJadwalUpdate($instansi_id, $m_visit_id, $date_visit, $time, $type_alamat, $type_act, $acara);
+		echo $this->record->TambahJadwalUpdate($instansi_id, $m_visit_id, $m_visit_history_id, $date_visit, $time, $type_alamat, $type_act, $acara);
 	}
 
 	public function Delete()
@@ -174,5 +175,38 @@ class Jadwal extends CI_Controller
 		$notvisited = $this->input->post('notvisited');
 
 		echo $this->record->ResultSimpan($id_jadwal, $notvisited);
+	}
+
+	public function tambahBaruKunjungan($id_jadwal)
+	{
+		$data['title'] = 'Tambah Kunjungan | Marak 2.0';
+		$data['data'] = $this->record->dataTambahBaruKunjungan($id_jadwal);
+		$this->load->view('Jadwal/v_tambah_kunjungan_save', $data);
+	}
+
+	public function SimpanKunjungan()
+	{
+		$id_jadwal 					= $this->input->post('id_jadwal');
+		$m_visit_prov 				= $this->input->post('m_visit_prov');
+		$m_visit_kab 				= $this->input->post('m_visit_kab');
+		$m_visit_instansi 		= $this->input->post('m_visit_instansi');
+		$m_visit_agenda 			= $this->input->post('m_visit_agenda');
+		$m_visit_jam_mulai 		= $this->input->post('m_visit_jam_mulai');
+		$m_visit_jam_selesai 	= $this->input->post('m_visit_jam_selesai');
+		$m_visit_tgl 				= $this->input->post('m_visit_tgl');
+		$peserta_nama 				= $this->input->post('peserta_nama');
+		$peserta_jabatan 			= $this->input->post('peserta_jabatan');
+		$peserta_phone 			= $this->input->post('peserta_phone');
+		$m_visit_note 				= $this->input->post('m_visit_note');
+		$m_visit_anggaran_BUMN 	= $this->input->post('m_visit_anggaran_BUMN');
+		$m_visit_prospek 			= $this->input->post('m_visit_prospek');
+		$m_visit_prognosa 		= $this->input->post('m_visit_prognosa');
+		$m_visit_estimasi_order = $this->input->post('m_visit_estimasi_order');
+		$m_visit_estimasi_tahun = $this->input->post('m_visit_estimasi_tahun');
+		$m_visit_status 			= $this->input->post('m_visit_status');
+		$m_visit_koor_lat 		= $this->input->post('m_visit_koor_lat');
+		$m_visit_koor_long 		= $this->input->post('m_visit_koor_long');
+
+		echo $this->record->SimpanKunjungan($id_jadwal, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
 }

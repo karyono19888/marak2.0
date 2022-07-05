@@ -71,5 +71,5 @@
 	</div>
 	<!-- END: Content-->
 
-	<?php $this->load->view('Auth/Layouts/auth_footer'); ?>
-	<?php $this->load->view('Auth/Layouts/auth_buttom'); ?>
+	<?php $this->load->view('Auth/layouts/auth_footer'); ?>
+	<?php $this->load->view('Auth/layouts/auth_buttom'); ?>

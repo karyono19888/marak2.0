@@ -108,17 +108,32 @@ class M_user extends CI_Model
 
 	public function Update($id_user, $role_user, $name_user, $username, $password_user, $is_active)
 	{
-		$this->db->select('username');
-		$this->db->where('username', $username);
-		$query  = $this->db->get('users');
-		$row = $query->num_rows();
-		if ($row > 0) {
-			return json_encode(array('success' => false, 'msg' => 'Update data gagal, username sudah ada!'));
+		if ($role_user == 1) {
+			return json_encode(array('success' => false, 'msg' => 'Gagal!, Administrator tidak bisa di edit!'));
 		} else {
-			if ($role_user == 1) {
-				return json_encode(array('success' => false, 'msg' => 'Gagal!, Administrator tidak bisa di edit!'));
+			if ($password_user == "") {
+				$this->db->trans_start();
+				$this->db->where('id_user', $id_user);
+				$this->db->update('users', array(
+					'name_user'       => $name_user,
+					'username'        => htmlspecialchars($username),
+					'nickname'			=> substr($name_user, 0, 5),
+					'image_user' 		=> 'https://ui-avatars.com/api/?name=' . $name_user . '',
+					'role_user'   		=> $role_user,
+					'is_active' 		=> $is_active,
+					'updated_at' 		=> time()
+				));
+
+				$this->db->trans_complete();
+				if ($this->db->trans_status() === FALSE) {
+					return json_encode(array('success' => false, 'msg' => 'Update User gagal!'));
+				} else {
+					return json_encode(array('success' => true, 'msg' => 'Update User berhasil!'));
+				}
 			} else {
-				if ($password_user == "") {
+				if (strlen($password_user) <= 6) {
+					return json_encode(array('success' => false, 'msg' => 'Gagal!, Password terlalu pendek, min 6 karakter!'));
+				} else {
 					$this->db->trans_start();
 					$this->db->where('id_user', $id_user);
 					$this->db->update('users', array(
@@ -126,6 +141,7 @@ class M_user extends CI_Model
 						'username'        => htmlspecialchars($username),
 						'nickname'			=> substr($name_user, 0, 5),
 						'image_user' 		=> 'https://ui-avatars.com/api/?name=' . $name_user . '',
+						'password_user' 	=> password_hash($password_user, PASSWORD_DEFAULT),
 						'role_user'   		=> $role_user,
 						'is_active' 		=> $is_active,
 						'updated_at' 		=> time()
@@ -136,30 +152,6 @@ class M_user extends CI_Model
 						return json_encode(array('success' => false, 'msg' => 'Update User gagal!'));
 					} else {
 						return json_encode(array('success' => true, 'msg' => 'Update User berhasil!'));
-					}
-				} else {
-					if (strlen($password_user) <= 6) {
-						return json_encode(array('success' => false, 'msg' => 'Gagal!, Password terlalu pendek, min 6 karakter!'));
-					} else {
-						$this->db->trans_start();
-						$this->db->where('id_user', $id_user);
-						$this->db->update('users', array(
-							'name_user'       => $name_user,
-							'username'        => htmlspecialchars($username),
-							'nickname'			=> substr($name_user, 0, 5),
-							'image_user' 		=> 'https://ui-avatars.com/api/?name=' . $name_user . '',
-							'password_user' 	=> password_hash($password_user, PASSWORD_DEFAULT),
-							'role_user'   		=> $role_user,
-							'is_active' 		=> $is_active,
-							'updated_at' 		=> time()
-						));
-
-						$this->db->trans_complete();
-						if ($this->db->trans_status() === FALSE) {
-							return json_encode(array('success' => false, 'msg' => 'Update User gagal!'));
-						} else {
-							return json_encode(array('success' => true, 'msg' => 'Update User berhasil!'));
-						}
 					}
 				}
 			}
