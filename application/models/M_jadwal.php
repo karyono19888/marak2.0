@@ -467,4 +467,140 @@ class M_jadwal extends CI_Model
 		}
 	}
 
+	public function PreviewdataUpdateVisit($m_visit_id)
+	{
+		$this->db->where('m_visit_history_id', $m_visit_id);
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->from('m_visit_history as a');
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
+		$query = $this->db->get();
+		return $query->row_array();
+	}
+
+	public function PreviewdataUpdatePeserta($m_visit_history_id)
+	{
+		$this->db->where('id_visit_history', $m_visit_history_id);
+		return $this->db->get('m_visit_peserta');
+	}
+
+	public function PreviewdataHistory($m_visit_id)
+	{
+		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
+		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
+		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
+		$this->db->order_by('m_visit_tgl', 'desc');
+		return $this->db->get('m_visit_history');
+	}
+
+	public function UpdateSimpanKunjungan($id, $id_history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long)
+	{
+		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+		$now1 = date('Y-m-d', strtotime($m_visit_tgl));
+		$ref_date = strtotime($now1);
+		$week_of_year = date('W', $ref_date);
+		$now = date('Y-m-d H:i:s');
+
+		$this->db->trans_start();
+		$data = [
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Update'
+		];
+		$this->db->where('m_visit_id', $id);
+		$this->db->update('m_visit', $data);
+
+		$data2 = [
+			'm_visit_id'           	 => $id,
+			'm_visit_prov'           => $m_visit_prov,
+			'm_visit_kab'            => $m_visit_kab,
+			'm_visit_instansi'       => $m_visit_instansi,
+			'm_visit_agenda'         => $m_visit_agenda,
+			'm_visit_jam_mulai'      => $m_visit_jam_mulai,
+			'm_visit_jam_selesai'    => $m_visit_jam_selesai,
+			'm_visit_tgl'            => $m_visit_tgl,
+			'm_visit_week'           => $week_of_year,
+			'm_visit_user_id'        => $this->session->userdata('id_user'),
+			'm_visit_note'           => $m_visit_note,
+			'm_visit_anggaran_BUMN'  => str_replace(",", "", $m_visit_anggaran_BUMN),
+			'm_visit_prospek'        => str_replace(",", "", $m_visit_prospek),
+			'm_visit_prognosa'       => str_replace(",", "", $m_visit_prognosa),
+			'm_visit_estimasi_order' => $m_visit_estimasi_order,
+			'm_visit_estimasi_tahun' => $m_visit_estimasi_tahun,
+			'm_visit_status'         => $m_visit_status,
+			'm_visit_koor_lat'       => str_replace(",", ".", $m_visit_koor_lat),
+			'm_visit_koor_long'      => str_replace(",", ".", $m_visit_koor_long),
+			'm_visit_date_created'   => $now,
+			'm_visit_history'        => 'Update'
+		];
+
+		$this->db->insert('m_visit_history', $data2);
+		$id_visit_history = $this->db->insert_id();
+
+		$this->db->insert('m_visit_group', array(
+			'history'   => $id_visit_history,
+			'visit'  	=> $id,
+		));
+
+		$this->db->where('m_visit_id', $id);
+		$dataid = [
+			'm_visit_history_id' => $id_visit_history,
+		];
+
+		$this->db->update('m_visit', $dataid);
+
+		$result = array();
+		foreach ($peserta_nama as $key => $val) {
+			$result[] = array(
+				'peserta_nama'  	=> $peserta_nama[$key],
+				'peserta_jabatan' => $peserta_jabatan[$key],
+				'peserta_phone'   => $peserta_phone[$key],
+				'id_users'      	=> $this->session->userdata('id_user'),
+				'id_visit'      	=> $id,
+				'id_visit_history' => $id_visit_history,
+				'created_at'    	=> time(),
+			);
+		}
+		$this->db->insert_batch('m_visit_peserta', $result);
+
+		$datajadwal = [
+			'done_visit_id'  			=> $id,
+			'done_visit_history_id' => $id_visit_history,
+			'status'  					=> 'Visited',
+			'date_visit_done'  		=> $m_visit_tgl,
+		];
+		$this->db->where('vis_his_id', $id_history);
+		$this->db->update('m_jadwal_kunjungan', $datajadwal);
+
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Update data gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Update data berhasil!'));
+		}
+	}
+
 }

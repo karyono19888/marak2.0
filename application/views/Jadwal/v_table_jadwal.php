@@ -80,7 +80,7 @@
 								<?php if ($key['status'] == "Planning") : ?>
 									<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Actions</button>
 									<div class="dropdown-menu dropdown-menu-end">
-										<a class="dropdown-item" href="<?= $key['visit_id'] == 0 ? '' . base_url('Jadwal/tambahBaruKunjungan/' . $key['id_jadwal']) . '' : '' . base_url('Visit/ViewUpdate/' . $key['visit_id']) . '' ?>">
+										<a class="dropdown-item" href="<?= $key['visit_id'] == 0 ? '' . base_url('Jadwal/tambahBaruKunjungan/' . $key['id_jadwal']) . '' : '' . base_url('Jadwal/ViewUpdateKunjungan/' . $key['visit_id']) . '' ?>">
 											<span class="text-info">Visited</span>
 										</a>
 										<a class="dropdown-item Notvisited" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-id="<?= $key['id_jadwal']; ?>">

@@ -209,4 +209,41 @@ class Jadwal extends CI_Controller
 
 		echo $this->record->SimpanKunjungan($id_jadwal, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
 	}
+
+	public function ViewUpdateKunjungan($m_visit_id)
+	{
+		$data['title'] 	= 'Update Kunjungan | Marak 2.0';
+		$id = $this->db->get_where('m_visit', ['m_visit_id' => $m_visit_id])->row_array();
+		$data['data'] 		= $this->record->PreviewdataUpdateVisit($id['m_visit_history_id']);
+		$data['peserta'] 	= $this->record->PreviewdataUpdatePeserta($id['m_visit_history_id']);
+		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
+		$this->load->view('Jadwal/v_updatekunjungan', $data);
+	}
+
+	public function UpdateSimpanKunjungan()
+	{
+		$id 							= $this->input->post('id');
+		$id_history 				= $this->input->post('id_history');
+		$m_visit_prov 				= $this->input->post('m_visit_prov');
+		$m_visit_kab 				= $this->input->post('m_visit_kab');
+		$m_visit_instansi 		= $this->input->post('m_visit_instansi');
+		$m_visit_agenda 			= $this->input->post('m_visit_agenda');
+		$m_visit_jam_mulai 		= $this->input->post('m_visit_jam_mulai');
+		$m_visit_jam_selesai 	= $this->input->post('m_visit_jam_selesai');
+		$m_visit_tgl 				= $this->input->post('m_visit_tgl');
+		$peserta_nama 				= $this->input->post('peserta_nama');
+		$peserta_jabatan 			= $this->input->post('peserta_jabatan');
+		$peserta_phone 			= $this->input->post('peserta_phone');
+		$m_visit_note 				= $this->input->post('m_visit_note');
+		$m_visit_anggaran_BUMN 	= $this->input->post('m_visit_anggaran_BUMN');
+		$m_visit_prospek 			= $this->input->post('m_visit_prospek');
+		$m_visit_prognosa 		= $this->input->post('m_visit_prognosa');
+		$m_visit_estimasi_order = $this->input->post('m_visit_estimasi_order');
+		$m_visit_estimasi_tahun = $this->input->post('m_visit_estimasi_tahun');
+		$m_visit_status 			= $this->input->post('m_visit_status');
+		$m_visit_koor_lat 		= $this->input->post('m_visit_koor_lat');
+		$m_visit_koor_long 		= $this->input->post('m_visit_koor_long');
+
+		echo $this->record->UpdateSimpanKunjungan($id, $id_history, $m_visit_prov, $m_visit_kab, $m_visit_instansi, $m_visit_agenda, $m_visit_jam_mulai, $m_visit_jam_selesai, $m_visit_tgl, $peserta_nama, $peserta_jabatan, $peserta_phone, $m_visit_note, $m_visit_anggaran_BUMN, $m_visit_prospek, $m_visit_prognosa, $m_visit_estimasi_order, $m_visit_estimasi_tahun, $m_visit_status, $m_visit_koor_lat, $m_visit_koor_long);
+	}
 }
