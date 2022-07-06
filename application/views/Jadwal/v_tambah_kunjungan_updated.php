@@ -11,51 +11,51 @@
 						<div class="alert alert-warning" role="alert">
 							<div class="alert-body"><strong>Perhatian!</strong> Pastikan data Instansi/ Swasta/ Perorangan sudah terdaftar pada Menu Data Instansi.</div>
 						</div>
-						<div class="col-12">
+						<div class="col-sm-8">
 							<label class="form-label" for="instansi">Instansi/ Swasta/ Perorangan<span class="text-danger">*</span></label>
 							<select id="instansi" name="instansi" class="form-select select2" aria-label="Default select example">
 								<option value="<?= $data['instansi_id']; ?>"><?= $data['instansi_nama']; ?></option>
 							</select>
 						</div>
-						<div class="col-12">
+						<div class="col-sm-8">
 							<label class="form-label" for="instansi">Alamat<span class="text-danger">*</span></label>
 							<textarea name="alamatinstansi" id="alamatinstansi" cols="30" rows="2" class="form-control" readonly><?= $data['instansi_alamat']; ?></textarea>
 						</div>
 						<input type="hidden" id="m_visit_id" name="m_visit_id" value="<?= $data['m_visit_id'] ?>">
 						<input type="hidden" id="m_visit_history_id" name="m_visit_history_id" value="<?= $data['m_visit_history_id'] ?>">
-						<div class="col-sm-6">
-							<label class="form-label" for="date_visit">Tanggal <span class="text-danger">*</span></label>
-							<div class="input-group input-group-merge">
-								<span class="input-group-text"><i data-feather="calendar"></i></span>
-								<input type="date" id="date_visit" class="form-control" name="date_visit" placeholder="First Name" />
+						<div class="row mt-1">
+							<div class="col-sm-3">
+								<label class="form-label" for="date_visit">Tanggal <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<input type="date" id="date_visit" class="form-control" name="date_visit" placeholder="First Name" />
+								</div>
 							</div>
-						</div>
-						<div class="col-sm-4">
-							<label class="form-label" for="time">Jam <span class="text-danger">*</span></label>
-							<div class="input-group input-group-merge">
-								<span class="input-group-text"><i data-feather="clock"></i></span>
-								<input type="time" id="time" class="form-control" name="time" placeholder="First Name" />
+							<div class="col-sm-3">
+								<label class="form-label" for="time">Jam <span class="text-danger">*</span></label>
+								<div class="input-group">
+									<input type="time" id="time" class="form-control" name="time" placeholder="First Name" />
+								</div>
 							</div>
-						</div>
-						<div class="col-12 col-md-6">
-							<label class="form-label" for="type_alamat">Alamat Kunjungan<span class="text-danger">*</span></label>
-							<select id="type_alamat" name="type_alamat" class="form-select" aria-label="Default select example">
-								<option value="">- Pilih -</option>
-								<option value="Alamat Kantor">Alamat Kantor</option>
-								<option value="Alamat Rumah">Alamat Rumah</option>
-								<option value="Alamat Lain">Alamat lain</option>
-							</select>
-						</div>
-						<div class="col-12 col-md-6">
-							<label class="form-label" for="type_act">Activity<span class="text-danger">*</span></label>
-							<select id="type_act" name="type_act" class="form-select" aria-label="Default select example">
-								<option value="">- Pilih -</option>
-								<option value="Kunjungan Langsung">Kunjungan Langsung</option>
-								<option value="By Phone">By Phone</option>
-								<option value="Meet Online">Meet Online</option>
-								<option value="Email">Email</option>
-								<option value="lainnya">lainnya</option>
-							</select>
+							<div class="col-sm-3">
+								<label class="form-label" for="type_alamat">Alamat Kunjungan<span class="text-danger">*</span></label>
+								<select id="type_alamat" name="type_alamat" class="form-select" aria-label="Default select example">
+									<option value="">- Pilih -</option>
+									<option value="Alamat Kantor">Alamat Kantor</option>
+									<option value="Alamat Rumah">Alamat Rumah</option>
+									<option value="Alamat Lain">Alamat lain</option>
+								</select>
+							</div>
+							<div class="col-sm-3">
+								<label class="form-label" for="type_act">Activity<span class="text-danger">*</span></label>
+								<select id="type_act" name="type_act" class="form-select" aria-label="Default select example">
+									<option value="">- Pilih -</option>
+									<option value="Kunjungan Langsung">Kunjungan Langsung</option>
+									<option value="By Phone">By Phone</option>
+									<option value="Meet Online">Meet Online</option>
+									<option value="Email">Email</option>
+									<option value="lainnya">lainnya</option>
+								</select>
+							</div>
 						</div>
 						<div class="col-12 mb-5">
 							<label class="form-label" for="acara">Agenda Kunjungan <span class="text-danger">*</span></label>

@@ -64,6 +64,18 @@
 									<?php endif; ?>
 								<?php else : ?>
 									<button type="button" class="btn btn-outline-info btn-sm Result viewResult" data-id="<?= $key['id_jadwal']; ?>" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">Preview</button>
+									<?php if ($this->session->userdata('role_user') == 1) : ?>
+										<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Edit</button>
+										<div class="dropdown-menu dropdown-menu-end">
+											<a class="dropdown-item" href="<?= base_url('Jadwal/Edit/' . $key['id_jadwal']); ?>">
+												<span class="text-warning">Edit Jadwal</span>
+											</a>
+											<a class="dropdown-item editPreview" href="#" data-bs-toggle="modal" data-bs-target="#exampleModalCenter" data-id="<?= $key['id_jadwal']; ?>">
+												<span class="text-info">Edit Preview</span>
+											</a>
+										</div>
+									<?php endif; ?>
+
 								<?php endif; ?>
 								<?php if ($key['status'] == "Planning") : ?>
 									<button type="button" class="btn btn-outline-primary btn-sm dropdown-toggle " data-bs-toggle="dropdown">Actions</button>
@@ -75,8 +87,8 @@
 											<span class="text-danger">Not Visited</span>
 										</a>
 									</div>
+								<?php endif; ?>
 							</div>
-						<?php endif; ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -92,23 +104,25 @@
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalCenterTitle">Result "<span id="namaDinas" class="fw-bolder"></span>"</h5>
+					<h5 class="modal-title" id="judul1">Preview "<span id="namaDinas" class="fw-bolder"></span>"</h5>
+					<h5 class="modal-title" id="judul2">Edit Preview "<span id="namaDinas2" class="fw-bolder"></span>"</h5>
 					<button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form action="" method="POST" id="formResult">
 						<div class="row">
 							<div class="col-12">
-								<label class="form-label" for="notvisited">Isi result ?<span class="text-danger">*</span></label>
-								<input type="hidden" name="notvisited" id="notvisited" value="<?= set_value('notvisited') ?>">
-								<div id="editor" style="min-height: 100px;"><?= set_value('notvisited') ?></div>
+								<label class="form-label" for="notvisited" id="label1">Preview <span class="text-danger">*</span></label>
+								<label class="form-label" for="notvisited" id="label2">Edit Preview <span class=" text-danger">*</span></label>
+								<textarea name="notvisited" id="notvisited" cols="30" rows="10" class="form-control"></textarea>
 								<input type="hidden" name="id_jadwal" id="id_jadwal">
 							</div>
 						</div>
 					</form>
 				</div>
-				<div class="modal-footer mt-5">
+				<div class="modal-footer">
 					<button type="button" class="btn btn-primary" id="tombol_simpan">Simpan</button>
+					<button type="button" class="btn btn-warning" id="tombol_edit">Edit</button>
 				</div>
 			</div>
 		</div>
@@ -121,17 +135,14 @@
 	});
 </script>
 <script>
-	var quill = new Quill('#editor', {
-		theme: 'snow'
-	});
-
-	quill.on('text-change', function(delta, oldDelta, source) {
-		document.querySelector("input[name='notvisited']").value = quill.root.innerHTML;
-	});
-
 	// getview
 	$(document).on("click", ".viewResult", function() {
 		$('#tombol_simpan').hide();
+		$('#tombol_edit').hide();
+		$('#label2').hide();
+		$('#label1').show();
+		$('#judul1').show();
+		$('#judul2').hide();
 		let id = $(this).data('id');
 		$.ajax({
 			type: 'POST',
@@ -142,10 +153,13 @@
 			success: function(response) {
 				let data = JSON.parse(response);
 				if (data.success) {
-					$('#id_jadwal').val(data.id_jadwal);
-					$("input[name='notvisited']").val(data.result_not_visited);
+					if (data.result_not_visited == "") {
+						document.getElementById("notvisited").value = data.m_visit_note;
+					} else {
+						document.getElementById("notvisited").value = data.result_not_visited;
+					}
 					document.getElementById("namaDinas").innerHTML = data.instansi_nama;
-					document.getElementById("editor").innerHTML = data.result_not_visited;
+					$('#id_jadwal').val(data.id_jadwal);
 				} else {
 					Swal.fire({
 						icon: 'warning',
@@ -160,6 +174,12 @@
 	});
 
 	$(document).on("click", ".Notvisited", function() {
+		$('#label2').hide();
+		$('#label1').show();
+		$('#judul1').show();
+		$('#judul2').hide();
+		$('#tombol_edit').hide();
+		$('#tombol_simpan').show();
 		let id = $(this).data('id');
 		$.ajax({
 			type: 'POST',
@@ -187,7 +207,7 @@
 
 
 	$(document).on("click", ".close", function() {
-		$("input[name='notvisited']").val("");
+		$("#notvisited").val("");
 		$('#id_jadwal').val("");
 	});
 
@@ -234,3 +254,75 @@
 			return true;
 		}
 	}
+
+	$(document).on("click", ".editPreview", function() {
+		$('#tombol_simpan').hide();
+		$('#tombol_edit').show();
+		$('#label1').hide();
+		$('#label2').show();
+		$('#judul1').hide();
+		$('#judul2').show();
+		let id = $(this).data('id');
+		$.ajax({
+			type: 'POST',
+			url: '<?= site_url('Jadwal/ViewNotVisited') ?>',
+			data: {
+				id: id
+			},
+			success: function(response) {
+				let data = JSON.parse(response);
+				if (data.success) {
+					if (data.result_not_visited == "") {
+						document.getElementById("notvisited").value = data.m_visit_note;
+					} else {
+						document.getElementById("notvisited").value = data.result_not_visited;
+					}
+					document.getElementById("namaDinas2").innerHTML = data.instansi_nama;
+					$('#id_jadwal').val(data.id_jadwal);
+				} else {
+					Swal.fire({
+						icon: 'warning',
+						title: 'Warning',
+						text: data.msg,
+						showConfirmButton: false,
+						timer: 1500
+					});
+				}
+			}
+		});
+	});
+
+	$(document).on("click", "#tombol_edit", function() {
+		if (validasiupdate()) {
+			let data = $('#formResult').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('Jadwal/ResultSimpan') ?>',
+				data: data,
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("Jadwal") ?>');
+					}, 1500);
+				}
+			});
+		}
+	});
+</script>

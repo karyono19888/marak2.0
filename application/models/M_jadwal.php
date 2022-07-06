@@ -319,15 +319,16 @@ class M_jadwal extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->join('m_instansi', 'instansi_id=instansi', 'left');
+		$this->db->join('m_visit', 'm_visit_id=visit_id', 'left');
 		$this->db->where('id_jadwal', $id);
 		$query  = $this->db->get('m_jadwal_kunjungan');
 		if ($query) {
 			$row = $query->row();
-			return json_encode(array(
-				'success'         => true,
-				'id_jadwal'       => $row->id_jadwal,
-				'instansi_nama'   => $row->instansi_nama,
-				'result_not_visited'   	=> $row->result_not_visited,
+			return json_encode(array('success'         	=> true,
+				'id_jadwal'       	=> $row->id_jadwal,
+				'instansi_nama'   	=> $row->instansi_nama,
+				'm_visit_note'   		=> strip_tags($row->m_visit_note),
+				'result_not_visited' => strip_tags($row->result_not_visited),
 			));
 		} else {
 			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));

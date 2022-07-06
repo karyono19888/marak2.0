@@ -483,13 +483,6 @@ class M_visit extends CI_Model
 			'visit'  	=> $id,
 		));
 
-		$datajadwal = [
-			'status'  				=> 'Visited',
-			'date_visit_done'  	=> $m_visit_tgl,
-		];
-		$this->db->where('vis_his_id', $id_history);
-		$this->db->update('m_jadwal_kunjungan', $datajadwal);
-
 		$this->db->where('m_visit_id', $id);
 		$dataid = [
 			'm_visit_history_id' => $id_visit_history,
