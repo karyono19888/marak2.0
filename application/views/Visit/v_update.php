@@ -703,6 +703,7 @@
 	}
 </script>
 
+<!-- map -->
 <script>
 	$(document).ready(function() {
 		let m_visit_anggaran_BUMN = $('#m_visit_anggaran_BUMN');

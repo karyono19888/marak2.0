@@ -140,7 +140,7 @@ class Visit extends CI_Controller
 	{
 		$data['title'] 	= 'Update Kunjungan | Marak 2.0';
 		$id = $this->db->get_where('m_visit', ['m_visit_id' => $m_visit_id])->row_array();
-		$data['data'] 		= $this->record->PreviewdataUpdateVisit($m_visit_id);
+		$data['data'] 		= $this->record->PreviewdataUpdateVisit($id['m_visit_history_id']);
 		$data['peserta'] 	= $this->record->PreviewdataUpdatePeserta($id['m_visit_history_id']);
 		$data['history'] 	= $this->record->PreviewdataHistory($m_visit_id);
 		$this->load->view('Visit/v_update', $data);

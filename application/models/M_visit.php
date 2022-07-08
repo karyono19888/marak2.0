@@ -198,7 +198,7 @@ class M_visit extends CI_Model
 
 	public function PreviewdataUpdateVisit($m_visit_id)
 	{
-		$this->db->where('m_visit_id', $m_visit_id);
+		$this->db->where('m_visit_history_id', $m_visit_id);
 		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 		$this->db->from('m_visit_history as a');
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');

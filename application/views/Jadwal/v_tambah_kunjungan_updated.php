@@ -33,7 +33,7 @@
 							<div class="col-sm-3">
 								<label class="form-label" for="time">Jam <span class="text-danger">*</span></label>
 								<div class="input-group">
-									<input type="time" id="time" class="form-control" name="time" placeholder="First Name" />
+									<input type="time" id="time" class="form-control flatpickr-time" name="time" placeholder="00:00" />
 								</div>
 							</div>
 							<div class="col-sm-3">
@@ -82,6 +82,14 @@
 	quill.on('text-change', function(delta, oldDelta, source) {
 		document.querySelector("input[name='acara']").value = quill.root.innerHTML;
 	});
+
+	let timePickr = $('.flatpickr-time');
+	if (timePickr.length) {
+		timePickr.flatpickr({
+			enableTime: true,
+			noCalendar: true
+		});
+	}
 </script>
 
 <!-- simpan tambah -->
