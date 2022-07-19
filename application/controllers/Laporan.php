@@ -35,6 +35,18 @@ class Laporan extends CI_Controller
 		$this->load->view('Laporan/v_showdatakunjungan', $data);
 	}
 
+	public function ShowDataSummaryOrder()
+	{
+		$start = $this->input->post('date_start_summary');
+		$end 	 = $this->input->post('date_end_summary');
+
+		$data['title'] = 'Summary Order <br> <small class="text-muted"><i>Periode Tanggal</i></small> <b>' . $start . '</b> <small class="text-muted"><i>s.d</i></small> <b>' . $end . '</b>';
+		$data['data']  = $this->record->getDataShowSummaryOrder($start, $end);
+		$data['start'] = $start;
+		$data['end']  	= $end;
+		$this->load->view('Laporan/v_showdatasummaryorder', $data);
+	}
+
 	public function DownloadDataLaporanKunjungan()
 	{
 		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone

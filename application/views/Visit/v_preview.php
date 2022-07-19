@@ -89,7 +89,7 @@
 									<tbody>
 										<?php if (empty($peserta->result_array())) : ?>
 											<tr class="border-bottom">
-												<td colspan='3' class='text-center'>Data tidak ditemukan.</td>
+												<td colspan='4' class='text-center'>Data tidak ditemukan.</td>
 											</tr>
 										<?php else : ?>
 											<?php

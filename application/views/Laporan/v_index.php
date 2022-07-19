@@ -166,6 +166,35 @@
 		}
 	}
 
+	$(document).on("click", "#tombol_summary", function() {
+		if (validasiA()) {
+			let data = $('#formSumamry').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('Laporan/ShowDataSummaryOrder'); ?>',
+				data: data,
+				success: function(response) {
+					$("#showdata").html(response);
+				}
+			});
+		}
+	});
+
+	function validasiA() {
+		let date_start_summary = document.getElementById("date_start_summary").value;
+		let date_end_summary = document.getElementById("date_end_summary").value;
+		if ((date_start_summary == "") || (date_end_summary == "")) {
+			if (date_end_summary == "") {
+				notif("Tanggal Selesai");
+			}
+			if (date_start_summary == "") {
+				notif("Tanggal Mulai");
+			}
+		} else {
+			return true;
+		}
+	}
+
 	function notif(word) {
 		Swal.fire({
 			title: 'Perhatian',
