@@ -109,35 +109,7 @@
 					</div>
 				</div>
 				<!-- list and filter start -->
-				<div class="card">
-					<div class="card-header">
-						<h4 class="card-title">Search & Filter</h4>
-						<a href="<?= base_url('Visit/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
-							<span><i data-feather='plus'></i> Add New Request</span>
-						</a>
-					</div>
-					<div class="card-body">
-						<div class="card-datatable">
-							<table class="table table-hover table-borderless" id="mytable" width="100%">
-								<thead>
-									<tr>
-										<th>#</th>
-										<th>Req Date</th>
-										<th>Pic</th>
-										<th>Instansi</th>
-										<th>Alamat</th>
-										<th>Prognosa</th>
-										<th>Status</th>
-										<th>Actions</th>
-									</tr>
-								</thead>
-								<tbody>
-
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
+				<div id="show_data"></div>
 				<!-- list and filter end -->
 			</section>
 			<!-- Dashboard Ecommerce ends -->
@@ -151,7 +123,11 @@
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$('#mytable').DataTable();
+		$("#show_data").load("<?= base_url('OrderRequest/ShowTableData'); ?>");
+	});
+
+	$(document).on("click", ".Tambah", function() {
+		$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
