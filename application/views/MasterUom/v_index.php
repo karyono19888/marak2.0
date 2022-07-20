@@ -22,14 +22,12 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Products</h2>
+						<h2 class="content-header-title float-start mb-0">Master Uom</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="<?= base_url('Products'); ?>">Products</a>
+								<li class="breadcrumb-item"><a href="#">Products Management</a>
 								</li>
-								<li class="breadcrumb-item"><a href="#">Product Management</a>
-								</li>
-								<li class="breadcrumb-item active">Data Products
+								<li class="breadcrumb-item"><a href="#">Master Uom</a>
 								</li>
 							</ol>
 						</div>
@@ -54,7 +52,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75">12</h3>
-									<span>Total Product</span>
+									<span>Total Items</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
 									<span class="avatar-content">
@@ -112,11 +110,71 @@
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#show_data").load("<?= base_url('Products/ShowTableData'); ?>");
+		$("#show_data").load("<?= base_url('MasterUom/ShowTableData'); ?>");
 	});
 
 	$(document).on("click", ".Tambah", function() {
-		$("#show_data").load("<?= base_url('Products/ShowTambahData'); ?>");
+		$("#show_data").load("<?= base_url('MasterUom/ShowTambahData'); ?>");
+	});
+
+	$(document).on("click", ".Edit", function() {
+		let id = $(this).data('id');
+		$.ajax({
+			type: "POST",
+			url: "<?= site_url('MasterUom/ShowDataEdit') ?>",
+			data: {
+				id: id
+			},
+			success: function(response) {
+				$("#show_data").html(response);
+			}
+		});
+	});
+
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete Data Uom!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('MasterUom/UomDelete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("MasterUom") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

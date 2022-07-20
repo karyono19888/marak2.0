@@ -18,9 +18,15 @@ class Products extends CI_Controller
 		$this->load->view('Product/v_index', $data);
 	}
 
-	public function Tambah()
+	public function ShowTableData()
 	{
-		$data['title'] = 'Tambah Kunjungan | Marak';
-		$this->load->view('Visit/v_tambah', $data);
+		$this->load->view('Product/v_table');
 	}
+
+	public function ShowTambahData()
+	{
+		$this->load->view('Product/v_showtambah');
+	}
+
+
 }
