@@ -22,12 +22,12 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Master Uom</h2>
+						<h2 class="content-header-title float-start mb-0">Master Tipe</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="#">Products Management</a>
 								</li>
-								<li class="breadcrumb-item"><a href="#">Master Uom</a>
+								<li class="breadcrumb-item"><a href="#">Master Tipe</a>
 								</li>
 							</ol>
 						</div>
@@ -52,7 +52,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $totalItem; ?></h3>
-									<span>Total Uom</span>
+									<span>Total Tipe</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
 									<span class="avatar-content">
@@ -67,7 +67,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $aktif; ?></h3>
-									<span>Uom Aktif</span>
+									<span>Tipe Aktif</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
@@ -82,7 +82,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $tidakaktif; ?></h3>
-									<span>Uom Tidak Aktif</span>
+									<span>Tipe Tidak Aktif</span>
 								</div>
 								<div class="avatar bg-light-danger p-50">
 									<span class="avatar-content">
@@ -108,18 +108,18 @@
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#show_data").load("<?= base_url('MasterUom/ShowTableData'); ?>");
+		$("#show_data").load("<?= base_url('MasterTipe/ShowTableData'); ?>");
 	});
 
 	$(document).on("click", ".Tambah", function() {
-		$("#show_data").load("<?= base_url('MasterUom/ShowTambahData'); ?>");
+		$("#show_data").load("<?= base_url('MasterTipe/ShowTambahData'); ?>");
 	});
 
 	$(document).on("click", ".Edit", function() {
 		let id = $(this).data('id');
 		$.ajax({
 			type: "POST",
-			url: "<?= site_url('MasterUom/ShowDataEdit') ?>",
+			url: "<?= site_url('MasterTipe/ShowDataEdit') ?>",
 			data: {
 				id: id
 			},
@@ -143,7 +143,7 @@
 			if (result.isConfirmed) {
 				$.ajax({
 					type: 'POST',
-					url: '<?= site_url('MasterUom/UomDelete') ?>',
+					url: '<?= site_url('MasterTipe/DeleteTipe') ?>',
 					data: {
 						id: id
 					},
@@ -167,7 +167,7 @@
 							});
 						}
 						setTimeout(() => {
-							window.location.assign('<?php echo site_url("MasterUom") ?>');
+							window.location.assign('<?= site_url("MasterTipe") ?>');
 						}, 1500);
 					}
 				});

@@ -2,34 +2,28 @@
 	<div class="col-sm-9">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title"><b>Tambah Uom Baru</b></h4>
+				<h4 class="card-title"><b>Tambah Tipe Baru</b></h4>
 			</div>
 			<div class="card-body">
-				<form class="form" id="formUom">
+				<form class="form" id="formTipe">
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="mb-1">
-								<label class="form-label" for="m_uom_kode">Kode</label>
-								<input type="text" id="m_uom_kode" class="form-control" placeholder="Kode" name="m_uom_kode" />
-							</div>
-						</div>
-						<div class="col-sm-4">
-							<div class="mb-1">
-								<label class="form-label" for="m_uom_symbol">Symbol</label>
-								<input type="text" id="m_uom_symbol" class="form-control" placeholder="Simbol" name="m_uom_symbol" />
+								<label class="form-label" for="m_tipe_kode">Kode</label>
+								<input type="text" id="m_tipe_kode" class="form-control" placeholder="Kode" name="m_tipe_kode" />
 							</div>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="mb-1">
-								<label class="form-label" for="m_uom_nama">Nama</label>
-								<input type="text" id="m_uom_nama" class="form-control" placeholder="Nama" name="m_uom_nama" />
+								<label class="form-label" for="m_tipe_nama">Nama</label>
+								<input type="text" id="m_tipe_nama" class="form-control" placeholder="Nama" name="m_tipe_nama" />
 							</div>
 						</div>
 						<div class="col-sm-4">
-							<label class="form-label" for="m_uom_status">Status</label>
-							<select class="form-select select2" id="m_uom_status" name="m_uom_status">
+							<label class="form-label" for="m_tipe_status">Status</label>
+							<select class="form-select select2" id="m_tipe_status" name="m_tipe_status">
 								<option value="">- Pilih -</option>
 								<option value="Aktif">Aktif</option>
 								<option value="Tidak Aktif">Tidak Aktif</option>
@@ -37,8 +31,8 @@
 						</div>
 						<div class="col-sm-4">
 							<div class="mb-1">
-								<label class="form-label" for="m_uom_deskripsi">Deskripsi</label>
-								<textarea name="m_uom_deskripsi" id="m_uom_deskripsi" cols="30" rows="3" class="form-control" placeholder="Deskripsi"></textarea>
+								<label class="form-label" for="m_tipe_deskripsi">Deskripsi</label>
+								<textarea name="m_tipe_deskripsi" id="m_tipe_deskripsi" cols="30" rows="3" class="form-control" placeholder="Deskripsi"></textarea>
 							</div>
 						</div>
 					</div>
@@ -57,17 +51,17 @@
 </div>
 <script>
 	$(document).on("click", ".Kembali", function() {
-		$("#show_data").load("<?= base_url('MasterUom/ShowTableData'); ?>");
+		$("#show_data").load("<?= base_url('MasterTipe/ShowTableData'); ?>");
 	});
 </script>
 <!-- simpan tambah -->
 <script>
 	$(document).on("click", "#tombol_simpan", function() {
 		if (validasi()) {
-			let data = $('#formUom').serialize();
+			let data = $('#formTipe').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('MasterUom/TambahUom'); ?>',
+				url: '<?= base_url('MasterTipe/TambahTipe'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);
@@ -89,7 +83,7 @@
 						});
 					}
 					setTimeout(() => {
-						window.location.assign('<?= site_url("MasterUom") ?>');
+						window.location.assign('<?= site_url("MasterTipe") ?>');
 					}, 2000);
 				}
 			});
@@ -97,25 +91,21 @@
 	});
 
 	function validasi() {
-		let m_uom_nama = document.getElementById("m_uom_nama").value;
-		let m_uom_kode = document.getElementById("m_uom_kode").value;
-		let m_uom_symbol = document.getElementById("m_uom_symbol").value;
-		let m_uom_deskripsi = document.getElementById("m_uom_deskripsi").value;
-		let m_uom_status = document.getElementById("m_uom_status").value;
-		if ((m_uom_nama == "") || (m_uom_kode == "") || (m_uom_symbol == "") || (m_uom_deskripsi == "") || (m_uom_status == "")) {
-			if (m_uom_deskripsi == "") {
+		let m_tipe_kode = document.getElementById("m_tipe_kode").value;
+		let m_tipe_nama = document.getElementById("m_tipe_nama").value;
+		let m_tipe_status = document.getElementById("m_tipe_status").value;
+		let m_tipe_deskripsi = document.getElementById("m_tipe_deskripsi").value;
+		if ((m_tipe_kode == "") || (m_tipe_nama == "") || (m_tipe_status == "") || (m_tipe_deskripsi == "")) {
+			if (m_tipe_deskripsi == "") {
 				notif("Deskripsi");
 			}
-			if (m_uom_status == "") {
+			if (m_tipe_status == "") {
 				notif("Status");
 			}
-			if (m_uom_nama == "") {
+			if (m_tipe_nama == "") {
 				notif("Nama");
 			}
-			if (m_uom_symbol == "") {
-				notif("Symbol");
-			}
-			if (m_uom_kode == "") {
+			if (m_tipe_kode == "") {
 				notif("Kode");
 			}
 		} else {

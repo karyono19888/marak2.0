@@ -13,7 +13,10 @@ class MasterUom extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 	= 'Master Uom | Marak 2.0';
+		$data['title'] 		= 'Master Uom | Marak 2.0';
+		$data['totalItem'] 	= $this->record->totalItem();
+		$data['aktif'] 		= $this->record->totalAktif();
+		$data['tidakaktif'] 	= $this->record->totalTidakAktif();
 		$this->load->view('MasterUom/v_index', $data);
 	}
 
@@ -43,7 +46,7 @@ class MasterUom extends CI_Controller
 	{
 		$id = $this->input->post('id');
 		$data['data'] 	= $this->record->ShowDataEdit($id);
-		$this->load->view('MasterUom/v_showedit', $data);
+		$this->load->view('MasterTipe/v_showedit', $data);
 	}
 
 	public function EditUom()

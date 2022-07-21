@@ -10,14 +10,14 @@
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_uom_kode">Kode</label>
-								<input type="hidden" id="m_uom_id" class="form-control" placeholder="Kode Produk" name="m_uom_id" value="<?= $data['m_uom_id']; ?>" />
-								<input type="text" id="m_uom_kode" class="form-control" placeholder="Kode Produk" name="m_uom_kode" value="<?= $data['m_uom_kode']; ?>" />
+								<input type="hidden" id="m_uom_id" class="form-control" placeholder="Kode" name="m_uom_id" value="<?= $data['m_uom_id']; ?>" />
+								<input type="text" id="m_uom_kode" class="form-control" placeholder="Kode" name="m_uom_kode" value="<?= $data['m_uom_kode']; ?>" />
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_uom_symbol">Symbol</label>
-								<input type="text" id="m_uom_symbol" class="form-control" placeholder="Kode Produk" name="m_uom_symbol" value="<?= $data['m_uom_symbol']; ?>" />
+								<input type="text" id="m_uom_symbol" class="form-control" placeholder="Simbol" name="m_uom_symbol" value="<?= $data['m_uom_symbol']; ?>" />
 							</div>
 						</div>
 					</div>
@@ -25,7 +25,7 @@
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_uom_nama">Nama</label>
-								<input type="text" id="m_uom_nama" class="form-control" placeholder="Nama Produk" name="m_uom_nama" value="<?= $data['m_uom_nama']; ?>" />
+								<input type="text" id="m_uom_nama" class="form-control" placeholder="Nama" name="m_uom_nama" value="<?= $data['m_uom_nama']; ?>" />
 							</div>
 						</div>
 						<div class="col-sm-4">

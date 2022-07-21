@@ -8,6 +8,23 @@ class M_masterUom extends CI_Model
 		$this->load->helper('security');
 	}
 
+	public function totalItem()
+	{
+		return $this->db->get('m_uom')->num_rows();
+	}
+
+	public function totalAktif()
+	{
+		$this->db->where('m_uom_status', "Aktif");
+		return $this->db->get('m_uom')->num_rows();
+	}
+
+	public function totalTidakAktif()
+	{
+		$this->db->where('m_uom_status', "Tidak Aktif");
+		return $this->db->get('m_uom')->num_rows();
+	}
+
 	public function TambahUom($m_uom_nama, $m_uom_kode, $m_uom_symbol, $m_uom_deskripsi, $m_uom_status)
 	{
 		$nama = $this->db->get_where('m_uom', ['m_uom_nama' => $m_uom_nama])->num_rows();
@@ -20,7 +37,7 @@ class M_masterUom extends CI_Model
 			$this->db->trans_start();
 			$this->db->insert('m_uom', array(
 				'm_uom_nama'       => ucwords($m_uom_nama),
-				'm_uom_kode'       => $m_uom_kode,
+				'm_uom_kode'       => strtoupper($m_uom_kode),
 				'm_uom_symbol'     => $m_uom_symbol,
 				'm_uom_deskripsi'  => $m_uom_deskripsi,
 				'm_uom_status'     => $m_uom_status,
@@ -55,7 +72,7 @@ class M_masterUom extends CI_Model
 		$this->db->where('m_uom_id', $m_uom_id);
 		$this->db->update('m_uom', array(
 			'm_uom_nama'       => ucwords($m_uom_nama),
-			'm_uom_kode'       => $m_uom_kode,
+			'm_uom_kode'       => strtoupper($m_uom_kode),
 			'm_uom_symbol'     => $m_uom_symbol,
 			'm_uom_deskripsi'  => $m_uom_deskripsi,
 			'm_uom_status'     => $m_uom_status,

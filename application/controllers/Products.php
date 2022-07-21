@@ -28,5 +28,12 @@ class Products extends CI_Controller
 		$this->load->view('Product/v_showtambah');
 	}
 
+	public function GetUom()
+	{
+		$searchTerm = $this->input->post('searchTerm');
+		$response   = $this->record->GetUom($searchTerm);
+		echo json_encode($response);
+	}
+
 
 }

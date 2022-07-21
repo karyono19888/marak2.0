@@ -2,7 +2,7 @@
 	<div class="col-sm-9">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title">Tambah Data Produk</h4>
+				<h4 class="card-title"><b>Tambah Data Produk</b></h4>
 			</div>
 			<div class="card-body">
 				<form class="form" id="formProduk">
@@ -42,7 +42,9 @@
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_uom">Uom</label>
-								<input type="text" id="m_prod_uom" class="form-control" placeholder="Uom" name="m_prod_uom" />
+								<select class="form-select" id="m_prod_uom" name="m_prod_uom">
+									<option value="">- Pilih -</option>
+								</select>
 							</div>
 						</div>
 						<div class="col-sm-4">
@@ -76,6 +78,28 @@
 <script>
 	$(document).on("click", ".Kembali", function() {
 		$("#show_data").load("<?= base_url('Products/ShowTableData'); ?>");
+	});
+
+	$(document).ready(function() {
+		$("#m_prod_uom").select2({
+			ajax: {
+				url: '<?= base_url('Products/GetUom'); ?>',
+				type: "post",
+				dataType: 'json',
+				delay: 200,
+				data: function(params) {
+					return {
+						searchTerm: params.term
+					};
+				},
+				processResults: function(response) {
+					return {
+						results: response
+					};
+				},
+				cache: true
+			}
+		});
 	});
 </script>
 <!-- simpan tambah -->

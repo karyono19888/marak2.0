@@ -1,5 +1,5 @@
 <?php $this->load->view('Components/v_header'); ?>
-
+<link rel="stylesheet" type="text/css" href="<?= base_url('assets'); ?>/css/components.css">
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
@@ -110,6 +110,8 @@
 
 <?php $this->load->view('Components/v_footer'); ?>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
+<script src="<?= base_url('assets'); ?>/js/scripts/forms/form-select2.js"></script>
 <script>
 	$(document).ready(function() {
 		$("#show_data").load("<?= base_url('Products/ShowTableData'); ?>");
