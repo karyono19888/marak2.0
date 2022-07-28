@@ -133,7 +133,7 @@
 		let id = $(this).data('id');
 		Swal.fire({
 			title: 'Are you sure?',
-			text: "Delete Data Uom!",
+			text: "Delete Data Tipe!",
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',

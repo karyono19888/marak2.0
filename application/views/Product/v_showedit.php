@@ -2,7 +2,7 @@
 	<div class="col-sm-9">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title"><b>Tambah Data Produk</b></h4>
+				<h4 class="card-title">Edit Data Produk <b>"<?= $data['m_prod_nama']; ?>"</b></h4>
 			</div>
 			<div class="card-body">
 				<form class="form" id="formProduk">
@@ -11,9 +11,13 @@
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_category">Kategori</label>
 								<select class="form-select select2" id="m_prod_category" name="m_prod_category">
-									<option value="">- Pilih -</option>
-									<option value="E-catalog">E-catalog</option>
-									<option value="Non E-catalog">Non E-catalog</option>
+									<?php if ($data['m_prod_category'] == "E-catalog") : ?>
+										<option value="<?= $data['m_prod_category']; ?>"><?= $data['m_prod_category']; ?></option>
+										<option value="Non E-catalog">Non E-catalog</option>
+									<?php else : ?>
+										<option value="<?= $data['m_prod_category']; ?>"><?= $data['m_prod_category']; ?></option>
+										<option value="E-catalog">E-catalog</option>
+									<?php endif; ?>
 								</select>
 							</div>
 						</div>
@@ -22,20 +26,21 @@
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_kode">Kode Produk</label>
-								<input type="text" id="m_prod_kode" class="form-control" placeholder="Kode Produk" name="m_prod_kode" />
+								<input type="hidden" id="m_prod_id" class="form-control" name="m_prod_id" value="<?= $data['m_prod_id']; ?>" />
+								<input type="text" id="m_prod_kode" class="form-control" placeholder="Kode Produk" name="m_prod_kode" value="<?= $data['m_prod_kode']; ?>" />
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_nama">Nama Produk</label>
-								<input type="text" id="m_prod_nama" class="form-control" placeholder="Nama Produk" name="m_prod_nama" />
+								<input type="text" id="m_prod_nama" class="form-control" placeholder="Nama Produk" name="m_prod_nama" value="<?= $data['m_prod_nama']; ?>" />
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_type">Tipe Produk</label>
 								<select class="form-select" id="m_prod_type" name="m_prod_type">
-									<option value="">- Pilih -</option>
+									<option value="<?= $data['m_tipe_id']; ?>"><?= $data['m_tipe_nama']; ?></option>
 								</select>
 							</div>
 						</div>
@@ -45,22 +50,26 @@
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_uom">Uom</label>
 								<select class="form-select" id="m_prod_uom" name="m_prod_uom">
-									<option value="">- Pilih -</option>
+									<option value="<?= $data['m_uom_id']; ?>"><?= $data['m_uom_nama']; ?></option>
 								</select>
 							</div>
 						</div>
 						<div class="col-sm-4">
 							<label class="form-label" for="m_prod_status">Status</label>
 							<select class="form-select select2" id="m_prod_status" name="m_prod_status">
-								<option value="">- Pilih -</option>
-								<option value="Aktif">Aktif</option>
-								<option value="Tidak Aktif">Tidak Aktif</option>
+								<?php if ($data['m_prod_status'] == "Aktif") : ?>
+									<option value="<?= $data['m_prod_status']; ?>"><?= $data['m_prod_status']; ?></option>
+									<option value="Tidak Aktif">Tidak Aktif</option>
+								<?php else : ?>
+									<option value="<?= $data['m_prod_status']; ?>"><?= $data['m_prod_status']; ?></option>
+									<option value="Aktif">Aktif</option>
+								<?php endif; ?>
 							</select>
 						</div>
 						<div class="col-sm-4">
 							<div class="mb-1">
 								<label class="form-label" for="m_prod_ket">Deskripsi</label>
-								<textarea name="m_prod_ket" id="m_prod_ket" cols="30" rows="3" class="form-control" placeholder="Deskripsi"></textarea>
+								<textarea name="m_prod_ket" id="m_prod_ket" cols="30" rows="3" class="form-control" placeholder="Deskripsi"><?= $data['m_prod_ket']; ?></textarea>
 							</div>
 						</div>
 					</div>
@@ -71,7 +80,7 @@
 	<div class="col-sm-3">
 		<div class="card">
 			<div class="card-body">
-				<button class="btn btn-primary w-100 mb-75" id="tombol_simpan" type="button">Save</button>
+				<button class="btn btn-warning w-100 mb-75" id="tombol_simpan" type="button">Edit</button>
 				<a href="#" class="btn btn-outline-primary w-100 Kembali" type="button">Back</a>
 			</div>
 		</div>
@@ -133,7 +142,7 @@
 			let data = $('#formProduk').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('Products/TambahProduk'); ?>',
+				url: '<?= base_url('Products/EditProduk'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);

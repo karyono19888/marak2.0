@@ -21,7 +21,7 @@ class OrderRequest extends CI_Controller
 
 	public function ShowTableData()
 	{
-		$data['title'] = 'Order Request | Marak 2.0';
+		$data['data'] = $this->record->DataTable();
 		$this->load->view('OrderRequest/v_table', $data);
 	}
 
@@ -33,9 +33,55 @@ class OrderRequest extends CI_Controller
 
 	public function getDataShowRequest()
 	{
-		$id = $this->input->post('id');
+		$id 			  = $this->input->post('id');
 		$data['data'] = $this->record->DataKunjunganrequest($id);
 		$data['org']  = $this->record->DataOrganisasi();
+		$data['kode'] = $this->record->DataKodeRequest();
 		$this->load->view('OrderRequest/v_tambah_req_order', $data);
+	}
+
+	public function TambahOrderRequest()
+	{
+		$t_req_kode 			= $this->input->post('t_req_kode');
+		$t_req_visit 			= $this->input->post('t_req_visit');
+		$t_req_history_visit = $this->input->post('t_req_history_visit');
+		$t_req_perusahaan 	= $this->input->post('t_req_perusahaan');
+		$t_req_kategori 		= $this->input->post('t_req_kategori');
+		$t_req_konsumen 		= $this->input->post('t_req_konsumen');
+		$t_req_phone 			= $this->input->post('t_req_phone');
+		$t_req_alamat 			= $this->input->post('t_req_alamat');
+
+		echo $this->record->TambahOrderRequest($t_req_kode, $t_req_visit, $t_req_history_visit, $t_req_perusahaan, $t_req_kategori, $t_req_konsumen, $t_req_phone, $t_req_alamat);
+	}
+
+	public function ShowDataEdit()
+	{
+		$id 			  = $this->input->post('id');
+		$data['data'] = $this->record->getDataTableRequest($id);
+		$data['org']  = $this->record->DataOrganisasi();
+		$this->load->view('OrderRequest/v_edit_req_order', $data);
+	}
+
+	public function EditOrderRequest()
+	{
+		$t_req_kode 			= $this->input->post('t_req_kode');
+		$t_req_tgl 				= $this->input->post('t_req_tgl');
+		$t_req_user 			= $this->input->post('t_req_user');
+		$t_req_visit 			= $this->input->post('t_req_visit');
+		$t_req_history_visit = $this->input->post('t_req_history_visit');
+		$t_req_perusahaan 	= $this->input->post('t_req_perusahaan');
+		$t_req_kategori 		= $this->input->post('t_req_kategori');
+		$t_req_konsumen 		= $this->input->post('t_req_konsumen');
+		$t_req_phone 			= $this->input->post('t_req_phone');
+		$t_req_alamat 			= $this->input->post('t_req_alamat');
+
+		echo $this->record->EditOrderRequest($t_req_kode, $t_req_tgl, $t_req_user, $t_req_visit, $t_req_history_visit, $t_req_perusahaan, $t_req_kategori, $t_req_konsumen, $t_req_phone, $t_req_alamat);
+	}
+
+	public function DeleteRequest()
+	{
+		$id = $this->input->post('id');
+
+		echo $this->record->DeleteRequest($id);
 	}
 }

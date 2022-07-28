@@ -10,9 +10,14 @@
 			<table class="table table-hover table-borderless" id="mytable" width="100%">
 				<thead>
 					<tr>
-						<th>#</th>
+						<th>No</th>
 						<th>Req Date</th>
-						<th>Pic</th>
+						<?php if ($this->session->userdata('role_user') == 1) : ?>
+							<th>User</th>
+							<th>Kode</th>
+						<?php endif; ?>
+						<th>Kategori</th>
+						<th>Perusahaan</th>
 						<th>Instansi</th>
 						<th>Alamat</th>
 						<th>Prognosa</th>
@@ -21,7 +26,43 @@
 					</tr>
 				</thead>
 				<tbody>
-
+					<?php
+					$i = 1;
+					foreach ($data->result_array() as $a) :
+					?>
+						<tr>
+							<td><?= $i++; ?></td>
+							<td width="10%"><?= date('d F, Y', strtotime($a['t_req_tgl'])); ?></td>
+							<?php if ($this->session->userdata('role_user') == 1) : ?>
+								<td><?= $a['name_user']; ?></td>
+								<td><?= $a['t_req_kode']; ?></td>
+							<?php endif; ?>
+							<td>
+								<?php if ($a['t_req_kategori'] == "E-Commerce") : ?>
+									<span class="badge rounded-pill badge-light-success me-1"><?= $a['t_req_kategori']; ?></span>
+								<?php elseif ($a['t_req_kategori'] == "Non E-catalog") : ?>
+									<span class="badge rounded-pill badge-light-info me-1"><?= $a['t_req_kategori']; ?></span>
+								<?php else : ?>
+									<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_req_kategori']; ?></span>
+								<?php endif; ?>
+							</td>
+							<td width="15%"><?= $a['org_nama']; ?></td>
+							<td width="15%"><?= $a['instansi_nama']; ?></td>
+							<td width="20%"><?= $a['instansi_alamat']; ?></td>
+							<td><?= number_format($a['m_visit_prognosa'], 0, '.', '.'); ?></td>
+							<td>
+								<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_req_status']; ?></span>
+							</td>
+							<td class="text-center" width="15%">
+								<?php if ($a['t_req_status'] == "Close PO") : ?>
+									<span class="badge rounded-pill badge-light-danger me-1">Selesai</span>
+								<?php else : ?>
+									<a href="#" type="button" class="btn btn-gradient-warning btn-sm EditRequest my-1" data-id="<?= $a['t_req_id']; ?>">Edit</a>
+									<a href="#" type="button" class="btn btn-gradient-danger btn-sm Delete" data-id="<?= $a['t_req_id']; ?>">Delete</a>
+								<?php endif; ?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
 				</tbody>
 			</table>
 		</div>

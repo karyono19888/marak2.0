@@ -2,8 +2,8 @@
 	<div class="col-sm-9">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title"><b>Permintaan Close Order</b></h4>
-				<h4 class="card-title"><b>#<?= $kode; ?></b></h4>
+				<h4 class="card-title text-warning"><b>Edit Permintaan Close Order</b></h4>
+				<h4 class="card-title text-warning"><b>#<?= $data['t_req_kode']; ?></b></h4>
 			</div>
 			<div class="card-body">
 				<form action="#" method="post" id="formRequestOrder">
@@ -12,9 +12,10 @@
 							<h6 class="mb-2">Ordering from:</h6>
 							<h6 class="mb-25"><b><?= $data['instansi_nama']; ?></b></h6>
 							<p class="card-text mb-25"><?= $data['instansi_alamat']; ?></p>
-							<input type="hidden" class="form-control" name="t_req_history_visit" value="<?= $data['m_visit_history_id']; ?>">
-							<input type="hidden" class="form-control" name="t_req_visit" value="<?= $data['m_visit_id']; ?>">
-							<input type="hidden" name="t_req_kode" id="t_req_kode" value="<?= $kode; ?>">
+							<input type="hidden" class="form-control" name="t_req_history_visit" value="<?= $data['t_req_history_visit']; ?>">
+							<input type="hidden" class="form-control" name="t_req_visit" value="<?= $data['t_req_visit']; ?>">
+							<input type="hidden" name="t_req_kode" id="t_req_kode" value="<?= $data['t_req_kode']; ?>">
+							<input type="hidden" name="t_req_user" id="t_req_user" value="<?= $data['t_req_user']; ?>">
 
 							<div class="row mt-2">
 								<div class="col-sm-6">
@@ -22,7 +23,7 @@
 										<small class="text-muted"><i>Perusahaan</i></small>
 										<div class="input-group mb-2">
 											<select class="form-select select2" id="t_req_perusahaan" name="t_req_perusahaan">
-												<option value="">- Pilih -</option>
+												<option value="<?= $data['org_id']; ?>"><?= $data['org_nama']; ?></option>
 												<?php foreach ($org->result_array() as $a) : ?>
 													<option value="<?= $a['org_id']; ?>"><?= $a['org_nama']; ?></option>
 												<?php endforeach; ?>
@@ -35,7 +36,7 @@
 										<small class="text-muted"><i>Jenis Order</i></small>
 										<div class="input-group mb-2">
 											<select class="form-select select2" id="t_req_kategori" name="t_req_kategori">
-												<option value="">- Pilih -</option>
+												<option value="<?= $data['t_req_kategori']; ?>"><?= $data['t_req_kategori']; ?></option>
 												<option value="E-catalog">E-catalog</option>
 												<option value="Non E-catalog">Non E-catalog</option>
 												<option value="E-Commerce">E-Commerce</option>
@@ -45,14 +46,14 @@
 								</div>
 							</div>
 
-							<div id="showEcommerce" style="display: none;">
+							<div id="showEcommerce" <?= $data['t_req_kategori'] == "E-Commerce" ? '' : 'style="display: none;"' ?>>
 								<div class="row">
 									<hr>
 									<div class="col-sm-6">
 										<div class="mb-1">
 											<small class="text-muted"><i>Nama Penerima</i></small>
 											<div class="input-group mb-2">
-												<input type="text" class="form-control" name="t_req_konsumen" id="t_req_konsumen" placeholder="Nama lengkap">
+												<input type="text" class="form-control" name="t_req_konsumen" id="t_req_konsumen" placeholder="Nama lengkap" value="<?= $data['t_req_konsumen']; ?>">
 											</div>
 										</div>
 									</div>
@@ -60,7 +61,7 @@
 										<div class="mb-1">
 											<small class="text-muted"><i>Nomor Handphone</i></small>
 											<div class="input-group mb-2">
-												<input type="number" class="form-control" name="t_req_phone" id="t_req_phone" placeholder="0812 3456 7689">
+												<input type="number" class="form-control" name="t_req_phone" id="t_req_phone" placeholder="0812 3456 7689" value="<?= $data['t_req_phone']; ?>">
 											</div>
 										</div>
 									</div>
@@ -70,7 +71,7 @@
 										<div class="mb-1">
 											<small class="text-muted"><i>Alamat Lengkap</i></small>
 											<div class="input-group mb-2">
-												<textarea name="t_req_alamat" id="t_req_alamat" cols="30" rows="3" class="form-control" placeholder="Jl. contoh No.123"></textarea>
+												<textarea name="t_req_alamat" id="t_req_alamat" cols="30" rows="3" class="form-control" placeholder="Jl. contoh No.123"><?= $data['t_req_alamat']; ?></textarea>
 											</div>
 										</div>
 									</div>
@@ -83,11 +84,11 @@
 								<tbody>
 									<tr>
 										<td class="pe-1">Order</td>
-										<td>: <span class="badge badge-light-info">New Order</span></td>
+										<td>: <span class="badge badge-light-info"><?= $data['t_req_status']; ?></span></td>
 									</tr>
 									<tr>
 										<td class="pe-1">Sales Person</td>
-										<td>: <b><?= $this->session->userdata('name_user'); ?></b></td>
+										<td>: <b><?= $data['name_user']; ?></b></td>
 									</tr>
 									<tr>
 										<td class="pe-1">Division</td>
@@ -95,7 +96,7 @@
 									</tr>
 									<tr>
 										<td class="pe-1">Order Req</td>
-										<td>: <?= date('d F, Y'); ?></td>
+										<td><input type="date" name="t_req_tgl" id="t_req_tgl" class="form-control" value="<?= $data['t_req_tgl']; ?>"></td>
 									</tr>
 								</tbody>
 							</table>
@@ -108,7 +109,7 @@
 	<div class="col-sm-3">
 		<div class="card">
 			<div class="card-body">
-				<button class="btn btn-primary w-100 mb-75" id="tombol_simpan" type="button">Send Request</button>
+				<button class="btn btn-warning w-100 mb-75" id="tombol_simpan" type="button">Edit</button>
 				<a href="#" class="btn btn-outline-primary w-100 Kembali" type="button">Back</a>
 			</div>
 		</div>
@@ -117,7 +118,7 @@
 
 <script>
 	$(document).on("click", ".Kembali", function() {
-		$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
+		$("#show_data").load("<?= base_url('OrderRequest/ShowTableData'); ?>");
 	});
 
 	$('#t_req_kategori').change(function() {
@@ -133,7 +134,7 @@
 			let data = $('#formRequestOrder').serialize();
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('OrderRequest/TambahOrderRequest'); ?>',
+				url: '<?= base_url('OrderRequest/EditOrderRequest'); ?>',
 				data: data,
 				success: function(response) {
 					var data = JSON.parse(response);

@@ -129,5 +129,65 @@
 	$(document).on("click", ".Tambah", function() {
 		$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
 	});
+
+	$(document).on("click", ".EditRequest", function() {
+		let id = $(this).data('id');
+		$.ajax({
+			type: "POST",
+			url: "<?= site_url('OrderRequest/ShowDataEdit') ?>",
+			data: {
+				id: id
+			},
+			success: function(response) {
+				$("#show_data").html(response);
+			}
+		});
+	});
+
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete Data Request Order!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('OrderRequest/DeleteRequest') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?= site_url("OrderRequest") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
+	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

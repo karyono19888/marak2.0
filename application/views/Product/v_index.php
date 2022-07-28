@@ -53,12 +53,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">12</h3>
+									<h3 class="fw-bolder mb-75"><?= $total; ?></h3>
 									<span>Total Product</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
 									<span class="avatar-content">
-										<i data-feather="git-pull-request" class="font-medium-4"></i>
+										<i data-feather="box" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -68,13 +68,14 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">1212</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalEcataloge; ?></h3>
 									<span>E-Cataloge</span>
 								</div>
-								<div class="fw-bold text-body-heading">12 %</div>
+								<?php $presentaseE = round($totalEcataloge / $total * 100, 2); ?>
+								<div class="fw-bold text-body-heading <?= $presentaseE > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseE; ?> %</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
-										<i data-feather="trending-up" class="font-medium-4"></i>
+										<i data-feather="briefcase" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -84,13 +85,14 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">23</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalNon; ?></h3>
 									<span>Non E-Cataloge</span>
 								</div>
-								<div class="fw-bold text-body-heading">12 %</div>
+								<?php $presentaseNon = round($totalNon / $total * 100, 2); ?>
+								<div class="fw-bold text-body-heading <?= $presentaseNon > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseNon; ?> %</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
-										<i data-feather="dollar-sign" class="font-medium-4"></i>
+										<i data-feather="bookmark" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -119,6 +121,66 @@
 
 	$(document).on("click", ".Tambah", function() {
 		$("#show_data").load("<?= base_url('Products/ShowTambahData'); ?>");
+	});
+
+	$(document).on("click", ".Edit", function() {
+		let id = $(this).data('id');
+		$.ajax({
+			type: "POST",
+			url: "<?= site_url('Products/ShowDataEdit') ?>",
+			data: {
+				id: id
+			},
+			success: function(response) {
+				$("#show_data").html(response);
+			}
+		});
+	});
+
+	$(document).on("click", ".Delete", function() {
+		let id = $(this).data('id');
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "Delete Data Produk!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: 'POST',
+					url: '<?= site_url('Products/ProductDelete') ?>',
+					data: {
+						id: id
+					},
+					success: function(response) {
+						var data = JSON.parse(response);
+						if (data.success) {
+							SweetAlert.fire({
+								icon: 'success',
+								title: 'Success',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						} else {
+							SweetAlert.fire({
+								icon: 'error',
+								title: 'Error',
+								text: data.msg,
+								showConfirmButton: false,
+								timer: 1500
+							});
+						}
+						setTimeout(() => {
+							window.location.assign('<?php echo site_url("Products") ?>');
+						}, 1500);
+					}
+				});
+			}
+		})
 	});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
