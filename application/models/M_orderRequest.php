@@ -8,6 +8,27 @@ class M_orderRequest extends CI_Model
 		$this->load->helper('security');
 	}
 
+	public function totalRequest()
+	{
+		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		return $this->db->get('t_order_request')->num_rows();
+	}
+
+	public function totalNewRequest()
+	{
+		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		$this->db->where('t_req_status', 'Request');
+		return $this->db->get('t_order_request')->num_rows();
+	}
+
+	public function totalRequestClose()
+	{
+		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		$this->db->where('t_req_status', 'Close PO');
+		return $this->db->get('t_order_request')->num_rows();
+	}
+
+
 	public function DataTable()
 	{
 		if ($this->session->userdata('role_user') == 1) {

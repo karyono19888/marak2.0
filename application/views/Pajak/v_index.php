@@ -22,12 +22,12 @@
 			<div class="content-header-left col-md-9 col-12 mb-2">
 				<div class="row breadcrumbs-top">
 					<div class="col-12">
-						<h2 class="content-header-title float-start mb-0">Order Request</h2>
+						<h2 class="content-header-title float-start mb-0">Master Pajak</h2>
 						<div class="breadcrumb-wrapper">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="#">Marketing</a>
+								<li class="breadcrumb-item"><a href="#">Administrator</a>
 								</li>
-								<li class="breadcrumb-item active">Data Order Request
+								<li class="breadcrumb-item"><a href="#">Master Pajak</a>
 								</li>
 							</ol>
 						</div>
@@ -51,12 +51,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75"><?= $total; ?></h3>
-									<span>Total Request</span>
+									<h3 class="fw-bolder mb-75"><?= $totalItem; ?></h3>
+									<span>Total Pajak</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
 									<span class="avatar-content">
-										<i data-feather="shopping-bag" class="font-medium-4"></i>
+										<i data-feather="layers" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -66,27 +66,27 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75"><?= $new; ?></h3>
-									<span>Total New Request</span>
-								</div>
-								<div class="avatar bg-light-warning p-50">
-									<span class="avatar-content">
-										<i data-feather="bell" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75"><?= $close; ?></h3>
-									<span>Total Request Close</span>
+									<h3 class="fw-bolder mb-75"><?= $aktif; ?></h3>
+									<span>Pajak Aktif</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
-										<i data-feather="dollar-sign" class="font-medium-4"></i>
+										<i data-feather="check" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75"><?= $tidakaktif; ?></h3>
+									<span>Pajak Tidak Aktif</span>
+								</div>
+								<div class="avatar bg-light-danger p-50">
+									<span class="avatar-content">
+										<i data-feather="x" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -108,18 +108,18 @@
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
 	$(document).ready(function() {
-		$("#show_data").load("<?= base_url('OrderRequest/ShowTableData'); ?>");
+		$("#show_data").load("<?= base_url('Pajak/ShowTableData'); ?>");
 	});
 
 	$(document).on("click", ".Tambah", function() {
-		$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
+		$("#show_data").load("<?= base_url('Pajak/ShowTambahData'); ?>");
 	});
 
-	$(document).on("click", ".EditRequest", function() {
+	$(document).on("click", ".Edit", function() {
 		let id = $(this).data('id');
 		$.ajax({
 			type: "POST",
-			url: "<?= site_url('OrderRequest/ShowDataEdit') ?>",
+			url: "<?= site_url('Pajak/ShowDataEdit') ?>",
 			data: {
 				id: id
 			},
@@ -133,7 +133,7 @@
 		let id = $(this).data('id');
 		Swal.fire({
 			title: 'Are you sure?',
-			text: "Delete Data Request Order!",
+			text: "Delete Data Pajak!",
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonColor: '#3085d6',
@@ -143,7 +143,7 @@
 			if (result.isConfirmed) {
 				$.ajax({
 					type: 'POST',
-					url: '<?= site_url('OrderRequest/DeleteRequest') ?>',
+					url: '<?= site_url('Pajak/PajakDelete') ?>',
 					data: {
 						id: id
 					},
@@ -167,7 +167,7 @@
 							});
 						}
 						setTimeout(() => {
-							window.location.assign('<?= site_url("OrderRequest") ?>');
+							window.location.assign('<?php echo site_url("Pajak") ?>');
 						}, 1500);
 					}
 				});

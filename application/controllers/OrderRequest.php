@@ -16,6 +16,9 @@ class OrderRequest extends CI_Controller
 	public function index()
 	{
 		$data['title'] = 'Order Request | Marak 2.0';
+		$data['total'] = $this->record->totalRequest();
+		$data['new']   = $this->record->totalNewRequest();
+		$data['close'] = $this->record->totalRequestClose();
 		$this->load->view('OrderRequest/v_index', $data);
 	}
 
