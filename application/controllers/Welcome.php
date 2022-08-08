@@ -13,7 +13,7 @@ class Welcome extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Jadwal Kunjungan | Marak 2.0';
+		$data['title'] = 'Selamat Datang | Marak 2.0';
 		$this->load->view('v_welcome', $data);
 	}
 }

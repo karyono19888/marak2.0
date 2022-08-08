@@ -51,7 +51,11 @@
 							<td width="20%"><?= $a['instansi_alamat']; ?></td>
 							<td><?= number_format($a['m_visit_prognosa'], 0, '.', '.'); ?></td>
 							<td>
-								<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_req_status']; ?></span>
+								<?php if ($a['t_req_status'] == "Close PO") : ?>
+									<span class="badge rounded-pill badge-light-danger me-1"><?= $a['t_req_status']; ?></span>
+								<?php else : ?>
+									<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_req_status']; ?></span>
+								<?php endif; ?>
 							</td>
 							<td class="text-center" width="15%">
 								<?php if ($a['t_req_status'] == "Close PO") : ?>

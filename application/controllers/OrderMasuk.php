@@ -105,4 +105,25 @@ class OrderMasuk extends CI_Controller
 		$data['pajak'] 	   = $this->record->DataPajak();
 		$this->load->view('OrderMasuk/v_tableProduk', $data);
 	}
+
+	public function TambahOrderComplete()
+	{
+		$t_order_kode 					= $this->input->post('t_order_kode');
+		$t_order_paket_id 			= $this->input->post('t_order_paket_id');
+		$t_order_perusahaan 			= $this->input->post('t_order_perusahaan');
+		$t_order_kategori 			= $this->input->post('t_order_kategori');
+		$t_order_visit_history_id 	= $this->input->post('t_order_visit_history_id');
+		$t_order_visit_id 			= $this->input->post('t_order_visit_id');
+		$t_order_tgl_req 				= $this->input->post('t_order_tgl_req');
+		$t_order_tgl_order 			= $this->input->post('t_order_tgl_order');
+		$t_order_tgl_kirim 			= $this->input->post('t_order_tgl_kirim');
+		$t_order_subtotal 			= $this->input->post('t_order_subtotal');
+		$t_order_ppn 					= $this->input->post('t_order_ppn');
+		$t_order_pajak 				= $this->input->post('t_order_pajak');
+		$t_order_grandtotal 			= $this->input->post('t_order_grandtotal');
+		$t_order_user 					= $this->input->post('t_order_user');
+		$t_req_kode 					= $this->input->post('t_req_kode');
+
+		echo $this->record->TambahOrderComplete($t_order_kode, $t_order_paket_id, $t_order_perusahaan, $t_order_kategori, $t_order_visit_history_id, $t_order_visit_id, $t_order_tgl_req, $t_order_tgl_order, $t_order_tgl_kirim, $t_order_subtotal, $t_order_ppn, $t_order_pajak, $t_order_grandtotal, $t_order_user, $t_req_kode);
+	}
 }

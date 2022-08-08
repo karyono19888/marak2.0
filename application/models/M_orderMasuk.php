@@ -163,4 +163,64 @@ class M_orderMasuk extends CI_Model
 		$this->db->order_by('m_pajak_id', 'desc');
 		return $this->db->get('m_pajak');
 	}
+
+	public function TambahOrderComplete($t_order_kode, $t_order_paket_id, $t_order_perusahaan, $t_order_kategori, $t_order_visit_history_id, $t_order_visit_id, $t_order_tgl_req, $t_order_tgl_order, $t_order_tgl_kirim, $t_order_subtotal, $t_order_ppn, $t_order_pajak, $t_order_grandtotal, $t_order_user, $t_req_kode)
+	{
+		$this->db->trans_start();
+		$getJumlahPOBefore = $this->db->get_where('m_visit', ['m_visit_id' => $t_order_visit_id])->row_array();
+		if ($t_order_grandtotal < 1000000) {
+			$konversi   = $t_order_grandtotal;
+		} else {
+			$konversi   = round($t_order_grandtotal / 1000000);
+		}
+
+		$totalPo    = $konversi + $getJumlahPOBefore['m_visit_po'];
+
+		$this->db->insert('t_order_po', array(
+			't_order_kode'  				=> $t_order_kode,
+			't_order_paket_id'			=> $t_order_paket_id,
+			't_order_perusahaan' 		=> $t_order_perusahaan,
+			't_order_kategori'   		=> $t_order_kategori,
+			't_order_visit_history_id' => $t_order_visit_history_id,
+			't_order_visit_id'      	=> $t_order_visit_id,
+			't_order_tgl_req'      		=> $t_order_tgl_req,
+			't_order_tgl_order'      	=> $t_order_tgl_order,
+			't_order_tgl_kirim'      	=> $t_order_tgl_kirim,
+			't_order_subtotal'      	=> $t_order_subtotal,
+			't_order_ppn'      			=> $t_order_ppn,
+			't_order_pajak'      		=> $t_order_pajak,
+			't_order_grandtotal'      	=> $t_order_grandtotal,
+			't_order_user'      			=> $t_order_user,
+			't_order_status' 				=> 'Close PO',
+			'created_at' 					=> time()
+		));
+
+
+
+		$this->db->where('m_visit_id', $t_order_visit_id);
+		$this->db->update('m_visit', array(
+			'm_visit_order_id'  	=> $t_order_kode,
+			'm_visit_po'  			=> $totalPo,
+			'm_visit_status'  	=> 'Close PO',
+		));
+
+		$this->db->where('m_visit_history_id', $t_order_visit_history_id);
+		$this->db->update('m_visit_history', array(
+			'm_visit_order_id'  	=> $t_order_kode,
+			'm_visit_po'  			=> $totalPo,
+			'm_visit_status'  	=> 'Close PO',
+		));
+
+		$this->db->where('t_req_kode', $t_req_kode);
+		$this->db->update('t_order_request', array(
+			't_req_status'  			=> 'Close PO',
+		));
+
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Close Order gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Close Order Berhasil!'));
+		}
+	}
 }

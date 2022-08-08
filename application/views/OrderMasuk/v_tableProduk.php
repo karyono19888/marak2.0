@@ -2,7 +2,10 @@
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h4 class="card-title text-primary"><b>Data Produk</b></h4>
+				<!-- tombol modal produk  -->
+				<button class="btn btn-outline-primary mt-2" id="tombolModalTambah" type="button" data-bs-toggle="modal" data-bs-target="#ModalProduk">
+					Tambah Produk
+				</button>
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered" width="100%">
@@ -64,11 +67,10 @@
 		<div class="card">
 			<div class="card-body">
 				<h6 class="mb-2">Payment :</h6>
-				<div class="mb-1">
-
-					<small>Jenis Pajak</small>
-					<div class="input-group mb-1">
-						<select name="t_produk_pajak" id="t_produk_pajak" class="form-control">
+				<div class="mb-1 row">
+					<label for="t_order_pajak" class="col-sm-3 col-form-label">Jenis Pajak</label>
+					<div class="col-sm-9">
+						<select name="t_order_pajak" id="t_order_pajak" class="form-control">
 							<option value="">- Pilih -</option>
 							<?php foreach ($pajak->result_array() as $a) : ?>
 								<option data-price="<?= empty($subtotal) ? '0' : '' . $subtotal . ''; ?>" data-ppn="<?= $a['m_pajak_nilai']; ?>" value="<?= $a['m_pajak_id']; ?>"><?= $a['m_pajak_nama']; ?></option>
@@ -81,6 +83,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<b class="float-end"><?= empty($subtotal) ? '0' : '' . number_format($subtotal, 0, ".", ".") . ''; ?></b>
+						<input type="hidden" class="form-control" id="t_order_subtotal" name="t_order_subtotal" value="<?= empty($subtotal) ? '0' : '' . $subtotal . ''; ?>" />
 					</div>
 				</div>
 				<div class="row">
@@ -88,6 +91,7 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<b id="showPajak" class="float-end">0</b>
+						<input type="hidden" class="form-control" id="t_order_ppn" name="t_order_ppn" />
 					</div>
 				</div>
 				<h3 class="mt-2  text-muted">Grand Total</h3>
@@ -96,13 +100,14 @@
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
 						<h1 class="text-center"><b id="showTotal" class="float-end">0</b></h1>
+						<input type="hidden" class="form-control" id="t_order_grandtotal" name="t_order_grandtotal" />
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="card">
 			<div class="card-body">
-				<button class="btn btn-primary w-100 mb-75" id="tombol_complete" data-id="" type="button">Complete Order</button>
+				<button class="btn btn-primary w-100 mb-75" id="tombol_complete" type="button">Complete Order</button>
 				<a href="#" class="btn btn-outline-primary w-100" id="BacktoPreview" type="button">Back</a>
 			</div>
 		</div>
@@ -110,13 +115,13 @@
 </div>
 
 <script>
-	$('#t_produk_pajak').on('change', function() {
-		let value = $('#t_produk_pajak').val();
-		const price = $('#t_produk_pajak option:selected').data('price');
-		const ppn = $('#t_produk_pajak option:selected').data('ppn');
+	$('#t_order_pajak').on('change', function() {
+		let value = $('#t_order_pajak').val();
+		const price = $('#t_order_pajak option:selected').data('price');
+		const ppn = $('#t_order_pajak option:selected').data('ppn');
 		const totalPpn = (price * ppn / 100)
 		const total = price + totalPpn;
-		// $('[name=t_order_ppn]').val(totalPpn);
+		$('[name=t_order_ppn]').val(totalPpn);
 		// tampilkan data ke element
 		var bilangan = totalPpn;
 		var number_string = bilangan.toString(),
@@ -138,7 +143,7 @@
 		ribuan = ribuan.join('.').split('').reverse().join('');
 
 
-		// $('[name=t_order_tot_hrg]').val(total);
+		$('[name=t_order_grandtotal]').val(total);
 		$('#showTotal').text(`${ribuan}`);
 	})
 </script>

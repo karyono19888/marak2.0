@@ -131,6 +131,9 @@
 										<th>Date</th>
 										<th>Instansi</th>
 										<th>Agenda</th>
+										<th>Prospek</th>
+										<th>Prognosa</th>
+										<th>Close</th>
 										<th>Status</th>
 										<th>Actions</th>
 									</tr>
@@ -146,6 +149,9 @@
 											<td width="10%"><?= date('d F, Y', strtotime($key['m_visit_tgl'])); ?></td>
 											<td width="20%"><?= $key['instansi_nama']; ?></td>
 											<td width="30%"><?= $key['m_visit_agenda']; ?></td>
+											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
+											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
+											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
 											<td>
 												<?php if ($key['m_visit_status'] == "Close Po") : ?>
 													<span class="badge rounded-pill badge-light-danger me-1"><?= $key['m_visit_status']; ?></span>

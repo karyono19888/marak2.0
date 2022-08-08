@@ -350,13 +350,71 @@
 		}
 	}
 
-	function notif(word) {
-		Swal.fire({
-			title: 'Perhatian',
-			text: word + ' wajib di isi !',
-			icon: 'info',
-		}).then((result) => {})
+	$(document).on("click", "#tombol_complete", function() {
+		if (validasiComplete()) {
+			let data = $('#formRequestOrder').serialize();
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url('OrderMasuk/TambahOrderComplete'); ?>',
+				data: data,
+				beforeSend: function() {
+					$('#tombol_complete').prop('disabled', true);
+					$('#tombol_complete').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="ms-25 align-middle">Loading...</span>');
+				},
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("OrderMasuk") ?>');
+					}, 2000);
+				}
+			});
+		}
+	});
+
+	function validasiComplete() {
+		let t_order_paket_id = document.getElementById("t_order_paket_id").value;
+		let t_order_tgl_order = document.getElementById("t_order_tgl_order").value;
+		let t_order_tgl_kirim = document.getElementById("t_order_tgl_kirim").value;
+		let t_order_pajak = document.getElementById("t_order_pajak").value;
+		let t_order_grandtotal = document.getElementById("t_order_grandtotal").value;
+		if ((t_order_paket_id == "") || (t_order_tgl_order == "") || (t_order_tgl_kirim == "") || (t_order_pajak == "") || (t_order_grandtotal == "0")) {
+			if (t_order_grandtotal == "0") {
+				notif("Produk");
+			}
+			if (t_order_pajak == "") {
+				notif("Jenis Pajak");
+			}
+			if (t_order_tgl_kirim == "") {
+				notif("Tanggal Kirim");
+			}
+			if (t_order_tgl_order == "") {
+				notif("Tanggal Order");
+			}
+			if (t_order_paket_id == "") {
+				notif("ID Paket");
+			}
+		} else {
+			return true;
+		}
 	}
+
 
 	function HapusValue() {
 		$('#t_produk_nama').val("");
@@ -400,5 +458,13 @@
 			}
 		})
 	});
+
+	function notif(word) {
+		Swal.fire({
+			title: 'Perhatian',
+			text: word + ' wajib di isi !',
+			icon: 'info',
+		}).then((result) => {})
+	}
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
