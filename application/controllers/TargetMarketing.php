@@ -14,7 +14,11 @@ class TargetMarketing extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 			= 'Target Marketing | Marak 2.0';
+		$data['title']    	= 'Target Marketing | Marak 2.0';
+		$data['total']    	= $this->record->TotalUsers();
+		$data['target']   	= $this->record->TotalTarget();
+		$data['wilayah']  	= $this->record->TotalWilayah();
+		$data['targetNol']  	= $this->record->UserTargetNol();
 		$this->load->view('Target/v_targetmarketing', $data);
 	}
 

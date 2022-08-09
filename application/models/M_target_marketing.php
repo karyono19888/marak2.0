@@ -134,4 +134,39 @@ class M_target_marketing extends CI_Model
 			return json_encode(array('success' => true, 'msg' => 'Hapus Peserta Berhasil!'));
 		}
 	}
+
+	public function TotalUsers()
+	{
+		$this->db->where('m_target_thn', date('Y'));
+		$query = $this->db->get('m_target_marketing');
+		return $query->num_rows();
+	}
+
+	public function TotalTarget()
+	{
+		$this->db->where('m_target_thn', date('Y'));
+		$this->db->select_sum('m_target_jml');
+		$query = $this->db->get('m_target_marketing');
+		if ($query->num_rows() > 0) {
+			return $query->row()->m_target_jml;
+		} else {
+			return 0;
+		}
+	}
+
+	public function TotalWilayah()
+	{
+		$this->db->where('m_cover_prov_thn', date('Y'));
+		$query = $this->db->get('m_area_cover_wilayah');
+		return $query->num_rows();
+	}
+
+	public function UserTargetNol()
+	{
+		$this->db->where('m_target_thn', date('Y'));
+		$this->db->where('m_target_jml', 0);
+		$query = $this->db->get('m_target_marketing');
+		return $query->num_rows();
+	}
+
 }

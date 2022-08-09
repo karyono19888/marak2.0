@@ -10,7 +10,7 @@
 			<table class="user-list-table table table-borderless" id="mytable">
 				<thead class="table-light">
 					<tr>
-						<th></th>
+						<th>No</th>
 						<th>User</th>
 						<th>Target</th>
 						<th>Area Cover</th>
@@ -20,12 +20,13 @@
 				</thead>
 				<tbody>
 					<?php
+					$i = 1;
 					foreach ($data->result_array() as $a) :
 						$this->db->join('m_provinsi', 'id_prov=m_cover_prov_id', 'left');
 						$wilayah = $this->db->get_where('m_area_cover_wilayah', ['m_cover_prov_user' => $a['m_target_user'], 'm_cover_prov_thn' => $a['m_target_thn']])->result_array();
 					?>
 						<tr>
-							<td></td>
+							<td class="text-center"><?= $i++; ?></td>
 							<td><?= $a['name_user']; ?></td>
 							<td>Rp. <?= number_format($a['m_target_jml'], 0, '.', '.'); ?></td>
 							<td>

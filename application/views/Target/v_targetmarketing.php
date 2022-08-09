@@ -53,12 +53,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
-									<span>Total Target</span>
+									<h3 class="fw-bolder mb-75"><?= $total; ?></h3>
+									<span>Total User</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
 									<span class="avatar-content">
-										<i data-feather="user-plus" class="font-medium-4"></i>
+										<i data-feather="users" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -68,12 +68,13 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
-									<span>Suspend Users</span>
+									<h3 class="fw-bolder mb-75"><?= number_format($target, 0, '.', '.'); ?> <small class="text-muted">Mil</small></h3>
+									<span>Total Target</span>
+
 								</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
-										<i data-feather="user" class="font-medium-4"></i>
+										<i data-feather="trending-up" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -83,12 +84,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
-									<span>Active Users</span>
+									<h3 class="fw-bolder mb-75"><?= $wilayah; ?> <small class="text-muted">Wilayah</small></h3>
+									<span>Total Area Cover</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
-										<i data-feather="user-check" class="font-medium-4"></i>
+										<i data-feather="map-pin" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -98,8 +99,8 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
-									<span>Not Active Users</span>
+									<h3 class="fw-bolder mb-75"><?= $targetNol; ?></h3>
+									<span>User tidak ada target</span>
 								</div>
 								<div class="avatar bg-light-danger p-50">
 									<span class="avatar-content">
