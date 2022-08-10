@@ -47,18 +47,30 @@
 								<?php endif; ?>
 							</td>
 							<td width="15%"><?= $a['org_nama']; ?></td>
-							<td width="15%"><?= $a['instansi_nama']; ?></td>
-							<td width="20%"><?= $a['instansi_alamat']; ?></td>
+							<td width="15%">
+								<?php if ($a['t_req_kategori'] == "E-Commerce") : ?>
+									<?= $a['t_req_konsumen']; ?>
+								<?php else : ?>
+									<?= $a['instansi_nama']; ?>
+								<?php endif; ?>
+							</td>
+							<td width="20%">
+								<?php if ($a['t_req_kategori'] == "E-Commerce") : ?>
+									<?= $a['t_req_alamat']; ?>
+								<?php else : ?>
+									<?= $a['instansi_alamat']; ?>
+								<?php endif; ?>
+							</td>
 							<td><?= number_format($a['m_visit_prognosa'], 0, '.', '.'); ?></td>
 							<td>
-								<?php if ($a['t_req_status'] == "Close PO") : ?>
+								<?php if ($a['t_req_status'] == "Close Po") : ?>
 									<span class="badge rounded-pill badge-light-danger me-1"><?= $a['t_req_status']; ?></span>
 								<?php else : ?>
 									<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_req_status']; ?></span>
 								<?php endif; ?>
 							</td>
 							<td class="text-center" width="15%">
-								<?php if ($a['t_req_status'] == "Close PO") : ?>
+								<?php if ($a['t_req_status'] == "Close Po") : ?>
 									<span class="badge rounded-pill badge-light-danger me-1">Selesai</span>
 								<?php else : ?>
 									<a href="#" type="button" class="btn btn-gradient-warning btn-sm EditRequest my-1" data-id="<?= $a['t_req_id']; ?>">Edit</a>
