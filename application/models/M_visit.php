@@ -42,6 +42,22 @@ class M_visit extends CI_Model
 		}
 	}
 
+	public function TotalKunjunganProspek()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
+			$query = $this->db->get('m_visit');
+			return $query->num_rows();
+		}
+	}
+
 	public function TotalKunjunganPrognosa()
 	{
 		if ($this->session->userdata('role_user') == 1) {
@@ -57,6 +73,7 @@ class M_visit extends CI_Model
 			return $query->num_rows();
 		}
 	}
+
 	public function TotalKunjunganClose()
 	{
 		if ($this->session->userdata('role_user') == 1) {

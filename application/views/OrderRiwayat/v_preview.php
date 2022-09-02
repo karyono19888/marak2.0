@@ -27,7 +27,7 @@
 												<td>
 													<?php if ($data['t_req_kategori'] == "E-Commerce") : ?>
 														: <span class="badge badge-light-success"><?= $data['t_req_kategori']; ?></span>
-													<?php elseif ($data['t_req_kategori'] == "E-catalog") : ?>
+													<?php elseif ($data['t_req_kategori'] == "E-Catalog") : ?>
 														: <span class="badge badge-light-warning"><?= $data['t_req_kategori']; ?></span>
 													<?php else : ?>
 														: <span class="badge badge-light-info"><?= $data['t_req_kategori']; ?></span>
@@ -38,7 +38,7 @@
 											<tr>
 												<td class="pe-1">Perusahaan</td>
 												<td>: <b><?= $data['org_nama']; ?></b></td>
-												<input type="hidden" class="form-control" id="t_order_perusahaan" name="t_order_perusahaan" value="<?= $data['org_id']; ?>" />
+												<input type="hidden" class="form-control" id="t_order_perusahaan" name="t_order_prh" value="<?= $data['org_id']; ?>" />
 											</tr>
 										</tbody>
 									</table>
@@ -48,11 +48,11 @@
 										<tbody>
 											<tr>
 												<td class="pe-1">ID Paket <small class="text-muted">(Order Konfirmasi)</small></td>
-												<td>: <?= $data['t_order_paket_id']; ?></td>
+												<td>: <?= $data['t_order_id_pket']; ?></td>
 											</tr>
 											<tr>
 												<td class="pe-1">Tanggal Order</td>
-												<td>: <?= date('d F, Y', strtotime($data['t_order_tgl_order'])); ?></td>
+												<td>: <?= date('d F, Y', strtotime($data['t_order_tgl'])); ?></td>
 											</tr>
 											<tr>
 												<td class="pe-1">Tanggal Kirim <small class="text-muted">(Estimasi)</small></td>
@@ -91,7 +91,8 @@
 								<tbody>
 									<tr>
 										<td class="pe-1">Status</td>
-										<td>: <span class="badge badge-light-danger"><?= $data['t_req_status']; ?></span></td>
+										<td>: <span class="badge badge-light-danger"><?= $data['t_order_status']; ?></span></td>
+										<!-- <td>: <span class="badge badge-light-danger"><?= $data['t_req_status']; ?></span></td> -->
 									</tr>
 									<tr>
 										<td class="pe-1">Sales Person</td>
@@ -103,7 +104,7 @@
 									</tr>
 									<tr>
 										<td class="pe-1">Date Close</td>
-										<td>: <?= date('d F, Y', strtotime($data['t_order_tgl_order'])); ?></td>
+										<td>: <?= date('d F, Y', strtotime($data['t_order_tgl'])); ?></td>
 									</tr>
 								</tbody>
 							</table>

@@ -10,10 +10,10 @@ class M_orderRiwayat extends CI_Model
 
 	public function DataTable()
 	{
-		$this->db->where('YEAR(t_order_tgl_order)', date('Y'));
+		$this->db->where('YEAR(t_order_tgl)', date('Y'));
 		$this->db->where('t_order_status', 'Close PO');
-		$this->db->join('m_organisasi', 'org_id=t_order_perusahaan', 'left');
-		$this->db->join('users', 'id_user=t_order_user', 'left');
+		$this->db->join('m_organisasi', 'org_id=t_order_prh', 'left');
+		$this->db->join('users', 'id_user=t_order_agent', 'left');
 		$this->db->join('m_visit', 'm_visit_id=t_order_visit_id', 'left');
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('t_order_request', 't_req_kode=t_order_kodeReq', 'left');
@@ -25,8 +25,8 @@ class M_orderRiwayat extends CI_Model
 	public function DataTablePreview($id)
 	{
 		$this->db->where('t_order_kode', $id);
-		$this->db->join('m_organisasi', 'org_id=t_order_perusahaan', 'left');
-		$this->db->join('users', 'id_user=t_order_user', 'left');
+		$this->db->join('m_organisasi', 'org_id=t_order_prh', 'left');
+		$this->db->join('users', 'id_user=t_order_agent', 'left');
 		$this->db->join('m_visit', 'm_visit_id=t_order_visit_id', 'left');
 		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 		$this->db->join('t_order_request', 't_req_kode=t_order_kodeReq', 'left');
@@ -37,12 +37,12 @@ class M_orderRiwayat extends CI_Model
 
 	public function DataTableProdukPreview($kode)
 	{
-		$this->db->where('t_produk_order_kode', $kode);
-		$this->db->join('t_order_po', 't_order_kode=t_produk_order_kode', 'left');
-		$this->db->join('m_pajak', 'm_pajak_id=t_order_pajak', 'left');
-		$this->db->join('m_product_pm', 'm_prod_id=t_produk_nama', 'left');
+		$this->db->where('t_order_produk_kode', $kode);
+		$this->db->join('t_order_po', 't_order_kode=t_order_produk_kode', 'left');
+		$this->db->join('m_pajak', 'm_pajak_id=m_pjk_id', 'left');
+		$this->db->join('m_product_pm', 'm_prod_id=t_order_produk_nama', 'left');
 		$this->db->join('m_uom', 'm_uom_id=m_prod_uom', 'left');
-		$this->db->order_by('t_produk_id', 'desc');
+		$this->db->order_by('t_order_produk_id', 'desc');
 		return $this->db->get('t_order_produk');
 	}
 

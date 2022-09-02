@@ -51,7 +51,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
+									<h3 class="fw-bolder mb-75"><?= $totaltool; ?></h3>
 									<span>Total Tools</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
@@ -66,8 +66,8 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total Tools Public</span>
+									<h3 class="fw-bolder mb-75"><?= $marketing; ?></h3>
+									<span>Total Marketing</span>
 								</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
@@ -81,12 +81,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total Tools Privat</span>
+									<h3 class="fw-bolder mb-75"><?= $general; ?></h3>
+									<span>Total General</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
-										<i data-feather="file" class="font-medium-4"></i>
+										<i data-feather="file-plus" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -96,12 +96,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">12</h3>
-									<span>Draft Tools</span>
+									<h3 class="fw-bolder mb-75"><?= $tidakAktif; ?></h3>
+									<span>Tools Tidak Aktif</span>
 								</div>
 								<div class="avatar bg-light-danger p-50">
 									<span class="avatar-content">
-										<i data-feather="file-plus" class="font-medium-4"></i>
+										<i data-feather="file-minus" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -143,15 +143,15 @@
 											<td><?= $a['tools_type']; ?></td>
 											<td><?= $a['tools_nama']; ?></td>
 											<td>
-												<?php if ($a['tools_status'] === "1") : ?>
+												<?php if ($a['tools_status'] === "Aktif") : ?>
 													<span class="badge badge-light-primary">
 														<i data-feather="unlock" class="me-25"></i>
-														<span>Active</span>
+														<span><?= $a['tools_status']; ?></span>
 													</span>
 												<?php else : ?>
 													<span class="badge badge-light-danger">
 														<i data-feather="lock" class="me-25"></i>
-														<span>Not Active</span>
+														<span><?= $a['tools_status']; ?></span>
 													</span>
 												<?php endif; ?>
 											</td>

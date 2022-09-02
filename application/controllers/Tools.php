@@ -14,8 +14,12 @@ class Tools extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Tools | Marak 2.0';
-		$data['data']	= $this->record->index();
+		$data['title'] 		= 'Tools | Marak 2.0';
+		$data['totaltool']	= $this->record->totaltool();
+		$data['marketing']	= $this->record->toolMarketing();
+		$data['general']		= $this->record->toolGeneral();
+		$data['tidakAktif']	= $this->record->tooltidakAktif();
+		$data['data']			= $this->record->index();
 		$this->load->view('Tools/v_index', $data);
 	}
 
@@ -52,7 +56,7 @@ class Tools extends CI_Controller
 				<div class="alert alert-danger" role="alert">
 					<div class="alert-body d-flex align-items-center">
 						<i data-feather="info" class="me-50"></i>
-						<span><strong>Oopss!</strong> Upload tools gagal.</span>
+						<span><strong>Oopss!</strong> Tambah tools gagal.</span>
 					</div></div>
 				');
 				redirect(site_url('Tools'));
@@ -64,7 +68,7 @@ class Tools extends CI_Controller
 					'tools_type' 	=> $tools_type,
 					'tools_nama' 	=> ucwords($tools_nama),
 					'tools_upload' => $this->upload->data('file_name'),
-					'tools_status' => 1,
+					'tools_status' => "Aktif",
 					'created_at'   => time(),
 				];
 
@@ -74,7 +78,7 @@ class Tools extends CI_Controller
 					<div class="alert alert-success" role="alert">
 						<div class="alert-body d-flex align-items-center">
 							<i data-feather="info" class="me-50"></i>
-							<span><strong>Success!</strong> Upload tools berhasil.</span>
+							<span><strong>Success!</strong> Tambah tools berhasil.</span>
 						</div></div>
 					');
 					redirect('Tools');
@@ -83,7 +87,7 @@ class Tools extends CI_Controller
 				<div class="alert alert-danger" role="alert">
 				<div class="alert-body d-flex align-items-center">
 					<i data-feather="info" class="me-50"></i>
-					<span><strong>Gagal!</strong> Upload tools gagal.</span>
+					<span><strong>Gagal!</strong> Tambah tools gagal.</span>
 				</div></div>
 			');
 					redirect(site_url('Tools'));
@@ -108,6 +112,7 @@ class Tools extends CI_Controller
 		$this->form_validation->set_rules('tools_role', 'Role File', 'required|trim');
 		$this->form_validation->set_rules('tools_type', 'Type File', 'required|trim');
 		$this->form_validation->set_rules('tools_nama', 'Nama File', 'required|trim');
+		$this->form_validation->set_rules('tools_status', 'Status', 'required|trim');
 
 
 		if ($this->form_validation->run() ==  false) {
@@ -117,6 +122,7 @@ class Tools extends CI_Controller
 			$tools_role 	= $this->input->post('tools_role');
 			$tools_type 	= $this->input->post('tools_type');
 			$tools_nama 	= $this->input->post('tools_nama');
+			$tools_status 	= $this->input->post('tools_status');
 			$tools_id 		= $this->input->post('tools_id');
 
 			$filename = $_FILES['tools_upload']['name'];
@@ -134,7 +140,7 @@ class Tools extends CI_Controller
 					'tools_role' 	=> $tools_role,
 					'tools_type' 	=> $tools_type,
 					'tools_nama' 	=> ucwords($tools_nama),
-					'tools_status' => 1,
+					'tools_status' => $tools_status,
 					'updated_at'   => time()
 				];
 
@@ -143,7 +149,7 @@ class Tools extends CI_Controller
 					<div class="alert alert-success" role="alert">
 						<div class="alert-body d-flex align-items-center">
 							<i data-feather="info" class="me-50"></i>
-							<span><strong>Success!</strong> Upload tools berhasil.</span>
+							<span><strong>Success!</strong> Edit tools berhasil.</span>
 						</div></div>
 					');
 					redirect('Tools');
@@ -152,7 +158,7 @@ class Tools extends CI_Controller
 				<div class="alert alert-danger" role="alert">
 				<div class="alert-body d-flex align-items-center">
 					<i data-feather="info" class="me-50"></i>
-					<span><strong>Gagal!</strong> Upload tools gagal.</span>
+					<span><strong>Gagal!</strong> Edit tools gagal.</span>
 				</div></div>');
 					redirect(site_url('Tools'));
 				}
@@ -162,7 +168,7 @@ class Tools extends CI_Controller
 					<div class="alert alert-danger" role="alert">
 						<div class="alert-body d-flex align-items-center">
 							<i data-feather="info" class="me-50"></i>
-							<span><strong>Oopss!</strong> Upload tools gagal.</span>
+							<span><strong>Oopss!</strong> Edit tools gagal.</span>
 						</div></div>
 					');
 					redirect(site_url('Tools'));
@@ -174,7 +180,7 @@ class Tools extends CI_Controller
 						'tools_type' 	=> $tools_type,
 						'tools_nama' 	=> ucwords($tools_nama),
 						'tools_upload' => $this->upload->data('file_name'),
-						'tools_status' => 1,
+						'tools_status' => $tools_status,
 						'updated_at'   => time()
 					];
 
@@ -186,7 +192,7 @@ class Tools extends CI_Controller
 							<div class="alert alert-success" role="alert">
 								<div class="alert-body d-flex align-items-center">
 									<i data-feather="info" class="me-50"></i>
-									<span><strong>Success!</strong> Upload tools berhasil.</span>
+									<span><strong>Success!</strong> Edit tools berhasil.</span>
 								</div></div>
 							');
 						redirect('Tools');
@@ -195,7 +201,7 @@ class Tools extends CI_Controller
 						<div class="alert alert-danger" role="alert">
 						<div class="alert-body d-flex align-items-center">
 							<i data-feather="info" class="me-50"></i>
-							<span><strong>Gagal!</strong> Upload tools gagal.</span>
+							<span><strong>Gagal!</strong> Edit tools gagal.</span>
 						</div></div>');
 						redirect(site_url('Tools'));
 					}

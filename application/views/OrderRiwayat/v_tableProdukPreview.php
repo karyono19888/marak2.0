@@ -34,7 +34,7 @@
 							$grandtotal = "";
 							$kodePO = "";
 							foreach ($data->result_array() as $a) :
-								$jml 			= $a['t_produk_qty'] * $a['t_produk_harga'] + $a['t_produk_ongkir'];
+								$jml 			= $a['t_order_produk_qty'] * $a['t_order_produk_harga'] + $a['t_order_produk_ongkir'];
 								$subtotal 	+= $jml;
 								$pajak 		= $a['m_pajak_nama'];
 								$ppn 			= $a['t_order_ppn'];
@@ -47,12 +47,12 @@
 										<?= $a['m_prod_kode']; ?> -
 										<?= $a['m_prod_nama']; ?>
 									</td>
-									<td width="2%"><?= $a['t_produk_qty']; ?></td>
+									<td width="2%"><?= $a['t_order_produk_qty']; ?></td>
 									<td><?= $a['m_uom_nama']; ?></td>
-									<td><?= number_format($a['t_produk_harga'], 0, '.', '.'); ?></td>
-									<td><?= number_format($a['t_produk_ongkir'], 0, '.', '.'); ?></td>
-									<td><?= number_format($a['t_produk_subtotal'], 0, '.', '.'); ?></td>
-									<td><?= $a['t_produk_catatan']; ?></td>
+									<td><?= number_format($a['t_order_produk_harga'], 0, '.', '.'); ?></td>
+									<td><?= number_format($a['t_order_produk_ongkir'], 0, '.', '.'); ?></td>
+									<td><?= number_format($a['t_order_grandtotal'], 0, '.', '.'); ?></td>
+									<td><?= $a['t_order_produk_catatan']; ?></td>
 								</tr>
 							<?php endforeach; ?>
 						<?php endif; ?>

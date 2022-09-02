@@ -55,9 +55,26 @@
 									<h3 class="fw-bolder mb-75"><?= $totalkunjungan; ?></h3>
 									<span>Total Kunjungan</span>
 								</div>
-								<div class="avatar bg-light-primary p-50">
+								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
 										<i data-feather="git-pull-request" class="font-medium-4"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 col-sm-6">
+						<div class="card">
+							<div class="card-body d-flex align-items-center justify-content-between">
+								<div>
+									<h3 class="fw-bolder mb-75"><?= $totalprospek; ?></h3>
+									<span>Total Prospek</span>
+								</div>
+								<?php $presentaseprospek = round($totalprospek / $totalkunjungan * 100, 2); ?>
+								<div class="fw-bold text-body-heading <?= $presentaseprospek > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseprospek; ?> %</div>
+								<div class="avatar bg-light-primary p-50">
+									<span class="avatar-content">
+										<i data-feather="bar-chart-2" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -89,24 +106,9 @@
 								</div>
 								<?php $presentaseclosepo = round($totalclosepo / $totalkunjungan * 100, 2); ?>
 								<div class="fw-bold text-body-heading <?= $presentaseclosepo > 50 ? 'text-success' : 'text-danger'; ?>"><?= $presentaseclosepo; ?> %</div>
-								<div class="avatar bg-light-success p-50">
-									<span class="avatar-content">
-										<i data-feather="dollar-sign" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75">12</h3>
-									<span>Belum Terkunjungi</span>
-								</div>
 								<div class="avatar bg-light-danger p-50">
 									<span class="avatar-content">
-										<i data-feather="user-x" class="font-medium-4"></i>
+										<i data-feather="dollar-sign" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>
@@ -162,9 +164,9 @@
 												<?php endif; ?>
 											</td>
 											<td class="text-center" width="20%">
-												<a href="<?= base_url('Visit/Preview/' . $key['m_visit_history_id']); ?>" type="button" class="btn btn-flat-warning btn-sm Edit">Preview</a>
+												<a href="<?= base_url('Visit/Preview/' . $key['m_visit_history_id']); ?>" type="button" class="btn btn-relief-warning btn-sm Edit">Preview</a>
 												<?php if ($this->session->userdata('role_user') == 1) : ?>
-													<a href="#" type="button" class="btn btn-flat-danger btn-sm Delete" data-id="<?= $key['m_visit_id']; ?>">Delete</a>
+													<a href="#" type="button" class="btn btn-relief-danger btn-sm Delete" data-id="<?= $key['m_visit_id']; ?>">Delete</a>
 												<?php endif; ?>
 											</td>
 										</tr>

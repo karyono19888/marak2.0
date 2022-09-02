@@ -52,7 +52,7 @@
 					<div class="col-sm-8">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="card-title">Edit Data Tools - <span class="fw-bolder"><?= $data['tools_nama']; ?></span></h4>
+								<h4 class="card-title">Edit Data Tools - <span class="fw-bolder text-warning"><?= $data['tools_nama']; ?></span></h4>
 								<a href="<?= base_url('Tools'); ?>" class="btn btn-default btn-dark">Back</a>
 							</div>
 							<div class="card-body">
@@ -107,8 +107,20 @@
 												<div class="invalid-feedback"><?= $error ?></div>
 											<?php endif; ?>
 										</div>
+										<div class="col-12 col-md-6 mb-1">
+											<label class="form-label" for="tools_status">Status <span class="text-danger">*</span></label>
+											<select id="tools_status" name="tools_status" class="form-select select2" aria-label="Default select example">
+												<option value="<?= $data['tools_status']; ?>"><?= $data['tools_status']; ?></option>
+												<?php if ($data['tools_status'] == "Aktif") : ?>
+													<option value="Tidak Aktif">Tidak Aktif</option>
+												<?php else : ?>
+													<option value="Aktif">Aktif</option>
+												<?php endif; ?>
+											</select>
+											<?= form_error('tools_status', '<small class="text-sm text-danger">', '</small>'); ?>
+										</div>
 										<div class="col-12 text-center mt-2 pt-50">
-											<button type="submit" class="btn btn-primary me-1" id="tombol_tambah">Simpan</button>
+											<button type="submit" class="btn btn-warning me-1" id="tombol_tambah">Update</button>
 											<a href="<?= base_url('Tools'); ?>" class="btn btn-outline-secondary">Discard</a>
 										</div>
 									</form>

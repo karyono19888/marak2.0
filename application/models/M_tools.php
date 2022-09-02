@@ -8,10 +8,43 @@ class M_tools extends CI_Model
 		$this->load->helper('security');
 	}
 
+	public function totaltool()
+	{
+		$query = $this->db->get('m_tools');
+		return $query->num_rows();
+	}
+
+	public function toolMarketing()
+	{
+		$this->db->where('tools_role', 'Marketing');
+		$query = $this->db->get('m_tools');
+		return $query->num_rows();
+	}
+
+	public function toolGeneral()
+	{
+		$this->db->where('tools_role', 'General');
+		$query = $this->db->get('m_tools');
+		return $query->num_rows();
+	}
+
+	public function tooltidakAktif()
+	{
+		$this->db->where('tools_status', "Tidak Aktif");
+		$query = $this->db->get('m_tools');
+		return $query->num_rows();
+	}
+
 	public function index()
 	{
+		if ($this->session->userdata('role_user') == 1) {
 		$this->db->join('m_organisasi', 'org_id=tools_owner', 'left');
 		return $this->db->get('m_tools');
+		} else {
+			$this->db->where('tools_status', 1);
+			$this->db->join('m_organisasi', 'org_id=tools_owner', 'left');
+			return $this->db->get('m_tools');
+		}
 	}
 
 	public function getOwner($searchTerm = "")

@@ -30,7 +30,7 @@
 					?>
 						<tr>
 							<td><?= $i++; ?></td>
-							<td width="10%"><?= date('d F, Y', strtotime($a['t_order_tgl_order'])); ?></td>
+							<td width="10%"><?= date('d F, Y', strtotime($a['t_order_tgl'])); ?></td>
 							<?php if ($this->session->userdata('role_user') == 1) : ?>
 								<td><?= $a['name_user']; ?></td>
 								<td><?= $a['t_order_kode']; ?></td>
@@ -38,8 +38,8 @@
 							<td>
 								<?php if ($a['t_order_kategori'] == "E-Commerce") : ?>
 									<span class="badge rounded-pill badge-light-success me-1"><?= $a['t_order_kategori']; ?></span>
-								<?php elseif ($a['t_order_kategori'] == "Non E-catalog") : ?>
-									<span class="badge rounded-pill badge-light-info me-1"><?= $a['t_order_kategori']; ?></span>
+								<?php elseif ($a['t_order_kategori'] == "Non E-Catalog") : ?>
+									<span class="badge rounded-pill badge-light-secondary me-1"><?= $a['t_order_kategori']; ?></span>
 								<?php else : ?>
 									<span class="badge rounded-pill badge-light-warning me-1"><?= $a['t_order_kategori']; ?></span>
 								<?php endif; ?>

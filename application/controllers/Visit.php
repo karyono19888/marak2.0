@@ -16,6 +16,7 @@ class Visit extends CI_Controller
 	{
 		$data['title'] 			= 'Data Kunjungan | Marak 2.0';
 		$data['totalkunjungan'] = $this->record->TotalKunjungan();
+		$data['totalprospek'] 	= $this->record->TotalKunjunganProspek();
 		$data['totalprognosa'] 	= $this->record->TotalKunjunganPrognosa();
 		$data['totalclosepo'] 	= $this->record->TotalKunjunganClose();
 		$data['visit'] 			= $this->record->dataVisitAll();

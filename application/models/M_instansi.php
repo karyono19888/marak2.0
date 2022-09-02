@@ -57,7 +57,7 @@ class M_instansi extends CI_Model
 			$this->db->insert('m_instansi', array(
 				'instansi_kategori'  => $instansi_kategori,
 				'instansi_nama'      => ucwords($instansi_nama),
-				'instansi_alamat'		=> $instansi_alamat,
+				'instansi_alamat'		=> ucwords($instansi_alamat),
 				'instansi_wil' 		=> $wilayah,
 				'instansi_prov'   	=> $provinsi,
 				'instansi_kab' 		=> $kabupaten,
@@ -91,7 +91,7 @@ class M_instansi extends CI_Model
 		$this->db->update('m_instansi', array(
 			'instansi_kategori'  => $instansi_kategori,
 			'instansi_nama'      => ucwords($instansi_nama),
-			'instansi_alamat'    => $instansi_alamat,
+			'instansi_alamat'    => ucwords($instansi_alamat),
 			'instansi_wil'      	=> $wilayah,
 			'instansi_prov'      => $provinsi,
 			'instansi_kab'       => $kabupaten,
@@ -136,7 +136,7 @@ class M_instansi extends CI_Model
 			$this->db->insert('m_instansi', array(
 				'instansi_kategori'  => $instansi_kategori,
 				'instansi_nama'      => ucwords($instansi_nama),
-				'instansi_alamat'		=> $instansi_alamat,
+				'instansi_alamat'		=> ucwords($instansi_alamat),
 				'instansi_wil' 		=> $wilayah,
 				'instansi_prov'   	=> $provinsi,
 				'instansi_kab' 		=> $kabupaten,

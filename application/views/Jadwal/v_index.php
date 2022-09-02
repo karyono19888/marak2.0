@@ -69,7 +69,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $totalplan; ?></h3>
-									<span>Total Planning</span>
+									<span>Total Perencanaan</span>
 								</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
@@ -84,7 +84,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $totalvisited; ?></h3>
-									<span>Total Visited</span>
+									<span>Total Terkunjungi</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">
@@ -99,7 +99,7 @@
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
 									<h3 class="fw-bolder mb-75"><?= $totalnotvisit; ?></h3>
-									<span>Total Not Visited</span>
+									<span>Total Tidak Terkunjungi</span>
 								</div>
 								<div class="avatar bg-light-danger p-50">
 									<span class="avatar-content">

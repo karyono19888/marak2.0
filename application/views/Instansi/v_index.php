@@ -121,7 +121,7 @@
 								<thead>
 									<tr>
 										<th>#</th>
-										<th>Gol</th>
+										<th>Kategori</th>
 										<th>Nama</th>
 										<th>Alamat</th>
 										<th>Provinsi</th>
@@ -139,7 +139,21 @@
 									?>
 										<tr>
 											<td class="text-center"><?= $i++; ?></td>
-											<td><?= $m['instansi_kategori']; ?></td>
+											<td>
+												<?php if ($m['instansi_kategori'] === "Pemerintahan") : ?>
+													<span class="badge badge-light-success">
+														<span><?= $m['instansi_kategori']; ?></span>
+													</span>
+												<?php elseif ($m['instansi_kategori'] === "Swasta") : ?>
+													<span class="badge badge-light-secondary">
+														<span><?= $m['instansi_kategori']; ?></span>
+													</span>
+												<?php else : ?>
+													<span class="badge badge-light-warning">
+														<span><?= $m['instansi_kategori']; ?></span>
+													</span>
+												<?php endif; ?>
+											</td>
 											<td><?= $m['instansi_nama']; ?></td>
 											<td><?= $m['instansi_alamat']; ?></td>
 											<td><?= $m['prov_nama']; ?></td>
