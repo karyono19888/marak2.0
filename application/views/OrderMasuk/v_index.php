@@ -258,16 +258,16 @@
 			success: function(response) {
 				let data = JSON.parse(response);
 				if (data.success) {
-					$('#t_produk_id').val(data.t_produk_id);
-					$('#t_produk_order_kode').val(data.t_produk_order_kode);
+					$('#t_produk_id').val(data.t_order_produk_id);
+					$('#t_produk_order_kode').val(data.t_order_produk_kode);
 					html += '<option value=' + data.m_prod_id + '>' + data.m_prod_kode + ' - ' + data.m_prod_nama + '</option>';
 					html += '<?php foreach ($namaProduk->result_array() as $data) { ?><option value="<?= $data['m_prod_id'] ?>"><?= $data['m_prod_kode'] ?> - <?= $data['m_prod_nama'] ?></option><?php } ?>';
 					$('#t_produk_nama').html(html);
 					$('#t_produk_nama').html(html);
-					$('#t_produk_qty').val(data.t_produk_qty);
-					$('#t_produk_harga').val(data.t_produk_harga);
-					$('#t_produk_ongkir').val(data.t_produk_ongkir);
-					$('#t_produk_catatan').val(data.t_produk_catatan);
+					$('#t_produk_qty').val(data.t_order_produk_qty);
+					$('#t_produk_harga').val(data.t_order_produk_harga);
+					$('#t_produk_ongkir').val(data.t_order_produk_ongkir);
+					$('#t_produk_catatan').val(data.t_order_produk_catatan);
 				} else {
 					Swal.fire({
 						icon: 'warning',

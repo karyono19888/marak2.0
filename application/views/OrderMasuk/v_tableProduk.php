@@ -33,7 +33,7 @@
 							$jml = 0;
 							$subtotal = 0;
 							foreach ($data->result_array() as $a) :
-								$jml = $a['t_produk_qty'] * $a['t_produk_harga'] + $a['t_produk_ongkir'];
+								$jml = $a['t_order_produk_qty'] * $a['t_order_produk_harga'] + $a['t_order_produk_ongkir'];
 								$subtotal += $jml;
 							?>
 								<tr>
@@ -42,15 +42,15 @@
 										<?= $a['m_prod_kode']; ?> -
 										<?= $a['m_prod_nama']; ?>
 									</td>
-									<td width="2%"><?= $a['t_produk_qty']; ?></td>
+									<td width="2%"><?= $a['t_order_produk_qty']; ?></td>
 									<td><?= $a['m_uom_nama']; ?></td>
-									<td><?= number_format($a['t_produk_harga'], 0, '.', '.'); ?></td>
-									<td><?= number_format($a['t_produk_ongkir'], 0, '.', '.'); ?></td>
+									<td><?= number_format($a['t_order_produk_harga'], 0, '.', '.'); ?></td>
+									<td><?= number_format($a['t_order_produk_ongkir'], 0, '.', '.'); ?></td>
 									<td><?= number_format($a['t_produk_subtotal'], 0, '.', '.'); ?></td>
-									<td><?= $a['t_produk_catatan']; ?></td>
+									<td><?= $a['t_order_produk_catatan']; ?></td>
 									<td class="text-center">
-										<button type="button" class="btn btn-sm btn-relief-warning EditProduk" data-bs-toggle="modal" data-bs-target="#ModalProduk" data-id="<?= $a['t_produk_id']; ?>">Edit</button>
-										<button type="button" class="btn btn-sm btn-relief-danger DeleteProduk" data-id="<?= $a['t_produk_id']; ?>">Delete</button>
+										<button type="button" class="btn btn-sm btn-relief-warning EditProduk" data-bs-toggle="modal" data-bs-target="#ModalProduk" data-id="<?= $a['t_order_produk_id']; ?>">Edit</button>
+										<button type="button" class="btn btn-sm btn-relief-danger DeleteProduk" data-id="<?= $a['t_order_produk_id']; ?>">Delete</button>
 									</td>
 								</tr>
 							<?php endforeach; ?>

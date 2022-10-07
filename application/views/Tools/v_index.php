@@ -113,9 +113,11 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Search & Filter</h4>
-						<a href="<?= base_url('Tools/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
-							<span><i data-feather='plus'></i> Add New Tools</span>
-						</a>
+						<?php if ($this->session->userdata('role_user') == 1) : ?>
+							<a href="<?= base_url('Tools/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
+								<span><i data-feather='plus'></i> Add New Tools</span>
+							</a>
+						<?php endif; ?>
 					</div>
 					<div class="card-body">
 						<div class="card-datatable">
