@@ -8,6 +8,16 @@ class M_orderMasuk extends CI_Model
 		$this->load->helper('security');
 	}
 
+	public function TotalNewPo()
+	{
+		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		$this->db->where('t_req_status', 'Request');
+		$query = $this->db->get('t_order_request');
+		return $query->num_rows();
+	}
+
+
+
 	public function DataTable()
 	{
 		if ($this->session->userdata('role_user') == 1) {

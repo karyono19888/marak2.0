@@ -8,6 +8,27 @@ class M_orderRiwayat extends CI_Model
 		$this->load->helper('security');
 	}
 
+	public function TotalClose()
+	{
+		$this->db->where('YEAR(t_order_tgl)', date('Y'));
+		$this->db->where('t_order_status', 'Close PO');
+		$query = $this->db->get('t_order_po');
+		return $query->num_rows();
+	}
+
+	public function TotalClosebyAmmount()
+	{
+		$this->db->where('YEAR(t_order_tgl)', date('Y'));
+		$this->db->where('t_order_status', 'Close PO');
+		$this->db->select_sum('t_order_grandtotal');
+		$query = $this->db->get('t_order_po');
+		if ($query->num_rows() > 0) {
+			return $query->row()->t_order_grandtotal;
+		} else {
+			return 0;
+		}
+	}
+
 	public function DataTable()
 	{
 		$this->db->where('YEAR(t_order_tgl)', date('Y'));

@@ -51,57 +51,12 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total Orders</span>
-								</div>
-								<div class="avatar bg-light-primary p-50">
-									<span class="avatar-content">
-										<i data-feather="shopping-bag" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total New PO</span>
+									<h3 class="fw-bolder mb-75"><?= $totalNewPo; ?></h3>
+									<span>Total New Request</span>
 								</div>
 								<div class="avatar bg-light-warning p-50">
 									<span class="avatar-content">
 										<i data-feather="bell" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75">09</h3>
-									<span>Total PO by Ammount</span>
-								</div>
-								<div class="avatar bg-light-success p-50">
-									<span class="avatar-content">
-										<i data-feather="dollar-sign" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75">12</h3>
-									<span>Total New PO by Ammount</span>
-								</div>
-								<div class="avatar bg-light-danger p-50">
-									<span class="avatar-content">
-										<i data-feather="dollar-sign" class="font-medium-4"></i>
 									</span>
 								</div>
 							</div>

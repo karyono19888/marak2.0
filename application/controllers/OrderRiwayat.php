@@ -14,8 +14,10 @@ class OrderRiwayat extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] = 'Order Riwayat | Marak 2.0';
-		$data['namaProduk'] 	= $this->record->DataNamaProduk();
+		$data['title'] 					= 'Order Riwayat | Marak 2.0';
+		$data['totalClose'] 				= $this->record->TotalClose();
+		$data['totalClosebyAmmount'] 	= $this->record->TotalClosebyAmmount();
+		$data['namaProduk'] 				= $this->record->DataNamaProduk();
 		$this->load->view('OrderRiwayat/v_index', $data);
 	}
 

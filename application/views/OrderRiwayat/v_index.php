@@ -51,7 +51,7 @@
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
+									<h3 class="fw-bolder mb-75"><?= $totalClose; ?></h3>
 									<span>Total Close</span>
 								</div>
 								<div class="avatar bg-light-primary p-50">
@@ -62,27 +62,12 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 col-sm-6">
+					<div class="col-lg-4 col-sm-6">
 						<div class="card">
 							<div class="card-body d-flex align-items-center justify-content-between">
 								<div>
-									<h3 class="fw-bolder mb-75">00 <small class="text-muted">Mil</small></h3>
+									<h3 class="fw-bolder mb-75">Rp. <?= number_format($totalClosebyAmmount, 0, '.', '.') ?> <small class="text-muted"><?= strlen($totalClosebyAmmount) > 3 ? 'Mil' : 'Jt' ?></small></h3>
 									<span>Total Close by Ammount</span>
-								</div>
-								<div class="avatar bg-light-warning p-50">
-									<span class="avatar-content">
-										<i data-feather="bell" class="font-medium-4"></i>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body d-flex align-items-center justify-content-between">
-								<div>
-									<h3 class="fw-bolder mb-75">00</h3>
-									<span>Total Request Close</span>
 								</div>
 								<div class="avatar bg-light-success p-50">
 									<span class="avatar-content">

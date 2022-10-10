@@ -14,9 +14,10 @@ class OrderMasuk extends CI_Controller
 
 	public function index()
 	{
-		$data['title'] 		= 'Order Masuk | Marak 2.0';
-		$data['namaProduk'] 	= $this->record->DataNamaProduk();
-		$data['kode']  		= $this->record->DataKodePo();
+		$data['title'] 					= 'Order Masuk | Marak 2.0';
+		$data['totalNewPo'] 				= $this->record->TotalNewPo();
+		$data['namaProduk'] 				= $this->record->DataNamaProduk();
+		$data['kode']  					= $this->record->DataKodePo();
 		$this->load->view('OrderMasuk/v_index', $data);
 	}
 
