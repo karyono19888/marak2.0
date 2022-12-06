@@ -12,6 +12,7 @@ class M_marketing extends CI_Model
 	{
 		if ($this->session->userdata('role_user') == 1 || $this->session->userdata('role_user') == 22) {
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
 			$this->db->select_sum('m_visit_anggaran_BUMN');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -22,6 +23,7 @@ class M_marketing extends CI_Model
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
 			$this->db->select_sum('m_visit_anggaran_BUMN');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -36,6 +38,7 @@ class M_marketing extends CI_Model
 	{
 		if ($this->session->userdata('role_user') == 1 || $this->session->userdata('role_user') == 22) {
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
 			$this->db->select_sum('m_visit_prospek');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -46,6 +49,7 @@ class M_marketing extends CI_Model
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prospek');
 			$this->db->select_sum('m_visit_prospek');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -60,6 +64,7 @@ class M_marketing extends CI_Model
 	{
 		if ($this->session->userdata('role_user') == 1 || $this->session->userdata('role_user') == 22) {
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prognosa');
 			$this->db->select_sum('m_visit_prognosa');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -70,6 +75,7 @@ class M_marketing extends CI_Model
 		} else {
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->where('m_visit_status', 'Prognosa');
 			$this->db->select_sum('m_visit_prognosa');
 			$query = $this->db->get('m_visit');
 			if ($query->num_rows() > 0) {
@@ -164,9 +170,13 @@ class M_marketing extends CI_Model
 
 	public function TargetGroupbyMkt()
 	{
+
 		$this->db->where('YEAR(tanggal)', date('Y'));
 		$this->db->join('users', 'id_user=User_id', 'left');
-		// $this->db->join('target_by_thn_mkt', 'id_user=a_user_id', 'left');
+		if ($this->session->userdata('role_user') == 1) {
+			// $this->db->join('target_by_thn_mkt', 'id_user=a_user_id', 'left');
+		} else {
+		}
 		$this->db->where('User_id', $this->session->userdata('id_user'));
 		$this->db->where('status_user', 1);
 		return $this->db->get('grafik_pencapaian');

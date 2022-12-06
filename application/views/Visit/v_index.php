@@ -119,7 +119,7 @@
 				<div class="card">
 					<div class="card-header">
 						<h4 class="card-title">Search & Filter</h4>
-						<a href="<?= base_url('Visit/Tambah'); ?>" class="dt-button create-new btn btn-primary Tambah" type="button">
+						<a href="<?= base_url('Visit/Tambah'); ?>" class="dt-button create-new btn btn-primary" id="Tambah" type="button" onclick="Tambah()">
 							<span><i data-feather='plus'></i> Add New Visit</span>
 						</a>
 					</div>
@@ -152,13 +152,15 @@
 											<td width="20%"><?= $key['instansi_nama']; ?></td>
 											<td width="30%"><?= $key['m_visit_agenda']; ?></td>
 											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
-											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
-											<td><?= number_format($key['m_visit_prospek'], 0, '.', '.'); ?></td>
+											<td><?= number_format($key['m_visit_prognosa'], 0, '.', '.'); ?></td>
+											<td><?= number_format($key['m_visit_po'], 0, '.', '.'); ?></td>
 											<td>
 												<?php if ($key['m_visit_status'] == "Close Po") : ?>
 													<span class="badge rounded-pill badge-light-danger me-1"><?= $key['m_visit_status']; ?></span>
 												<?php elseif ($key['m_visit_status'] == "Prognosa") : ?>
 													<span class="badge rounded-pill badge-light-warning me-1"><?= $key['m_visit_status']; ?></span>
+												<?php elseif ($key['m_visit_status'] == "Loss") : ?>
+													<span class="badge rounded-pill badge-light-secondary me-1"><?= $key['m_visit_status']; ?></span>
 												<?php else : ?>
 													<span class="badge rounded-pill badge-light-primary me-1"><?= $key['m_visit_status']; ?></span>
 												<?php endif; ?>
@@ -191,6 +193,12 @@
 	$(document).ready(function() {
 		$('#mytable').DataTable();
 	});
+
+	function Tambah() {
+		let element = document.getElementById("Tambah");
+		element.classList.add("disabled");
+		$('#Tambah').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+	}
 
 	$(document).on("click", ".Delete", function() {
 		let id = $(this).data('id');

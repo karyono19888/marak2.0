@@ -360,6 +360,8 @@
 													<span class="badge rounded-pill badge-light-danger me-1"><?= $k['m_visit_status']; ?></span>
 												<?php elseif ($k['m_visit_status'] == "Prognosa") : ?>
 													<span class="badge rounded-pill badge-light-warning me-1"><?= $k['m_visit_status']; ?></span>
+												<?php elseif ($k['m_visit_status'] == "Loss") : ?>
+													<span class="badge rounded-pill badge-light-secondary me-1"><?= $k['m_visit_status']; ?></span>
 												<?php else : ?>
 													<span class="badge rounded-pill badge-light-primary me-1"><?= $k['m_visit_status']; ?></span>
 												<?php endif; ?>
@@ -565,6 +567,10 @@
 				type: 'POST',
 				url: '<?= base_url('Visit/UpdateKunjungan'); ?>',
 				data: data,
+				beforeSend: function() {
+					$('#tombol_add').prop('disabled', true);
+					$('#tombol_add').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+				},
 				success: function(response) {
 					var data = JSON.parse(response);
 					if (data.success) {

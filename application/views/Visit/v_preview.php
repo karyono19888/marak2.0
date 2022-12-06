@@ -202,11 +202,11 @@
 					<div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
 						<div class="card">
 							<div class="card-body">
-								<a href="<?= base_url('Visit'); ?>" class="btn btn-primary w-100 mb-75"> Back</a>
+								<a href="<?= base_url('Visit'); ?>" class="btn btn-primary w-100 mb-75" id="Kembali" onclick="Kembali('Kembali')"> Back</a>
 								<?php if ($this->session->userdata('role_user') == 1) : ?>
 									<a class="btn btn-outline-secondary w-100 mb-75" href="<?= base_url('Visit/Edit/') . $data['m_visit_history_id']; ?>"> Edit </a>
 								<?php endif; ?>
-								<a class="btn btn-success w-100" href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_id']; ?>"> Update Kunjungan </a>
+								<a class="btn btn-success w-100" onclick="Kembali('Update')" id="Update" href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_id']; ?>"> Update Kunjungan </a>
 							</div>
 						</div>
 					</div>
@@ -221,7 +221,19 @@
 
 <?php $this->load->view('Components/v_footer'); ?>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
+
 <script>
+	function Kembali(type) {
+		if (type == "Kembali") {
+			let element = document.getElementById("Kembali");
+			element.classList.add("disabled");
+			$('#Kembali').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+		} else {
+			let element = document.getElementById("Update");
+			element.classList.add("disabled");
+			$('#Update').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+		}
+	}
 	$(document).ready(function() {
 		let long = <?= str_replace(",", ".", $data['m_visit_koor_long']); ?>;
 		let lat = <?= str_replace(",", ".", $data['m_visit_koor_lat']); ?>;

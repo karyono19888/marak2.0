@@ -30,7 +30,7 @@ class M_orderMasuk extends CI_Model
 			$this->db->order_by('t_req_id', 'desc');
 			$query = $this->db->get('t_order_request');
 		} else {
-			$this->db->where('t_req_user', $this->session->userdata('id_user'));
+			// $this->db->where('t_req_user', $this->session->userdata('id_user'));
 			$this->db->where('YEAR(t_req_tgl)', date('Y'));
 			$this->db->where('t_req_status', 'Request');
 			$this->db->join('m_organisasi', 'org_id=t_req_perusahaan', 'left');

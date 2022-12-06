@@ -10,6 +10,7 @@ class M_instansi extends CI_Model
 
 	public function index()
 	{
+		$this->db->join('users', 'id_user=m_instansi_user_id', 'left');
 		$this->db->join('m_provinsi', 'id_prov=instansi_prov', 'left');
 		$this->db->join('m_kabupaten', 'id_kab=instansi_kab', 'left');
 		$this->db->order_by('instansi_id', 'desc');
@@ -61,9 +62,8 @@ class M_instansi extends CI_Model
 				'instansi_wil' 		=> $wilayah,
 				'instansi_prov'   	=> $provinsi,
 				'instansi_kab' 		=> $kabupaten,
-				'instansi_lok' 		=> 'Belum Penlok',
-				'instansi_user_id' 	=> $this->session->userdata('id_user'),
-				'created_at' 			=> time()
+				'm_instansi_lok' 		=> 'Belum Penlok',
+				'm_instansi_user_id' => $this->session->userdata('id_user'),
 			));
 
 			$this->db->trans_complete();
@@ -95,7 +95,6 @@ class M_instansi extends CI_Model
 			'instansi_wil'      	=> $wilayah,
 			'instansi_prov'      => $provinsi,
 			'instansi_kab'       => $kabupaten,
-			'updated_at' 			=> time()
 		));
 
 		$this->db->trans_complete();
@@ -140,9 +139,8 @@ class M_instansi extends CI_Model
 				'instansi_wil' 		=> $wilayah,
 				'instansi_prov'   	=> $provinsi,
 				'instansi_kab' 		=> $kabupaten,
-				'instansi_lok' 		=> 'Belum Penlok',
-				'instansi_user_id' 	=> $this->session->userdata('id_user'),
-				'created_at' 			=> time()
+				'm_instansi_lok' 		=> 'Belum Penlok',
+				'm_instansi_user_id' 	=> $this->session->userdata('id_user'),
 			));
 
 			$this->db->trans_complete();

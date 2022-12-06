@@ -10,20 +10,35 @@ class M_orderRequest extends CI_Model
 
 	public function totalRequest()
 	{
-		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		} else {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+			$this->db->where('t_req_user', $this->session->userdata('id_user'));
+		}
 		return $this->db->get('t_order_request')->num_rows();
 	}
 
 	public function totalNewRequest()
 	{
-		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		} else {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+			$this->db->where('t_req_user', $this->session->userdata('id_user'));
+		}
 		$this->db->where('t_req_status', 'Request');
 		return $this->db->get('t_order_request')->num_rows();
 	}
 
 	public function totalRequestClose()
 	{
-		$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+		} else {
+			$this->db->where('YEAR(t_req_tgl)', date('Y'));
+			$this->db->where('t_req_user', $this->session->userdata('id_user'));
+		}
 		$this->db->where('t_req_status', 'Close PO');
 		return $this->db->get('t_order_request')->num_rows();
 	}

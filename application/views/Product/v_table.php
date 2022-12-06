@@ -35,7 +35,7 @@
 							<td><?= $a['m_uom_nama']; ?></td>
 							<td><?= $a['m_prod_ket']; ?></td>
 							<td>
-								<?php if ($a['m_prod_status'] == "Aktif") : ?>
+								<?php if ($a['m_prod_status'] == "Active") : ?>
 									<span class="badge badge-light-primary"><?= $a['m_prod_status']; ?></span>
 								<?php else : ?>
 									<span class="badge badge-light-danger"><?= $a['m_prod_status']; ?></span>

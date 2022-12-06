@@ -128,6 +128,7 @@
 										<th>Kab/Kota</th>
 										<th>Status</th>
 										<?php if ($this->session->userdata('role_user') == 1) : ?>
+											<th>user</th>
 											<th>Actions</th>
 										<?php endif; ?>
 									</tr>
@@ -159,19 +160,20 @@
 											<td><?= $m['prov_nama']; ?></td>
 											<td><?= $m['kab_nama']; ?></td>
 											<td>
-												<?php if ($m['instansi_lok'] === "Belum Penlok") : ?>
+												<?php if ($m['m_instansi_lok'] === "Belum Penlok") : ?>
 													<span class="badge badge-light-primary">
 														<i data-feather="unlock" class="me-25"></i>
-														<span><?= $m['instansi_lok']; ?></span>
+														<span><?= $m['m_instansi_lok']; ?></span>
 													</span>
 												<?php else : ?>
 													<span class="badge badge-light-danger">
 														<i data-feather="lock" class="me-25"></i>
-														<span><?= $m['instansi_lok']; ?></span>
+														<span><?= $m['m_instansi_lok']; ?></span>
 													</span>
 												<?php endif; ?>
 											</td>
 											<?php if ($this->session->userdata('role_user') == 1) : ?>
+												<td><?= $m['nickname']; ?></td>
 												<td width="12%">
 													<a href="<?= base_url('Instansi/Edit/' . $m['instansi_id']) ?>" type="button" class="btn btn-warning btn-sm">Edit</a>
 													<a href="#" data-id="<?= $m['instansi_id']; ?>" type="button" class="btn btn-danger btn-sm Hapus">Delete</a>

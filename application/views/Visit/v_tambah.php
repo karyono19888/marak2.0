@@ -317,7 +317,7 @@
 							<div class="card">
 								<div class="card-body">
 									<button class="btn btn-primary w-100 mb-75" id="tombol_add" type="button">Simpan</button>
-									<a href="<?= base_url('Visit'); ?>" class="btn btn-outline-primary w-100" type="button">Cancle</a>
+									<a href="<?= base_url('Visit'); ?>" class="btn btn-outline-primary w-100" type="button" id="Kembali" onclick="Kembali()">Cancle</a>
 								</div>
 							</div>
 						</div>
@@ -404,6 +404,12 @@
 	var quill = new Quill('#editor', {
 		theme: 'snow'
 	});
+
+	function Kembali() {
+		let element = document.getElementById("Kembali");
+		element.classList.add("disabled");
+		$('#Kembali').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+	}
 
 	quill.on('text-change', function(delta, oldDelta, source) {
 		document.querySelector("input[name='m_visit_note']").value = quill.root.innerHTML;
@@ -569,6 +575,10 @@
 				type: 'POST',
 				url: '<?= base_url('Instansi/TambahInstansiKunjungan'); ?>',
 				data: data,
+				beforeSend: function() {
+					$('#tombol_tambah').prop('disabled', true);
+					$('#tombol_tambah').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+				},
 				success: function(response) {
 					var data = JSON.parse(response);
 					if (data.success) {
@@ -637,6 +647,10 @@
 				type: 'POST',
 				url: '<?= base_url('Visit/TambahKunjungan'); ?>',
 				data: data,
+				beforeSend: function() {
+					$('#tombol_add').prop('disabled', true);
+					$('#tombol_add').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+				},
 				success: function(response) {
 					var data = JSON.parse(response);
 					if (data.success) {

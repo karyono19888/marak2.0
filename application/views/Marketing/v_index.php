@@ -60,7 +60,7 @@
 							<div class="card-header">
 								<h4 class="card-title">Statistics by Ammount</h4>
 								<div class="d-flex align-items-center">
-									<p class="card-text font-small-2 me-25 mb-0">Satuan dalam jutaan (IDR)</p>
+									<p class="card-text font-small-2 me-25 mb-0">Satuan dalam jutaan (Rp)</p>
 								</div>
 							</div>
 							<div class="card-body statistics-body">
@@ -171,7 +171,7 @@
 								<div class="card card-tiny-line-stats">
 									<div class="card-body pb-50">
 										<h6>Total Visit <?= date('Y'); ?></h6>
-										<h2 class="fw-bolder mb-1"><?= number_format($totalKunjungan, 0, '.', '.'); ?></h2>
+										<h2 class="fw-bolder mb-1"><?= number_format($totalKunjungan, 0, '.', '.'); ?> <sup>x</sup></h2>
 										<div id="statistics-profit-chart"></div>
 									</div>
 								</div>
