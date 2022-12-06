@@ -23,7 +23,7 @@ class Marketing extends CI_Controller
 		$data['totalKunjungan'] 		= $this->record->TotalKunjungan();
 		$data['number'] 		 		   = $this->record->number_weekly();
 		$data['weekly']			 	   = $this->record->weekly();
-		$data['byMkt'] 		 	 		= $this->record->TargetGroupbyMkt();
+		// $data['byMkt'] 		 	 		= $this->record->TargetGroupbyMkt();
 		$data['map']			 			= $this->record->DataVisitMap();
 		$this->load->view('Marketing/v_index', $data);
 	}

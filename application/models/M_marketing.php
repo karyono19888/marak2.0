@@ -170,14 +170,7 @@ class M_marketing extends CI_Model
 
 	public function TargetGroupbyMkt()
 	{
-
 		$this->db->where('YEAR(tanggal)', date('Y'));
-		$this->db->join('users', 'id_user=User_id', 'left');
-		if ($this->session->userdata('role_user') == 1) {
-			// $this->db->join('target_by_thn_mkt', 'id_user=a_user_id', 'left');
-		} else {
-		}
-		$this->db->where('User_id', $this->session->userdata('id_user'));
 		$this->db->where('status_user', 1);
 		return $this->db->get('grafik_pencapaian');
 	}

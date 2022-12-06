@@ -31,7 +31,9 @@
 								<p class="card-text font-small-3">You have won gold medal</p>
 								<h3 class="mb-75 mt-2 pt-50">
 									<a href="#">
-										<h4 class="fw-bolder mb-0"><?= number_format($totalClose, 0, '.', '.'); ?><sup><?= strlen($totalClose) > 3 ? 'MIL' : 'JT' ?></sup></h4>
+										<h4 class="fw-bolder mb-0">
+											<?= number_format($totalClose, 0, '.', '.'); ?><sup><?= strlen($totalClose) > 3 ? 'MIL' : 'JT' ?></sup>
+										</h4>
 									</a>
 
 								</h3>
@@ -39,15 +41,20 @@
 									<?php $close_vs_target = round($totalClose / $totalTargetMarketing * 100, 2); ?>
 									<small>Close vs Target</small>
 									<div class="progress progress-bar-primary">
-										<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: <?= $close_vs_target; ?>%"><?= $close_vs_target; ?>%</div>
+										<div class="progress-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+											aria-valuemax="100" style="width: <?= $close_vs_target; ?>%"><?= $close_vs_target; ?>%
+										</div>
 									</div>
 								</div>
 								<?php if (strlen($totalClose) > 3) : ?>
-									<img src="<?= base_url('assets'); ?>/images/illustration/badge.svg" class="congratulation-medal" alt="Medal Gols" />
+								<img src="<?= base_url('assets'); ?>/images/illustration/badge.svg" class="congratulation-medal"
+									alt="Medal Gols" />
 								<?php elseif (strlen($totalClose) >= 2) : ?>
-									<img src="<?= base_url('assets'); ?>/images/illustration/badge-brown.svg" class="congratulation-medal" alt="Medal Brown" />
+								<img src="<?= base_url('assets'); ?>/images/illustration/badge-brown.svg"
+									class="congratulation-medal" alt="Medal Brown" />
 								<?php else : ?>
-									<img src="<?= base_url('assets'); ?>/images/illustration/badge-silver.svg" class="congratulation-medal" alt="Medal Silver" />
+								<img src="<?= base_url('assets'); ?>/images/illustration/badge-silver.svg"
+									class="congratulation-medal" alt="Medal Silver" />
 								<?php endif; ?>
 							</div>
 						</div>
@@ -73,7 +80,9 @@
 												</div>
 											</div>
 											<div class="my-auto">
-												<h4 class="fw-bolder mb-0"><?= number_format($totalApbn, 0, '.', '.'); ?><sup><small><?= strlen($totalApbn) > 3 ? 'Mil' : 'Jt' ?></small></sup></h4>
+												<h4 class="fw-bolder mb-0">
+													<?= number_format($totalApbn, 0, '.', '.'); ?><sup><small><?= strlen($totalApbn) > 3 ? 'Mil' : 'Jt' ?></small></sup>
+												</h4>
 												<p class="card-text font-small-3 mb-0">APBN/D</p>
 											</div>
 										</div>
@@ -86,7 +95,9 @@
 												</div>
 											</div>
 											<div class="my-auto">
-												<h4 class="fw-bolder mb-0"><?= number_format($totalProspek, 0, '.', '.'); ?><sup><small><?= strlen($totalProspek) > 3 ? 'Mil' : 'Jt' ?></small></sup></h4>
+												<h4 class="fw-bolder mb-0">
+													<?= number_format($totalProspek, 0, '.', '.'); ?><sup><small><?= strlen($totalProspek) > 3 ? 'Mil' : 'Jt' ?></small></sup>
+												</h4>
 												<p class="card-text font-small-3 mb-0">Prospek</p>
 											</div>
 										</div>
@@ -108,7 +119,9 @@
 												</div>
 											</div>
 											<div class="my-auto">
-												<h4 class="fw-bolder mb-0"><?= number_format($totalPrognosa, 0, '.', '.'); ?><sup><small><?= strlen($totalPrognosa) > 3 ? 'Mil' : 'Jt' ?></small></sup></h4>
+												<h4 class="fw-bolder mb-0">
+													<?= number_format($totalPrognosa, 0, '.', '.'); ?><sup><small><?= strlen($totalPrognosa) > 3 ? 'Mil' : 'Jt' ?></small></sup>
+												</h4>
 												<p class="card-text font-small-3 mb-0">Prognosa</p>
 											</div>
 										</div>
@@ -130,7 +143,9 @@
 												</div>
 											</div>
 											<div class="my-auto">
-												<h4 class="fw-bolder mb-0"><?= number_format($totalClose, 0, '.', '.'); ?><sup><small><?= strlen($totalClose) > 3 ? 'Mil' : 'Jt' ?></small></sup></h4>
+												<h4 class="fw-bolder mb-0">
+													<?= number_format($totalClose, 0, '.', '.'); ?><sup><small><?= strlen($totalClose) > 3 ? 'Mil' : 'Jt' ?></small></sup>
+												</h4>
 												<p class="card-text font-small-3 mb-0">Close PO</p>
 											</div>
 										</div>
@@ -159,7 +174,9 @@
 								<div class="card">
 									<div class="card-body pb-50">
 										<h6>Target <?= date('Y'); ?></h6>
-										<h2 class="fw-bolder mb-1"><?= number_format($totalTargetMarketing, 0, '.', '.'); ?><sup><?= strlen($totalTargetMarketing) > 3 ? 'Mil' : 'Jt' ?></sup></h2>
+										<h2 class="fw-bolder mb-1">
+											<?= number_format($totalTargetMarketing, 0, '.', '.'); ?><sup><?= strlen($totalTargetMarketing) > 3 ? 'Mil' : 'Jt' ?></sup>
+										</h2>
 										<div id="statistics-order-chart"></div>
 									</div>
 								</div>
@@ -171,7 +188,9 @@
 								<div class="card card-tiny-line-stats">
 									<div class="card-body pb-50">
 										<h6>Total Visit <?= date('Y'); ?></h6>
-										<h2 class="fw-bolder mb-1"><?= number_format($totalKunjungan, 0, '.', '.'); ?> <sup>x</sup></h2>
+										<h2 class="fw-bolder mb-1"><?= number_format($totalKunjungan, 0, '.', '.'); ?>
+											<sup>x</sup>
+										</h2>
 										<div id="statistics-profit-chart"></div>
 									</div>
 								</div>
@@ -185,7 +204,8 @@
 										<div class="row">
 											<div class="col-12">
 												<h6 class="mb-50 mb-sm-0">Grafik</h6>
-												<canvas id="ChartMarket" style="min-height: 190px; height: 100%; max-height: 200px; max-width: 100%; width: 100%;"></canvas>
+												<canvas id="ChartMarket"
+													style="min-height: 190px; height: 100%; max-height: 200px; max-width: 100%; width: 100%;"></canvas>
 											</div>
 										</div>
 									</div>
@@ -204,7 +224,8 @@
 										<h4 class="card-title mb-50 mb-sm-0">Summary Weekly</h4>
 
 									</div>
-									<canvas id="myChart" style="min-height: 250px; height: 100%; max-height: 250px; max-width: 100%; width: 100%;"></canvas>
+									<canvas id="myChart"
+										style="min-height: 250px; height: 100%; max-height: 250px; max-width: 100%; width: 100%;"></canvas>
 								</div>
 							</div>
 						</div>
@@ -255,145 +276,143 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
 <script>
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var chart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: [
-				<?php
+var ctx = document.getElementById('myChart').getContext('2d');
+var chart = new Chart(ctx, {
+	type: 'line',
+	data: {
+		labels: [
+			<?php
 				foreach ($number->result_array() as $row) {
 					echo "'" . $row['tahun_minggu'] . "', ";
 				}
 				?>
-			],
-			datasets: [{
-					label: 'PROSPEK',
-					backgroundColor: '#36b9cc',
-					borderColor: '#36b9cc',
-					data: [
-						<?php
+		],
+		datasets: [{
+				label: 'PROSPEK',
+				backgroundColor: '#36b9cc',
+				borderColor: '#36b9cc',
+				data: [
+					<?php
 						foreach ($weekly->result_array() as $row) {
 							echo "'" . $row['prospek'] . "', ";
 						}
 						?>
-					]
-				},
-				{
-					label: 'PROGNOSA',
-					backgroundColor: '#1cc88a',
-					borderColor: '#1cc88a',
-					data: [
-						<?php
+				]
+			},
+			{
+				label: 'PROGNOSA',
+				backgroundColor: '#1cc88a',
+				borderColor: '#1cc88a',
+				data: [
+					<?php
 						foreach ($weekly->result_array() as $row) {
 							echo "'" . $row['prognosa'] . "', ";
 						}
 						?>
-					]
-				},
-				{
-					label: 'Close PO',
-					backgroundColor: '#FC4F4F',
-					borderColor: '#FC4F4F',
-					data: [
-						<?php
+				]
+			},
+			{
+				label: 'Close PO',
+				backgroundColor: '#FC4F4F',
+				borderColor: '#FC4F4F',
+				data: [
+					<?php
 						foreach ($weekly->result_array() as $row) {
 							echo "'" . $row['close'] . "', ";
 						}
 						?>
-					]
-				}
-			]
-		},
-		options: {
-			responsive: true,
-			plugins: {
-				legend: {
-					position: 'top',
-				},
-				title: {
-					display: false,
-					text: 'Summary Mingguan Semua Marketing'
-				}
+				]
 			}
-		},
-	});
+		]
+	},
+	options: {
+		responsive: true,
+		plugins: {
+			legend: {
+				position: 'top',
+			},
+			title: {
+				display: false,
+				text: 'Summary Mingguan Semua Marketing'
+			}
+		}
+	},
+});
 </script>
 
 <!-- Batang market -->
 <script>
-	const dataMkt = {
-		labels: [
-			'Target',
-			'Prospek',
-			'Prognosa',
-			'Close Po',
+const dataMkt = {
+	labels: [
+		'Target',
+		'Prospek',
+		'Prognosa',
+		'Close Po',
+	],
+	datasets: [{
+		label: 'Target Pencapaian',
+		data: [
+			<?= $totalTargetMarketing; ?>,
+			<?= $totalProspek; ?>,
+			<?= $totalPrognosa; ?>,
+			<?= $totalClose; ?>,
 		],
-		datasets: [{
-			label: 'Target Pencapaian',
-			data: [
-				<?php foreach ($byMkt->result_array() as $data) : ?>
-					<?= $data['target_mkt']; ?>,
-					<?= $data['prospek']; ?>,
-					<?= $data['prognosa'] - $data['close_po']; ?>,
-					<?= $data['close_po']; ?>,
-				<?php endforeach; ?>
-			],
-			backgroundColor: [
-				'rgba(153, 102, 255, 0.2)',
-				'rgba(255, 205, 86, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(75, 192, 192, 0.2)',
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(255, 159, 64, 0.2)',
-				'rgba(201, 203, 207, 0.2)'
-			],
-			borderColor: [
-				'rgb(153, 102, 255)',
-				'rgb(255, 205, 86)',
-				'rgb(54, 162, 235)',
-				'rgb(75, 192, 192)',
-				'rgb(255, 99, 132)',
-				'rgb(255, 159, 64)',
-				'rgb(201, 203, 207)'
-			],
-			borderWidth: 1
-		}]
-	};
+		backgroundColor: [
+			'rgba(201, 203, 207, 0.2)',
+			'rgba(54, 162, 235, 0.2)',
+			'rgba(255, 205, 86, 0.2)',
+			'rgba(255, 99, 132, 0.2)',
+			'rgba(75, 192, 192, 0.2)',
+			'rgba(255, 159, 64, 0.2)',
+			'rgba(153, 102, 255, 0.2)'
+		],
+		borderColor: [
+			'rgb(201, 203, 207)',
+			'rgb(54, 162, 235)',
+			'rgb(255, 205, 86)',
+			'rgb(255, 99, 132)',
+			'rgb(75, 192, 192)',
+			'rgb(255, 159, 64)',
+			'rgb(153, 102, 255)'
+		],
+		borderWidth: 1
+	}]
+};
 
-	const configmkt = {
-		type: 'bar',
-		data: dataMkt,
-		options: {
-			scales: {
-				y: {
-					beginAtZero: true
-				}
+const configmkt = {
+	type: 'bar',
+	data: dataMkt,
+	options: {
+		scales: {
+			y: {
+				beginAtZero: true
 			}
 		}
-	};
+	}
+};
 
-	const myChartmkt = new Chart(
-		document.getElementById('ChartMarket'),
-		configmkt
-	);
+const myChartmkt = new Chart(
+	document.getElementById('ChartMarket'),
+	configmkt
+);
 </script>
 
 <script>
-	$(document).ready(function() {
-		var lat = -1.4419606;
-		var long = 116.2544584;
-		var zoom = 5;
-		let userLocation = L.map("user-location").setView([lat, long], zoom);
-		userLocation.locate({
-			setView: true,
-			maxZoom: 18,
-		});
+$(document).ready(function() {
+	var lat = -1.4419606;
+	var long = 116.2544584;
+	var zoom = 5;
+	let userLocation = L.map("user-location").setView([lat, long], zoom);
+	userLocation.locate({
+		setView: true,
+		maxZoom: 18,
+	});
 
 
-		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
-			maxZoom: 18,
-		}).addTo(userLocation);
-	})
+	L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+		attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+		maxZoom: 18,
+	}).addTo(userLocation);
+})
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
