@@ -234,4 +234,22 @@ class M_orderMasuk extends CI_Model
 			return json_encode(array('success' => true, 'msg' => 'Close Order Berhasil!'));
 		}
 	}
+
+	function SearchListProduct($searchTerm = "")
+	{
+		$this->db->select('*');
+		$this->db->where('m_prod_status', 'Active');
+		$this->db->where("m_prod_nama like '%" . $searchTerm . "%' ");
+		$this->db->order_by('m_prod_id', 'asc');
+		$fetched_records = $this->db->get('m_product_pm');
+		$dataprod = $fetched_records->result_array();
+		$data = array();
+		foreach ($dataprod as $prod) {
+			$data[] = array(
+				"id"   => $prod['m_prod_id'],
+				"text" => $prod['m_prod_nama']
+			);
+		}
+		return $data;
+	}
 }

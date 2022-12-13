@@ -1,6 +1,8 @@
 <?php $this->load->view('Components/v_header'); ?>
 
 <link rel="stylesheet" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="<?= base_url('assets'); ?>/vendors/css/forms/select/select2.min.css">
 <!-- BEGIN: Body-->
 <?php $this->load->view('Components/v_headerbottom'); ?>
 
@@ -37,7 +39,8 @@
 			<div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
 				<div class="mb-1 breadcrumb-right">
 					<div class="dropdown">
-						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
+						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
 						</button>
 					</div>
 				</div>
@@ -70,51 +73,54 @@
 			<!-- Dashboard Ecommerce ends -->
 
 			<!-- Modal -->
-			<div class="modal fade text-start" id="ModalProduk" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+			<div class="modal fade text-start" id="ModalProduk" aria-labelledby="myModalLabel1" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title" id="judul_tambah">Tambah Produk</h4>
 							<h4 class="modal-title" id="judul_edit">Edit Produk</h4>
-							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="HapusValue()"></button>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+								onclick="HapusValue()"></button>
 						</div>
 						<div class="modal-body">
 							<form action="#" method="post" id="formProduk">
 								<div class="mb-1">
 									<small>Nama Produk</small>
 									<div class="input-group mb-1">
-										<input type="hidden" class="form-control" value="<?= $kode; ?>" id="t_produk_order_kode" name="t_produk_order_kode">
+										<input type="hidden" class="form-control" value="<?= $kode; ?>" id="t_produk_order_kode"
+											name="t_produk_order_kode">
 										<input type="hidden" class="form-control" id="t_produk_id" name="t_produk_id">
-										<select name="t_produk_nama" id="t_produk_nama" class="form-control">
+										<select name="t_produk_nama" id="t_produk_nama" class="form-control" style="width: 100%;">
 											<option value="">- Pilih -</option>
-											<?php foreach ($namaProduk->result_array() as $a) : ?>
-												<option value="<?= $a['m_prod_id']; ?>"><?= $a['m_prod_kode']; ?> - <?= $a['m_prod_nama']; ?></option>
-											<?php endforeach; ?>
 										</select>
 									</div>
 								</div>
 								<div class="mb-1">
 									<small>Qty</small>
 									<div class="input-group mb-1">
-										<input type="number" class="form-control" name="t_produk_qty" id="t_produk_qty" placeholder="000">
+										<input type="number" class="form-control" name="t_produk_qty" id="t_produk_qty"
+											placeholder="000">
 									</div>
 								</div>
 								<div class="mb-1">
 									<small>Harga</small>
 									<div class="input-group mb-1">
-										<input type="text" class="form-control" id="t_produk_harga" name="t_produk_harga" placeholder="Rp. 100.000.000">
+										<input type="text" class="form-control" id="t_produk_harga" name="t_produk_harga"
+											placeholder="Rp. 100.000.000">
 									</div>
 								</div>
 								<div class="mb-1">
 									<small>Biaya Kirim</small>
 									<div class="input-group mb-1">
-										<input type="text" class="form-control" id="t_produk_ongkir" name="t_produk_ongkir" placeholder="Rp. 100.000.000">
+										<input type="text" class="form-control" id="t_produk_ongkir" name="t_produk_ongkir"
+											placeholder="Rp. 100.000.000">
 									</div>
 								</div>
 								<div class="mb-1">
 									<small>Catatan <i class="text-muted">(Optional)</i></small>
 									<div class="input-group mb-1">
-										<textarea name="t_produk_catatan" id="t_produk_catatan" cols="30" rows="3" class="form-control" placeholder="Deskripsi Produk"></textarea>
+										<textarea name="t_produk_catatan" id="t_produk_catatan" cols="30" rows="3"
+											class="form-control" placeholder="Deskripsi Produk"></textarea>
 									</div>
 								</div>
 							</form>
@@ -122,7 +128,8 @@
 						<div class="modal-footer">
 							<button type="button" class="btn btn-primary" id="tombol_simpanProduk">Simpan</button>
 							<button type="button" class="btn btn-warning" id="tombol_editProduk">Edit</button>
-							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="HapusValue()">Cancle</button>
+							<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+								onclick="HapusValue()">Cancle</button>
 						</div>
 					</div>
 				</div>
@@ -134,292 +141,321 @@
 <!-- END: Content-->
 
 <?php $this->load->view('Components/v_footer'); ?>
+<script src="<?= base_url('assets'); ?>/vendors/js/forms/select/select2.full.min.js"></script>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/cleave.min.js"></script>
 <script src="<?= base_url('assets'); ?>/vendors/js/forms/cleave/addons/cleave-phone.us.js"></script>
 <script>
-	let t_produk_harga = $('#t_produk_harga');
-	let t_produk_ongkir = $('#t_produk_ongkir');
-	if (t_produk_harga.length) {
-		new Cleave(t_produk_harga, {
-			numeral: true,
-			numeralThousandsGroupStyle: 'thousand'
-		});
-	}
-	if (t_produk_ongkir.length) {
-		new Cleave(t_produk_ongkir, {
-			numeral: true,
-			numeralThousandsGroupStyle: 'thousand'
-		});
-	}
+let t_produk_harga = $('#t_produk_harga');
+let t_produk_ongkir = $('#t_produk_ongkir');
+if (t_produk_harga.length) {
+	new Cleave(t_produk_harga, {
+		numeral: true,
+		numeralThousandsGroupStyle: 'thousand'
+	});
+}
+if (t_produk_ongkir.length) {
+	new Cleave(t_produk_ongkir, {
+		numeral: true,
+		numeralThousandsGroupStyle: 'thousand'
+	});
+}
+
+$(document).ready(function() {
+	$("#t_produk_nama").select2({
+		dropdownParent: $("#ModalProduk"),
+		ajax: {
+			url: '<?= base_url('OrderMasuk/SearchListProduct') ?>',
+			type: "post",
+			dataType: 'json',
+			delay: 200,
+			data: function(params) {
+				return {
+					searchTerm: params.term
+				};
+			},
+			processResults: function(response) {
+				return {
+					results: response
+				};
+			},
+			cache: true
+		}
+	});
+});
 </script>
 <script>
-	$(document).ready(function() {
-		$("#show_data").load("<?= base_url('OrderMasuk/ShowTableData'); ?>");
-	});
+$(document).ready(function() {
+	$("#show_data").load("<?= base_url('OrderMasuk/ShowTableData'); ?>");
+});
 
-	$(document).on("click", ".Preview", function() {
-		let id = $(this).data('id');
-		$.ajax({
-			type: "POST",
-			url: "<?= site_url('OrderMasuk/ShowDataPreview') ?>",
-			data: {
-				id: id
-			},
-			success: function(response) {
-				$("#show_data").html(response);
+$(document).on("click", ".Preview", function() {
+	let id = $(this).data('id');
+	$.ajax({
+		type: "POST",
+		url: "<?= site_url('OrderMasuk/ShowDataPreview') ?>",
+		data: {
+			id: id
+		},
+		success: function(response) {
+			$("#show_data").html(response);
+		}
+	});
+});
+
+$(document).on("click", "#tombol_close", function() {
+	let id = $(this).data('id');
+	$.ajax({
+		type: "POST",
+		url: "<?= site_url('OrderMasuk/ShowCompliteOrder') ?>",
+		data: {
+			id: id
+		},
+		success: function(response) {
+			$("#show_data").html(response);
+		}
+	});
+});
+
+$(document).on("click", "#BacktoPreview", function() {
+	$("#show_data").load("<?= base_url('OrderMasuk/ShowTableData'); ?>");
+});
+
+$(document).on("click", "#tombolModalTambah", function() {
+	$('#judul_edit').hide();
+	$('#tombol_editProduk').hide();
+	$('#judul_tambah').show();
+	$('#tombol_simpanProduk').show();
+})
+
+$(document).on("click", ".EditProduk", function() {
+	$('#judul_edit').show();
+	$('#tombol_editProduk').show();
+	$('#judul_tambah').hide();
+	$('#tombol_simpanProduk').hide();
+	let id = $(this).data('id');
+	let html = "";
+	$.ajax({
+		type: 'POST',
+		url: '<?= site_url('OrderMasuk/ViewProduk') ?>',
+		data: {
+			id: id
+		},
+		success: function(response) {
+			let data = JSON.parse(response);
+			if (data.success) {
+				$('#t_produk_id').val(data.t_order_produk_id);
+				$('#t_produk_order_kode').val(data.t_order_produk_kode);
+				html += '<option value=' + data.m_prod_id + '>' + data.m_prod_kode + ' - ' + data
+					.m_prod_nama + '</option>';
+				html +=
+					'<?php foreach ($namaProduk->result_array() as $data) { ?><option value="<?= $data['m_prod_id'] ?>"><?= $data['m_prod_kode'] ?> - <?= $data['m_prod_nama'] ?></option><?php } ?>';
+				$('#t_produk_nama').html(html);
+				$('#t_produk_nama').html(html);
+				$('#t_produk_qty').val(data.t_order_produk_qty);
+				$('#t_produk_harga').val(data.t_order_produk_harga);
+				$('#t_produk_ongkir').val(data.t_order_produk_ongkir);
+				$('#t_produk_catatan').val(data.t_order_produk_catatan);
+			} else {
+				Swal.fire({
+					icon: 'warning',
+					title: 'Warning',
+					text: data.msg,
+					showConfirmButton: false,
+					timer: 1500
+				});
 			}
-		});
+		}
 	});
+});
 
-	$(document).on("click", "#tombol_close", function() {
-		let id = $(this).data('id');
-		$.ajax({
-			type: "POST",
-			url: "<?= site_url('OrderMasuk/ShowCompliteOrder') ?>",
-			data: {
-				id: id
-			},
-			success: function(response) {
-				$("#show_data").html(response);
-			}
-		});
-	});
-
-	$(document).on("click", "#BacktoPreview", function() {
-		$("#show_data").load("<?= base_url('OrderMasuk/ShowTableData'); ?>");
-	});
-
-	$(document).on("click", "#tombolModalTambah", function() {
-		$('#judul_edit').hide();
-		$('#tombol_editProduk').hide();
-		$('#judul_tambah').show();
-		$('#tombol_simpanProduk').show();
-	})
-
-	$(document).on("click", ".EditProduk", function() {
-		$('#judul_edit').show();
-		$('#tombol_editProduk').show();
-		$('#judul_tambah').hide();
-		$('#tombol_simpanProduk').hide();
-		let id = $(this).data('id');
-		let html = "";
+$(document).on("click", "#tombol_editProduk", function() {
+	if (validasi()) {
+		let data = $('#formProduk').serialize();
 		$.ajax({
 			type: 'POST',
-			url: '<?= site_url('OrderMasuk/ViewProduk') ?>',
-			data: {
-				id: id
+			url: '<?= base_url('OrderMasuk/EditProduk'); ?>',
+			data: data,
+			success: function(response) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Success',
+					text: "Produk Berhasil disimpan!",
+					showConfirmButton: false,
+					timer: 1500
+				});
+				$('#ModalProduk').modal('hide');
+				HapusValue();
+				$("#show_tableProduk").html(response);
+			}
+		});
+	}
+});
+
+$(document).on("click", "#tombol_simpanProduk", function() {
+	if (validasi()) {
+		let data = $('#formProduk').serialize();
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url('OrderMasuk/TambahProduk'); ?>',
+			data: data,
+			success: function(response) {
+				Swal.fire({
+					icon: 'success',
+					title: 'Success',
+					text: "Produk Berhasil disimpan!",
+					showConfirmButton: false,
+					timer: 1500
+				});
+				$('#ModalProduk').modal('hide');
+				HapusValue();
+				$("#show_tableProduk").html(response);
+			}
+		});
+	}
+});
+
+function validasi() {
+	let t_produk_nama = document.getElementById("t_produk_nama").value;
+	let t_produk_qty = document.getElementById("t_produk_qty").value;
+	let t_produk_harga = document.getElementById("t_produk_harga").value;
+	let t_produk_ongkir = document.getElementById("t_produk_ongkir").value;
+	if ((t_produk_nama == "") || (t_produk_qty == "") || (t_produk_harga == "") || (t_produk_ongkir == "")) {
+		if (t_produk_ongkir == "") {
+			notif("Ongkos kirim");
+		}
+		if (t_produk_harga == "") {
+			notif("Harga");
+		}
+		if (t_produk_qty == "") {
+			notif("Qty");
+		}
+		if (t_produk_nama == "") {
+			notif("Nama");
+		}
+	} else {
+		return true;
+	}
+}
+
+$(document).on("click", "#tombol_complete", function() {
+	if (validasiComplete()) {
+		let data = $('#formRequestOrder').serialize();
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url('OrderMasuk/TambahOrderComplete'); ?>',
+			data: data,
+			beforeSend: function() {
+				$('#tombol_complete').prop('disabled', true);
+				$('#tombol_complete').html(
+					'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="ms-25 align-middle">Loading...</span>'
+				);
 			},
 			success: function(response) {
-				let data = JSON.parse(response);
+				var data = JSON.parse(response);
 				if (data.success) {
-					$('#t_produk_id').val(data.t_order_produk_id);
-					$('#t_produk_order_kode').val(data.t_order_produk_kode);
-					html += '<option value=' + data.m_prod_id + '>' + data.m_prod_kode + ' - ' + data.m_prod_nama + '</option>';
-					html += '<?php foreach ($namaProduk->result_array() as $data) { ?><option value="<?= $data['m_prod_id'] ?>"><?= $data['m_prod_kode'] ?> - <?= $data['m_prod_nama'] ?></option><?php } ?>';
-					$('#t_produk_nama').html(html);
-					$('#t_produk_nama').html(html);
-					$('#t_produk_qty').val(data.t_order_produk_qty);
-					$('#t_produk_harga').val(data.t_order_produk_harga);
-					$('#t_produk_ongkir').val(data.t_order_produk_ongkir);
-					$('#t_produk_catatan').val(data.t_order_produk_catatan);
-				} else {
 					Swal.fire({
-						icon: 'warning',
-						title: 'Warning',
+						icon: 'success',
+						title: 'Success',
 						text: data.msg,
 						showConfirmButton: false,
 						timer: 1500
 					});
+				} else {
+					Swal.fire({
+						icon: 'error',
+						title: 'Error',
+						text: data.msg,
+						showConfirmButton: true,
+						timer: 2000
+					});
 				}
+				setTimeout(() => {
+					window.location.assign('<?= site_url("OrderMasuk") ?>');
+				}, 2000);
 			}
 		});
-	});
-
-	$(document).on("click", "#tombol_editProduk", function() {
-		if (validasi()) {
-			let data = $('#formProduk').serialize();
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('OrderMasuk/EditProduk'); ?>',
-				data: data,
-				success: function(response) {
-					Swal.fire({
-						icon: 'success',
-						title: 'Success',
-						text: "Produk Berhasil disimpan!",
-						showConfirmButton: false,
-						timer: 1500
-					});
-					$('#ModalProduk').modal('hide');
-					HapusValue();
-					$("#show_tableProduk").html(response);
-				}
-			});
-		}
-	});
-
-	$(document).on("click", "#tombol_simpanProduk", function() {
-		if (validasi()) {
-			let data = $('#formProduk').serialize();
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url('OrderMasuk/TambahProduk'); ?>',
-				data: data,
-				success: function(response) {
-					Swal.fire({
-						icon: 'success',
-						title: 'Success',
-						text: "Produk Berhasil disimpan!",
-						showConfirmButton: false,
-						timer: 1500
-					});
-					$('#ModalProduk').modal('hide');
-					HapusValue();
-					$("#show_tableProduk").html(response);
-				}
-			});
-		}
-	});
-
-	function validasi() {
-		let t_produk_nama = document.getElementById("t_produk_nama").value;
-		let t_produk_qty = document.getElementById("t_produk_qty").value;
-		let t_produk_harga = document.getElementById("t_produk_harga").value;
-		let t_produk_ongkir = document.getElementById("t_produk_ongkir").value;
-		if ((t_produk_nama == "") || (t_produk_qty == "") || (t_produk_harga == "") || (t_produk_ongkir == "")) {
-			if (t_produk_ongkir == "") {
-				notif("Ongkos kirim");
-			}
-			if (t_produk_harga == "") {
-				notif("Harga");
-			}
-			if (t_produk_qty == "") {
-				notif("Qty");
-			}
-			if (t_produk_nama == "") {
-				notif("Nama");
-			}
-		} else {
-			return true;
-		}
 	}
+});
 
-	$(document).on("click", "#tombol_complete", function() {
-		if (validasiComplete()) {
-			let data = $('#formRequestOrder').serialize();
+function validasiComplete() {
+	let t_order_paket_id = document.getElementById("t_order_paket_id").value;
+	let t_order_tgl_order = document.getElementById("t_order_tgl_order").value;
+	let t_order_tgl_kirim = document.getElementById("t_order_tgl_kirim").value;
+	let t_order_pajak = document.getElementById("t_order_pajak").value;
+	let t_order_grandtotal = document.getElementById("t_order_grandtotal").value;
+	if ((t_order_paket_id == "") || (t_order_tgl_order == "") || (t_order_tgl_kirim == "") || (t_order_pajak == "") || (
+			t_order_grandtotal == "0")) {
+		if (t_order_grandtotal == "0") {
+			notif("Produk");
+		}
+		if (t_order_pajak == "") {
+			notif("Jenis Pajak");
+		}
+		if (t_order_tgl_kirim == "") {
+			notif("Tanggal Kirim");
+		}
+		if (t_order_tgl_order == "") {
+			notif("Tanggal Order");
+		}
+		if (t_order_paket_id == "") {
+			notif("ID Paket");
+		}
+	} else {
+		return true;
+	}
+}
+
+
+function HapusValue() {
+	$('#t_produk_nama').val("");
+	$('#t_produk_qty').val("");
+	$('#t_produk_harga').val("");
+	$('#t_produk_ongkir').val("");
+	$('#t_produk_catatan').val("");
+}
+
+$(document).on("click", ".DeleteProduk", function() {
+	let id = $(this).data('id');
+	var kode = $('#t_produk_order_kode').val();
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "Hapus permanent produk!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
 			$.ajax({
 				type: 'POST',
-				url: '<?= base_url('OrderMasuk/TambahOrderComplete'); ?>',
-				data: data,
-				beforeSend: function() {
-					$('#tombol_complete').prop('disabled', true);
-					$('#tombol_complete').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="ms-25 align-middle">Loading...</span>');
+				url: '<?= site_url('OrderMasuk/DeleteProduk') ?>',
+				data: {
+					id: id,
+					kode: kode
 				},
 				success: function(response) {
-					var data = JSON.parse(response);
-					if (data.success) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: data.msg,
-							showConfirmButton: false,
-							timer: 1500
-						});
-					} else {
-						Swal.fire({
-							icon: 'error',
-							title: 'Error',
-							text: data.msg,
-							showConfirmButton: true,
-							timer: 2000
-						});
-					}
-					setTimeout(() => {
-						window.location.assign('<?= site_url("OrderMasuk") ?>');
-					}, 2000);
+					Swal.fire({
+						icon: 'success',
+						title: 'Success',
+						text: "Produk Berhasil dihapus!",
+						showConfirmButton: false,
+						timer: 1500
+					});
+					$("#show_tableProduk").html(response);
 				}
 			});
 		}
-	});
+	})
+});
 
-	function validasiComplete() {
-		let t_order_paket_id = document.getElementById("t_order_paket_id").value;
-		let t_order_tgl_order = document.getElementById("t_order_tgl_order").value;
-		let t_order_tgl_kirim = document.getElementById("t_order_tgl_kirim").value;
-		let t_order_pajak = document.getElementById("t_order_pajak").value;
-		let t_order_grandtotal = document.getElementById("t_order_grandtotal").value;
-		if ((t_order_paket_id == "") || (t_order_tgl_order == "") || (t_order_tgl_kirim == "") || (t_order_pajak == "") || (t_order_grandtotal == "0")) {
-			if (t_order_grandtotal == "0") {
-				notif("Produk");
-			}
-			if (t_order_pajak == "") {
-				notif("Jenis Pajak");
-			}
-			if (t_order_tgl_kirim == "") {
-				notif("Tanggal Kirim");
-			}
-			if (t_order_tgl_order == "") {
-				notif("Tanggal Order");
-			}
-			if (t_order_paket_id == "") {
-				notif("ID Paket");
-			}
-		} else {
-			return true;
-		}
-	}
-
-
-	function HapusValue() {
-		$('#t_produk_nama').val("");
-		$('#t_produk_qty').val("");
-		$('#t_produk_harga').val("");
-		$('#t_produk_ongkir').val("");
-		$('#t_produk_catatan').val("");
-	}
-
-	$(document).on("click", ".DeleteProduk", function() {
-		let id = $(this).data('id');
-		var kode = $('#t_produk_order_kode').val();
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "Hapus permanent produk!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				$.ajax({
-					type: 'POST',
-					url: '<?= site_url('OrderMasuk/DeleteProduk') ?>',
-					data: {
-						id: id,
-						kode: kode
-					},
-					success: function(response) {
-						Swal.fire({
-							icon: 'success',
-							title: 'Success',
-							text: "Produk Berhasil dihapus!",
-							showConfirmButton: false,
-							timer: 1500
-						});
-						$("#show_tableProduk").html(response);
-					}
-				});
-			}
-		})
-	});
-
-	function notif(word) {
-		Swal.fire({
-			title: 'Perhatian',
-			text: word + ' wajib di isi !',
-			icon: 'info',
-		}).then((result) => {})
-	}
+function notif(word) {
+	Swal.fire({
+		title: 'Perhatian',
+		text: word + ' wajib di isi !',
+		icon: 'info',
+	}).then((result) => {})
+}
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
