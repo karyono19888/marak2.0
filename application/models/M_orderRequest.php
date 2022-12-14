@@ -1,4 +1,8 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+use phpDocumentor\Reflection\Types\This;
+
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class M_orderRequest extends CI_Model
 {
@@ -72,6 +76,7 @@ class M_orderRequest extends CI_Model
 		if ($this->session->userdata('role_user') == 1) {
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->where('m_visit_status', 'Prognosa');
+			$this->db->where('m_visit_order_req', 'N');
 			$this->db->join('users', 'id_user=m_visit_user_id', 'left');
 			$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 			$this->db->order_by('m_visit_tgl', 'desc');
@@ -80,13 +85,14 @@ class M_orderRequest extends CI_Model
 			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
 			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
 			$this->db->where('m_visit_status', 'Prognosa');
+			$this->db->where('m_visit_order_req', 'N');
 			$this->db->join('users', 'id_user=m_visit_user_id', 'left');
 			$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
 			$this->db->order_by('m_visit_tgl', 'desc');
 			$query = $this->db->get('m_visit');
 		}
-
 		return $query;
+
 	}
 
 	public function DataKunjunganrequest($id)
@@ -141,6 +147,11 @@ class M_orderRequest extends CI_Model
 			'created_at'     			=> time(),
 		));
 
+		$this->db->where('m_visit_id', $t_req_visit);
+		$this->db->update('m_visit', array(
+			'm_visit_order_req' 				=> 'Y',
+		));
+
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Request Order gagal kirim!'));
@@ -189,6 +200,11 @@ class M_orderRequest extends CI_Model
 	public function DeleteRequest($id)
 	{
 		$this->db->trans_start();
+		$visit_id = $this->db->get_where('t_order_request', ['t_req_id' => $id])->row_array();
+		$this->db->where('m_visit_id', $visit_id['t_req_visit']);
+		$this->db->update('m_visit', array(
+			'm_visit_order_req' 	=> 'N',
+		));
 		$this->db->delete('t_order_request', array('t_req_id' => $id));
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {

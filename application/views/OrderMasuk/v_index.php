@@ -197,6 +197,12 @@ $(document).on("click", ".Preview", function() {
 		data: {
 			id: id
 		},
+		beforeSend: function() {
+			$('.Preview').prop('disabled', true);
+			$('.Preview').html(
+				'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...'
+			)
+		},
 		success: function(response) {
 			$("#show_data").html(response);
 		}
@@ -211,6 +217,12 @@ $(document).on("click", "#tombol_close", function() {
 		data: {
 			id: id
 		},
+		beforeSend: function() {
+			$('#tombol_close').prop('disabled', true);
+			$('#tombol_close').html(
+				'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...'
+			)
+		},
 		success: function(response) {
 			$("#show_data").html(response);
 		}
@@ -218,6 +230,10 @@ $(document).on("click", "#tombol_close", function() {
 });
 
 $(document).on("click", "#BacktoPreview", function() {
+	$('#BacktoPreview').prop('disabled', true);
+	$('#BacktoPreview').html(
+		'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...'
+	)
 	$("#show_data").load("<?= base_url('OrderMasuk/ShowTableData'); ?>");
 });
 

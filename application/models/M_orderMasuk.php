@@ -202,7 +202,8 @@ class M_orderMasuk extends CI_Model
 			'm_pjk_id'      				=> $t_order_pajak,
 			't_order_grandtotal'      	=> $t_order_grandtotal,
 			't_order_user_id'      		=> $t_order_user,
-			't_order_status' 				=> 'Close Po',
+			't_order_agent'      		=> $t_order_user,
+			't_order_status' 				=> 'Close PO',
 			'date_created' 				=> time()
 		));
 
