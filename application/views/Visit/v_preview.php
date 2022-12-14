@@ -31,7 +31,8 @@
 								<div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
 									<div class="col-sm-7">
 										<div class="logo-wrapper">
-											<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand" width="10%">
+											<img src="<?= base_url('assets'); ?>/images/logo/logo.png" alt="logo-brand"
+												width="10%">
 											<h3 class="text-primary invoice-logo">Marak</h3>
 										</div>
 										<p class="card-text mb-25"><b><?= $data['instansi_nama']; ?></b></p>
@@ -60,7 +61,8 @@
 												</tr>
 												<tr>
 													<td class="pe-1">Waktu</td>
-													<td>: <?= $data['m_visit_jam_mulai']; ?> - <?= $data['m_visit_jam_selesai']; ?></td>
+													<td>: <?= $data['m_visit_jam_mulai']; ?> - <?= $data['m_visit_jam_selesai']; ?>
+													</td>
 												</tr>
 												<tr>
 													<td class="pe-1">Marketing</td>
@@ -88,27 +90,27 @@
 									</thead>
 									<tbody>
 										<?php if (empty($peserta->result_array())) : ?>
-											<tr class="border-bottom">
-												<td colspan='4' class='text-center'>Data tidak ditemukan.</td>
-											</tr>
+										<tr class="border-bottom">
+											<td colspan='4' class='text-center'>Data tidak ditemukan.</td>
+										</tr>
 										<?php else : ?>
-											<?php
+										<?php
 											$i = 1;
 											foreach ($peserta->result_array() as $a) :
 											?>
-												<tr class="border-bottom">
-													<td class="py-1"><?= $i++; ?></td>
-													<td class="py-1">
-														<p class="card-text fw-bold mb-25"><?= $a['peserta_nama']; ?></p>
-													</td>
-													<td class="py-1">
-														<span class="fw-bold"><?= $a['peserta_jabatan']; ?></span>
-													</td>
-													<td class="py-1">
-														<span class="fw-bold"><?= $a['peserta_phone']; ?></span>
-													</td>
-												</tr>
-											<?php endforeach; ?>
+										<tr class="border-bottom">
+											<td class="py-1"><?= $i++; ?></td>
+											<td class="py-1">
+												<p class="card-text fw-bold mb-25"><?= $a['peserta_nama']; ?></p>
+											</td>
+											<td class="py-1">
+												<span class="fw-bold"><?= $a['peserta_jabatan']; ?></span>
+											</td>
+											<td class="py-1">
+												<span class="fw-bold"><?= $a['peserta_phone']; ?></span>
+											</td>
+										</tr>
+										<?php endforeach; ?>
 										<?php endif; ?>
 									</tbody>
 								</table>
@@ -121,7 +123,9 @@
 											<tbody>
 												<tr>
 													<td class="pe-1">APBN/P/D</td>
-													<td><span>: <?= number_format($data['m_visit_anggaran_BUMN'], 0, '.', '.'); ?></span></td>
+													<td><span>:
+															<?= number_format($data['m_visit_anggaran_BUMN'], 0, '.', '.'); ?></span>
+													</td>
 												</tr>
 												<tr>
 													<td class="pe-1">Prospek</td>
@@ -153,17 +157,20 @@
 												<tr>
 													<td class="pe-1">Status</td>
 													<?php if ($data['m_visit_status'] == "Close Po") : ?>
-														<td>
-															<span class="badge rounded-pill badge-light-danger me-1"><?= $data['m_visit_status']; ?></span>
-														</td>
+													<td>
+														<span
+															class="badge rounded-pill badge-light-danger me-1"><?= $data['m_visit_status']; ?></span>
+													</td>
 													<?php elseif ($data['m_visit_status'] == "Prognosa") : ?>
-														<td>
-															<span class="badge rounded-pill badge-light-warning me-1"><?= $data['m_visit_status']; ?></span>
-														</td>
+													<td>
+														<span
+															class="badge rounded-pill badge-light-warning me-1"><?= $data['m_visit_status']; ?></span>
+													</td>
 													<?php else : ?>
-														<td>
-															<span class="badge rounded-pill badge-light-primary me-1"><?= $data['m_visit_status']; ?></span>
-														</td>
+													<td>
+														<span
+															class="badge rounded-pill badge-light-primary me-1"><?= $data['m_visit_status']; ?></span>
+													</td>
 													<?php endif; ?>
 												</tr>
 											</tbody>
@@ -190,7 +197,8 @@
 							<div class="card-body invoice-padding pt-0">
 								<div class="row">
 									<div class="col-12">
-										<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;"></div>
+										<div class="leaflet-map" id="user-location" style="height: 150px; border-radius:5px;">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -202,11 +210,15 @@
 					<div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
 						<div class="card">
 							<div class="card-body">
-								<a href="<?= base_url('Visit'); ?>" class="btn btn-primary w-100 mb-75" id="Kembali" onclick="Kembali('Kembali')"> Back</a>
+								<a href="<?= base_url('Visit'); ?>" class="btn btn-primary w-100 mb-75" id="Kembali"
+									onclick="Kembali('Kembali')"> Back</a>
 								<?php if ($this->session->userdata('role_user') == 1) : ?>
-									<a class="btn btn-outline-secondary w-100 mb-75" href="<?= base_url('Visit/Edit/') . $data['m_visit_history_id']; ?>"> Edit </a>
+								<a class="btn btn-outline-secondary w-100 mb-75"
+									href="<?= base_url('Visit/Edit/') . $data['m_visit_history_id']; ?>"> Edit </a>
 								<?php endif; ?>
-								<a class="btn btn-success w-100" onclick="Kembali('Update')" id="Update" href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_id']; ?>"> Update Kunjungan </a>
+								<a class="btn w-100 <?= $data['m_visit_status'] == "Close Po" ? 'btn-danger disabled' : 'btn-success'; ?>"
+									onclick="Kembali('Update')" id="Update"
+									href="<?= base_url('Visit/ViewUpdate/') . $data['m_visit_id']; ?>"><?= $data['m_visit_status'] == "Close Po" ? 'SELESAI' : 'Update Kunjungan'; ?></a>
 							</div>
 						</div>
 					</div>
@@ -223,35 +235,37 @@
 <script src="<?= base_url('assets'); ?>/vendors/js/maps/leaflet.min.js"></script>
 
 <script>
-	function Kembali(type) {
-		if (type == "Kembali") {
-			let element = document.getElementById("Kembali");
-			element.classList.add("disabled");
-			$('#Kembali').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
-		} else {
-			let element = document.getElementById("Update");
-			element.classList.add("disabled");
-			$('#Update').html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
-		}
+function Kembali(type) {
+	if (type == "Kembali") {
+		let element = document.getElementById("Kembali");
+		element.classList.add("disabled");
+		$('#Kembali').html(
+			'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
+	} else {
+		let element = document.getElementById("Update");
+		element.classList.add("disabled");
+		$('#Update').html(
+			'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> loading...')
 	}
-	$(document).ready(function() {
-		let long = <?= str_replace(",", ".", $data['m_visit_koor_long']); ?>;
-		let lat = <?= str_replace(",", ".", $data['m_visit_koor_lat']); ?>;
-		let userLocation = L.map("user-location").setView([lat, long], 13);
-		userLocation.locate({
-			setView: true,
-			maxZoom: 18,
-		});
+}
+$(document).ready(function() {
+	let long = <?= str_replace(",", ".", $data['m_visit_koor_long']); ?>;
+	let lat = <?= str_replace(",", ".", $data['m_visit_koor_lat']); ?>;
+	let userLocation = L.map("user-location").setView([lat, long], 13);
+	userLocation.locate({
+		setView: true,
+		maxZoom: 18,
+	});
 
-		L.marker([lat, long])
-			.addTo(userLocation)
-			.bindPopup("Titik kunjungan <b><?= $data['name_user']; ?></b>")
-			.openPopup();
+	L.marker([lat, long])
+		.addTo(userLocation)
+		.bindPopup("Titik kunjungan <b><?= $data['name_user']; ?></b>")
+		.openPopup();
 
-		L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-			attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
-			maxZoom: 18,
-		}).addTo(userLocation);
-	})
+	L.tileLayer("https://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+		attribution: 'Map data &copy; <a href="#">Marak 2.0</a>',
+		maxZoom: 18,
+	}).addTo(userLocation);
+})
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>
