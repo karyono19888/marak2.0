@@ -56,6 +56,19 @@ class M_orderRiwayat extends CI_Model
 		return $query->row_array();
 	}
 
+	public function DataTablePreviewEdit($id)
+	{
+		$this->db->where('t_order_kode', $id);
+		$this->db->join('m_organisasi', 'org_id=t_order_prh', 'left');
+		$this->db->join('users', 'id_user=t_order_agent', 'left');
+		$this->db->join('m_visit', 'm_visit_id=t_order_visit_id', 'left');
+		$this->db->join('m_instansi', 'instansi_id=m_visit_instansi', 'left');
+		$this->db->join('t_order_request', 't_req_kode=t_order_kodeReq', 'left');
+		$this->db->order_by('t_order_id', 'desc');
+		$query = $this->db->get('t_order_po');
+		return $query->row_array();
+	}
+
 	public function DataTableProdukPreview($kode)
 	{
 		$this->db->where('t_order_produk_kode', $kode);

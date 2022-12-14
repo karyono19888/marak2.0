@@ -50,8 +50,8 @@ class OrderRiwayat extends CI_Controller
 
 	public function ShowDataEdit()
 	{
-		$id 				= $this->input->post('id');
-		$data['data'] 	= $this->record->DataTablePreview($id);
+		$id 			= $this->input->post('id');
+		$data['a'] 	= $this->record->DataTablePreviewEdit($id);
 		$this->load->view('OrderRiwayat/v_editOrder', $data);
 	}
 
