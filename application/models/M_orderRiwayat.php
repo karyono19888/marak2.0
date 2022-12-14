@@ -95,58 +95,58 @@ class M_orderRiwayat extends CI_Model
 	public function TambahProduk($t_produk_order_kode, $t_produk_nama, $t_produk_qty, $t_produk_harga, $t_produk_ongkir, $t_produk_catatan)
 	{
 		$this->db->insert('t_order_produk', array( //update to insert
-			't_produk_nama'       => $t_produk_nama,
-			't_produk_qty'        => $t_produk_qty,
-			't_produk_harga'      => str_replace(",", "", $t_produk_harga),
-			't_produk_ongkir'     => str_replace(",", "", $t_produk_ongkir),
+			't_order_produk_nama'       => $t_produk_nama,
+			't_order_produk_qty'        => $t_produk_qty,
+			't_order_produk_harga'      => str_replace(",", "", $t_produk_harga),
+			't_order_produk_ongkir'     => str_replace(",", "", $t_produk_ongkir),
 			't_produk_subtotal'   => $t_produk_qty * str_replace(",", "", $t_produk_harga) + str_replace(",", "", $t_produk_ongkir),
-			't_produk_catatan'    => $t_produk_catatan,
-			't_produk_order_kode' => $t_produk_order_kode,
+			't_order_produk_catatan'    => $t_produk_catatan,
+			't_order_produk_kode' => $t_produk_order_kode,
 		));
 
-		$this->db->where('t_produk_order_kode', $t_produk_order_kode);
-		$this->db->join('t_order_po', 't_order_kode=t_produk_order_kode', 'left');
-		$this->db->join('m_pajak', 'm_pajak_id=t_order_pajak', 'left');
-		$this->db->join('m_product_pm', 'm_prod_id=t_produk_nama', 'left');
+		$this->db->where('t_order_produk_kode', $t_produk_order_kode);
+		$this->db->join('t_order_po', 't_order_kode=t_order_produk_kode', 'left');
+		$this->db->join('m_pajak', 'm_pajak_id=m_pjk_id', 'left');
+		$this->db->join('m_product_pm', 'm_prod_id=t_order_produk_nama', 'left');
 		$this->db->join('m_uom', 'm_uom_id=m_prod_uom', 'left');
-		$this->db->order_by('t_produk_id', 'desc');
+		$this->db->order_by('t_order_produk_id', 'desc');
 		return $this->db->get('t_order_produk');
 	}
 
 	public function EditProduk($t_produk_id, $t_produk_order_kode, $t_produk_nama, $t_produk_qty, $t_produk_harga, $t_produk_ongkir, $t_produk_catatan)
 	{
-		$this->db->where('t_produk_id', $t_produk_id);
+		$this->db->where('t_order_produk_id', $t_produk_id);
 		$this->db->update('t_order_produk', array( //update to insert
-			't_produk_nama'       => $t_produk_nama,
-			't_produk_qty'        => $t_produk_qty,
-			't_produk_harga'      => str_replace(",", "", $t_produk_harga),
-			't_produk_ongkir'     => str_replace(",", "", $t_produk_ongkir),
-			't_produk_subtotal'   => $t_produk_qty * str_replace(",", "", $t_produk_harga) + str_replace(",", "", $t_produk_ongkir),
-			't_produk_catatan'    => $t_produk_catatan,
-			't_produk_order_kode' => $t_produk_order_kode,
+			't_order_produk_nama'       => $t_produk_nama,
+			't_order_produk_qty'        => $t_produk_qty,
+			't_order_produk_harga'      => str_replace(",", "", $t_produk_harga),
+			't_order_produk_ongkir'     => str_replace(",", "", $t_produk_ongkir),
+			't_produk_subtotal'   		 => $t_produk_qty * str_replace(",", "", $t_produk_harga) + str_replace(",", "", $t_produk_ongkir),
+			't_order_produk_catatan'    => $t_produk_catatan,
+			't_order_produk_kode' 		 => $t_produk_order_kode,
 		));
 
-		$this->db->where('t_produk_order_kode', $t_produk_order_kode);
-		$this->db->join('t_order_po', 't_order_kode=t_produk_order_kode', 'left');
-		$this->db->join('m_pajak', 'm_pajak_id=t_order_pajak', 'left');
-		$this->db->join('m_product_pm', 'm_prod_id=t_produk_nama', 'left');
+		$this->db->where('t_order_produk_kode', $t_produk_order_kode);
+		$this->db->join('t_order_po', 't_order_kode=t_order_produk_kode', 'left');
+		$this->db->join('m_pajak', 'm_pajak_id=m_pjk_id', 'left');
+		$this->db->join('m_product_pm', 'm_prod_id=t_order_produk_nama', 'left');
 		$this->db->join('m_uom', 'm_uom_id=m_prod_uom', 'left');
-		$this->db->order_by('t_produk_id', 'desc');
+		$this->db->order_by('t_order_produk_id', 'desc');
 		return $this->db->get('t_order_produk');
 	}
 
 	public function DeleteProduk($id, $kode)
 	{
 		$this->db->trans_start();
-		$this->db->delete('t_order_produk', array('t_produk_id' => $id));
+		$this->db->delete('t_order_produk', array('t_order_produk_id' => $id));
 		$this->db->trans_complete();
 
-		$this->db->where('t_produk_order_kode', $kode);
-		$this->db->join('t_order_po', 't_order_kode=t_produk_order_kode', 'left');
-		$this->db->join('m_pajak', 'm_pajak_id=t_order_pajak', 'left');
-		$this->db->join('m_product_pm', 'm_prod_id=t_produk_nama', 'left');
+		$this->db->where('t_order_produk_kode', $kode);
+		$this->db->join('t_order_po', 't_order_kode=t_order_produk_kode', 'left');
+		$this->db->join('m_pajak', 'm_pajak_id=m_pjk_id', 'left');
+		$this->db->join('m_product_pm', 'm_prod_id=t_order_produk_nama', 'left');
 		$this->db->join('m_uom', 'm_uom_id=m_prod_uom', 'left');
-		$this->db->order_by('t_produk_id', 'desc');
+		$this->db->order_by('t_order_produk_id', 'desc');
 		return $this->db->get('t_order_produk');
 	}
 
@@ -165,19 +165,19 @@ class M_orderRiwayat extends CI_Model
 		$this->db->update('t_order_po', array(
 			't_order_kode'  				=> $t_order_kode,
 			't_order_kodeReq'  			=> $t_req_kode,
-			't_order_paket_id'			=> $t_order_paket_id,
-			't_order_perusahaan' 		=> $t_order_perusahaan,
+			't_order_id_pket'				=> $t_order_paket_id,
+			't_order_prh' 					=> $t_order_perusahaan,
 			't_order_kategori'   		=> $t_order_kategori,
 			't_order_visit_history_id' => $t_order_visit_history_id,
 			't_order_visit_id'      	=> $t_order_visit_id,
 			't_order_tgl_req'      		=> $t_order_tgl_req,
-			't_order_tgl_order'      	=> $t_order_tgl_order,
+			't_order_tgl'      			=> $t_order_tgl_order,
 			't_order_tgl_kirim'      	=> $t_order_tgl_kirim,
 			't_order_subtotal'      	=> $t_order_subtotal,
 			't_order_ppn'      			=> $t_order_ppn,
-			't_order_pajak'      		=> $t_order_pajak,
+			'm_pjk_id'      		      => $t_order_pajak,
 			't_order_grandtotal'      	=> $t_order_grandtotal,
-			't_order_user'      			=> $t_order_user,
+			't_order_user_id'      		=> $t_order_user,
 			't_order_status' 				=> 'Close Po',
 			'created_at' 					=> time()
 		));
@@ -208,6 +208,32 @@ class M_orderRiwayat extends CI_Model
 			return json_encode(array('success' => false, 'msg' => 'Edit Close Order gagal!'));
 		} else {
 			return json_encode(array('success' => true, 'msg' => 'Edit Close Order Berhasil!'));
+		}
+	}
+
+	public function ViewProduk($id)
+	{
+		$this->db->select('*');
+		$this->db->join('m_product_pm', 'm_prod_id=t_order_produk_nama', 'left');
+		$this->db->join('m_uom', 'm_uom_id=m_prod_uom', 'left');
+		$this->db->where('t_order_produk_id', $id);
+		$query  = $this->db->get('t_order_produk');
+		if ($query) {
+			$row = $query->row();
+			return json_encode(array(
+				'success'         => true,
+				't_order_produk_id' 				=> $row->t_order_produk_id,
+				't_order_produk_kode' 			=> $row->t_order_produk_kode,
+				't_order_produk_qty'       	=> $row->t_order_produk_qty,
+				't_order_produk_harga'     	=> $row->t_order_produk_harga,
+				't_order_produk_ongkir'    	=> $row->t_order_produk_ongkir,
+				't_order_produk_catatan'   	=> $row->t_order_produk_catatan,
+				'm_prod_id'       				=> $row->m_prod_id,
+				'm_prod_kode'       				=> $row->m_prod_kode,
+				'm_prod_nama'       				=> $row->m_prod_nama,
+			));
+		} else {
+			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
 		}
 	}
 }

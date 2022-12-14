@@ -111,7 +111,8 @@
 					<div class="col-sm-4">Pajak <span class="text-muted">Rp.</span> </div>
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
-						<b id="showPajak" class="float-end"><?= number_format($ppn, 0, '.', '.'); ?></b>
+						<b id="showPajak"
+							class="float-end"><?= $ppn == "" ? '0' : '' . number_format($ppn, 0, '.', '.') . ''; ?></b>
 						<input type="hidden" class="form-control" id="t_order_ppn" name="t_order_ppn" value="<?= $ppn; ?>" />
 					</div>
 				</div>
@@ -138,7 +139,7 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade text-start" id="ModalProduk" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+<div class="modal fade text-start" id="ModalProduk" aria-labelledby="myModalLabel1" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -157,10 +158,6 @@
 							<input type="hidden" class="form-control" id="t_produk_id" name="t_produk_id">
 							<select name="t_produk_nama" id="t_produk_nama" class="form-control">
 								<option value="">- Pilih -</option>
-								<?php foreach ($namaProduk->result_array() as $a) : ?>
-								<option value="<?= $a['m_prod_id']; ?>"><?= $a['m_prod_kode']; ?> - <?= $a['m_prod_nama']; ?>
-								</option>
-								<?php endforeach; ?>
 							</select>
 						</div>
 					</div>
@@ -219,6 +216,29 @@ $(document).ready(function() {
 			numeralThousandsGroupStyle: 'thousand'
 		});
 	}
+});
+
+$(document).ready(function() {
+	$("#t_produk_nama").select2({
+		dropdownParent: $("#ModalProduk"),
+		ajax: {
+			url: '<?= base_url('OrderMasuk/SearchListProduct') ?>',
+			type: "post",
+			dataType: 'json',
+			delay: 200,
+			data: function(params) {
+				return {
+					searchTerm: params.term
+				};
+			},
+			processResults: function(response) {
+				return {
+					results: response
+				};
+			},
+			cache: true
+		}
+	});
 });
 
 $('#t_order_pajak').on('change', function() {

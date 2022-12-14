@@ -122,4 +122,10 @@ class OrderRiwayat extends CI_Controller
 
 		echo $this->record->EditOrderComplete($t_order_kode, $t_order_paket_id, $t_order_perusahaan, $t_order_kategori, $t_order_visit_history_id, $t_order_visit_id, $t_order_tgl_req, $t_order_tgl_order, $t_order_tgl_kirim, $t_order_subtotal, $t_order_ppn, $t_order_pajak, $t_order_grandtotal, $t_order_user, $t_req_kode);
 	}
+
+	public function ViewProduk()
+	{
+		$id = $this->input->post('id');
+		echo $this->record->ViewProduk($id);
+	}
 }
