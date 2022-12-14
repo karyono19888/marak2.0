@@ -105,6 +105,7 @@ class Auth extends CI_Controller
 			</div>
 		</div>'
 		);
+		helper_log("logout", "Logout");
 		redirect('Auth');
 		$this->db->delete('ci_sessions', ['id' => $session_id]);
 	}
@@ -121,5 +122,4 @@ class Auth extends CI_Controller
 		$data['title'] = 'Marak | 404';
 		$this->load->view('errors/blocked', $data);
 	}
-
 }

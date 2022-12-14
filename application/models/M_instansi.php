@@ -70,6 +70,7 @@ class M_instansi extends CI_Model
 			if ($this->db->trans_status() === FALSE) {
 				return json_encode(array('success' => false, 'msg' => 'Tambah Isntansi gagal!'));
 			} else {
+				helper_log("add", "Tambah Instansi $instansi_nama");
 				return json_encode(array('success' => true, 'msg' => 'Tambah Instansi berhasil!'));
 			}
 		}
@@ -101,6 +102,7 @@ class M_instansi extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update Instansi gagal!'));
 		} else {
+			helper_log("edit", "Edit Instansi $instansi_nama");
 			return json_encode(array('success' => true, 'msg' => 'Update Instansi berhasil!'));
 		}
 	}
@@ -108,11 +110,14 @@ class M_instansi extends CI_Model
 	public function Delete($id)
 	{
 		$this->db->trans_start();
+		$nama = $this->db->get_where('m_instansi', ['instansi_id' => $id])->row_array();
+		$nama_instansi = $nama['instansi_nama'];
 		$this->db->delete('m_instansi', array('instansi_id' => $id));
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Hapus Instansi Gagal!'));
 		} else {
+			helper_log("delete", "Hapus Instansi '$nama_instansi");
 			return json_encode(array('success' => true, 'msg' => 'Hapus Instansi Berhasil!'));
 		}
 	}
@@ -147,6 +152,7 @@ class M_instansi extends CI_Model
 			if ($this->db->trans_status() === FALSE) {
 				return json_encode(array('success' => false, 'msg' => 'Tambah Instansi gagal!'));
 			} else {
+				helper_log("add", "Tambah Instansi $instansi_nama");
 				return json_encode(array('success' => true, 'msg' => 'Tambah Instansi berhasil!'));
 			}
 		}

@@ -36,13 +36,14 @@ class M_auth extends CI_Model
 					}
 
 					$this->session->set_flashdata('success', 'Login Berhasil');
+					helper_log("login", "Login");
 					redirect('Welcome');
 
 				} else {
 					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					<div class="alert-body d-flex align-items-center">
 						<i data-feather="info" class="me-50"></i>
-						<span><strong>Invalid</strong> Password salah.</span>
+						<span><strong>Invalid</strong> Username dan Password salah.</span>
 					</div>
 			 		</div>');
 					redirect('Auth');
@@ -86,7 +87,7 @@ class M_auth extends CI_Model
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					<div class="alert-body d-flex align-items-center">
 						<i data-feather="info" class="me-50"></i>
-						<span><strong>Expired</strong> Session your login expired.</span>
+						<span><strong>Expired</strong> Silahkan login terlebih dahulu.</span>
 					</div></div>');
 			redirect('Auth');
 		}

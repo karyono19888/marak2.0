@@ -175,6 +175,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Input data gagal!'));
 		} else {
+			helper_log("add", "Tambah Kunjungan Baru");
 			return json_encode(array('success' => true, 'msg' => 'Input data berhasil!'));
 		}
 	}
@@ -190,6 +191,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Hapus Data Gagal!'));
 		} else {
+			helper_log("delete", "Hapus Kunjungan");
 			return json_encode(array('success' => true, 'msg' => 'Hapus Data Berhasil!'));
 		}
 	}
@@ -249,6 +251,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Tambah Peserta gagal!'));
 		} else {
+			helper_log("add", "Tambah Peserta Kunjungan");
 			return json_encode(array('success' => true, 'msg' => 'Tambah Peserta Berhasil!'));
 		}
 	}
@@ -261,6 +264,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Hapus Peserta Gagal!'));
 		} else {
+			helper_log("delete", "Hapus Peserta id : $id");
 			return json_encode(array('success' => true, 'msg' => 'Hapus Peserta Berhasil!'));
 		}
 	}
@@ -301,6 +305,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update Peserta gagal!'));
 		} else {
+			helper_log("edit", "Edit Peserta");
 			return json_encode(array('success' => true, 'msg' => 'Update Peserta Berhasil!'));
 		}
 	}
@@ -356,6 +361,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Edit Data Gagal!'));
 		} else {
+			helper_log("edit", "Edit Kunjungan");
 			return json_encode(array('success' => true, 'msg' => 'Edit Data Berhasil!'));
 		}
 	}
@@ -525,6 +531,7 @@ class M_visit extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update data gagal!'));
 		} else {
+			helper_log("update", "Update Kunjungan");
 			return json_encode(array('success' => true, 'msg' => 'Update data berhasil!'));
 		}
 	}

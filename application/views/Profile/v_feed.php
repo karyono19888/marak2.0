@@ -20,7 +20,7 @@
 						</span>
 						<div class="ms-75">
 							<h4 class="mb-0">568</h4>
-							<small>Projects Done</small>
+							<small>Ammount PO</small>
 						</div>
 					</div>
 				</div>
@@ -90,7 +90,8 @@
 							<p>React Project meeting with john @10:15am</p>
 							<div class="d-flex flex-row align-items-center mb-50">
 								<div class="avatar me-50">
-									<img src="<?= base_url('assets'); ?>/images/portrait/small/avatar-s-7.jpg" alt="Avatar" width="38" height="38" />
+									<img src="<?= base_url('assets'); ?>/images/portrait/small/avatar-s-7.jpg" alt="Avatar"
+										width="38" height="38" />
 								</div>
 								<div class="user-info">
 									<h6 class="mb-0">Leona Watkins (Client)</h6>
@@ -118,7 +119,8 @@
 							</div>
 							<p class="mb-0">Create new Invoices and send to Leona Watkins</p>
 							<div class="d-flex flex-row align-items-center mt-50">
-								<img class="me-1" src="<?= base_url('assets'); ?>/images/icons/pdf.png" alt="data.json" height="25" />
+								<img class="me-1" src="<?= base_url('assets'); ?>/images/icons/pdf.png" alt="data.json"
+									height="25" />
 								<h6 class="mb-0">Invoices.pdf</h6>
 							</div>
 						</div>

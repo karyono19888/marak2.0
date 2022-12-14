@@ -74,6 +74,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Tambah Jadwal Gagal!'));
 		} else {
+			helper_log("add", "Tambah Jadwal Baru");
 			return json_encode(array('success' => true, 'msg' => 'Tambah Jadwal Berhasil!'));
 		}
 	}
@@ -100,6 +101,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Tambah Jadwal Gagal!'));
 		} else {
+			helper_log("add", "Tambah Jadwal Update");
 			return json_encode(array('success' => true, 'msg' => 'Tambah Jadwal Berhasil!'));
 		}
 	}
@@ -112,6 +114,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Hapus Jadwal Gagal!'));
 		} else {
+			helper_log("delete", "Hapus Jadwal id : $id");
 			return json_encode(array('success' => true, 'msg' => 'Hapus Jadwal Berhasil!'));
 		}
 	}
@@ -172,6 +175,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update Jadwal Gagal!'));
 		} else {
+			helper_log("edit", "Edit Jadwal Baru id: $id_jadwal");
 			return json_encode(array('success' => true, 'msg' => 'Update Jadwal Berhasil!'));
 		}
 	}
@@ -217,6 +221,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update Jadwal Gagal!'));
 		} else {
+			helper_log("edit", "Edit Jadwal Baru id: $id_jadwal");
 			return json_encode(array('success' => true, 'msg' => 'Update Jadwal Berhasil!'));
 		}
 	}
@@ -351,6 +356,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Updated Result Gagal!'));
 		} else {
+			helper_log("edit", "Updated Result id: $id_jadwal");
 			return json_encode(array('success' => true, 'msg' => 'Updated Result Success!'));
 		}
 	}
@@ -463,6 +469,7 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Input data gagal!'));
 		} else {
+			helper_log("add", "Tambah Kunjungan Baru id jadwal: $id_jadwal");
 			return json_encode(array('success' => true, 'msg' => 'Input data berhasil!'));
 		}
 	}
@@ -599,8 +606,8 @@ class M_jadwal extends CI_Model
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Update data gagal!'));
 		} else {
+			helper_log("add", "Tambah Kunjungan Update id instansi: $m_visit_instansi");
 			return json_encode(array('success' => true, 'msg' => 'Update data berhasil!'));
 		}
 	}
-
 }
