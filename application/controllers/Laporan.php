@@ -179,4 +179,93 @@ class Laporan extends CI_Controller
 
 		$writer->save('php://output');
 	}
+
+	public function DownloadDataSummaryOrder()
+	{
+		date_default_timezone_set('Asia/Jakarta'); # add your city to set local time zone
+		$now = date('d F Y H:i:s');
+
+		$style_row = [
+			'alignment' => [
+				'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+			],
+		];
+
+		$style_col = [
+			'font' => ['bold' => true], // Set font nya jadi bold
+			'alignment' => [
+				'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER, // Set text jadi ditengah secara horizontal (center)
+				'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER // Set text jadi di tengah secara vertical (middle)
+			]
+		];
+
+
+		$start 		= $this->input->post('start');
+		$end 	 		= $this->input->post('end');
+		$nama_user 	= $this->db->get_where('users', ['id_user' => $this->session->userdata('id_user')])->row_array();
+
+		$spreadsheet = new Spreadsheet();
+		$sheet = $spreadsheet->getActiveSheet();
+		$sheet->setCellValue('A1', 'Laporan Order Marketing');
+		$sheet->setCellValue('A3', 'date_created : ' . $now . '');
+		$sheet->setCellValue('A4', 'user 		  : ' . $nama_user['name_user'] . '');
+		$sheet->setCellValue('A5', 'date 		  : ' . $start . ' s/d ' . $end . '');
+		$sheet->setCellValue('A7', 'Satuan dalam milyar');
+		$spreadsheet->getActiveSheet()
+			->getStyle('A7')
+			->getFont()
+			->setItalic('A7')
+			->setSize(8);
+
+		$sheet->setCellValue('A8', 'No');
+		$sheet->setCellValue('B8', 'Tanggal');
+		$sheet->setCellValue('C8', 'Kategori');
+		$sheet->setCellValue('D8', 'Instansi');
+		$sheet->setCellValue('E8', 'Alamat');
+		$sheet->setCellValue('F8', 'Total Purchase Order');
+		$sheet->setCellValue('G8', 'Status');
+
+		$sheet->getStyle('A8')->applyFromArray($style_col);
+		$sheet->getStyle('B8')->applyFromArray($style_col);
+		$sheet->getStyle('C8')->applyFromArray($style_col);
+		$sheet->getStyle('D8')->applyFromArray($style_col);
+		$sheet->getStyle('E8')->applyFromArray($style_col);
+		$sheet->getStyle('F8')->applyFromArray($style_col);
+		$sheet->getStyle('G8')->applyFromArray($style_col);
+
+		$writer = new Xlsx($spreadsheet);
+		$data = $this->record->getDownloadDataLaporanOrderMarketing($start, $end);
+		$index = 9;
+		$i = 1;
+		foreach ($data as $a) :
+
+			$spreadsheet->getActiveSheet()
+				->setCellValue('A' . $index, $i++)
+				->setCellValue('B' . $index, $a->t_order_tgl)
+				->setCellValue('C' . $index, $a->t_order_kategori)
+				->setCellValue('D' . $index, $a->instansi_nama)
+				->setCellValue('E' . $index, $a->instansi_alamat)
+				->setCellValue('F' . $index, $a->t_order_grandtotal)
+				->setCellValue('G' . $index, $a->t_order_status);
+
+			$sheet->getStyle('A' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('B' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('C' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('D' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('E' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('F' . $index)->applyFromArray($style_row);
+			$sheet->getStyle('G' . $index)->applyFromArray($style_row);
+			$index++;
+		endforeach;
+
+		$spreadsheet->getActiveSheet()->setTitle('laporan_order_' . $nama_user['name_user'] . '' . date('dmY') . '');
+
+		$filename = 'laporan_order_' . $nama_user['name_user'] . '' . date('dmY') . '';
+
+		header('Content-Type: application/vnd.ms-excel');
+		header('Content-Disposition: attachment;filename="' . $filename . '.xlsx"');
+		header('Cache-Control: max-age=0');
+
+		$writer->save('php://output');
+	}
 }

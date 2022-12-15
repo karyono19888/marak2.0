@@ -35,12 +35,26 @@ class M_laporanMarketing extends CI_Model
 	public function getDataShowSummaryOrder($start, $end)
 	{
 		$this->db->select("*");
-		$this->db->where('m_visit_tgl >=', date('Y-m-d', strtotime($start)));
-		$this->db->where('m_visit_tgl <=', date('Y-m-d', strtotime($end)));
-		$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+		$this->db->where('t_order_tgl >=', date('Y-m-d', strtotime($start)));
+		$this->db->where('t_order_tgl <=', date('Y-m-d', strtotime($end)));
+		$this->db->where('t_order_agent', $this->session->userdata('id_user'));
+		$this->db->join('m_visit', 'm_visit_id=t_order_visit_id', 'left');
 		$this->db->join('m_instansi', 'm_visit_instansi=instansi_id', 'left');
-		$this->db->join('users', 'm_visit_user_id=id_user', 'left');
-		$this->db->order_by('m_visit_tgl', 'desc');
-		return $this->db->get('m_visit_history');
+		$this->db->join('users', 't_order_agent=id_user', 'left');
+		$this->db->order_by('t_order_tgl', 'desc');
+		return $this->db->get('t_order_po');
+	}
+
+	public function getDownloadDataLaporanOrderMarketing($start, $end)
+	{
+		$this->db->select("*");
+		$this->db->where('t_order_tgl >=', date('Y-m-d', strtotime($start)));
+		$this->db->where('t_order_tgl <=', date('Y-m-d', strtotime($end)));
+		$this->db->where('t_order_agent', $this->session->userdata('id_user'));
+		$this->db->join('m_visit', 'm_visit_id=t_order_visit_id', 'left');
+		$this->db->join('m_instansi', 'm_visit_instansi=instansi_id', 'left');
+		$this->db->join('users', 't_order_agent=id_user', 'left');
+		$this->db->order_by('t_order_tgl', 'desc');
+		return $this->db->get('t_order_po')->result();
 	}
 }
