@@ -41,7 +41,8 @@
 			<div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
 				<div class="mb-1 breadcrumb-right">
 					<div class="dropdown">
-						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
+						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
 						</button>
 					</div>
 				</div>
@@ -54,14 +55,16 @@
 					<div class="col-12">
 						<div class="card profile-header mb-2">
 							<!-- profile cover photo -->
-							<img class="card-img-top" src="<?= base_url("assets"); ?>/images/profile/user-uploads/timeline.jpg" alt="User Profile Image" />
+							<img class="card-img-top" src="<?= base_url("assets"); ?>/images/profile/user-uploads/timeline.jpg"
+								alt="User Profile Image" />
 							<!--/ profile cover photo -->
 
 							<div class="position-relative">
 								<!-- profile picture -->
 								<div class="profile-img-container d-flex align-items-center">
 									<div class="profile-img">
-										<img src="<?= $profile->image_user ?>" class="rounded img-fluid" alt="Card image" width="100%" />
+										<img src="<?= $profile->image_user ?>" class="rounded img-fluid" alt="Card image"
+											width="100%" />
 									</div>
 									<!-- profile title -->
 									<div class="profile-title ms-3">
@@ -74,8 +77,11 @@
 							<!-- tabs pill -->
 							<div class="profile-header-nav">
 								<!-- navbar -->
-								<nav class="navbar navbar-expand-md navbar-light justify-content-end justify-content-md-between w-100">
-									<button class="btn btn-icon navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<nav
+									class="navbar navbar-expand-md navbar-light justify-content-end justify-content-md-between w-100">
+									<button class="btn btn-icon navbar-toggler" type="button" data-bs-toggle="collapse"
+										data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+										aria-expanded="false" aria-label="Toggle navigation">
 										<i data-feather="align-justify" class="font-medium-5"></i>
 									</button>
 
@@ -142,37 +148,36 @@
 <script src="<?= base_url("assets"); ?>/js/scripts/pages/page-profile.js"></script>
 <!-- END: Page JS-->
 
-<!-- <script src="<?= base_url('assets'); ?>/js/scripts/pages/page-account-settings-account.js"></script> -->
 
 <script>
-	$(window).on('load', function() {
-		if (feather) {
-			feather.replace({
-				width: 14,
-				height: 14
-			});
-		}
-	})
+$(window).on('load', function() {
+	if (feather) {
+		feather.replace({
+			width: 14,
+			height: 14
+		});
+	}
+})
 </script>
 <script>
-	$(document).ready(function() {
+$(document).ready(function() {
+	$('#viewProfile').load("<?= base_url('Profile/Feed') ?>");
+
+	$("#feed").click(function() {
 		$('#viewProfile').load("<?= base_url('Profile/Feed') ?>");
-
-		$("#feed").click(function() {
-			$('#viewProfile').load("<?= base_url('Profile/Feed') ?>");
-		});
-
-		$("#account").click(function() {
-			$("#viewProfile").load("<?= base_url('Profile/Account') ?>");
-		});
-
-		$("#security").click(function() {
-			$("#viewProfile").load("<?= base_url('Profile/Security') ?>");
-		});
-		$('.nav-link').on('click', function() {
-			$('.nav-link').removeClass('active');
-			$(this).addClass('active');
-		});
 	});
+
+	$("#account").click(function() {
+		$("#viewProfile").load("<?= base_url('Profile/Account') ?>");
+	});
+
+	$("#security").click(function() {
+		$("#viewProfile").load("<?= base_url('Profile/Security') ?>");
+	});
+	$('.nav-link').on('click', function() {
+		$('.nav-link').removeClass('active');
+		$(this).addClass('active');
+	});
+});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

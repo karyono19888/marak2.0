@@ -10,7 +10,7 @@
 							<i data-feather="check" class="font-medium-2"></i>
 						</span>
 						<div class="ms-75">
-							<h4 class="mb-0">1.23k</h4>
+							<h4 class="mb-0"><?= number_format($total, 0, '.', '.'); ?></h4>
 							<small>Visit Total</small>
 						</div>
 					</div>
@@ -19,7 +19,9 @@
 							<i data-feather="briefcase" class="font-medium-2"></i>
 						</span>
 						<div class="ms-75">
-							<h4 class="mb-0">568</h4>
+							<h4 class="mb-0">
+								<?= number_format($close, 0, '.', '.'); ?><sup><?= strlen($close) > 3 ? 'Mil' : 'Jt' ?></sup>
+							</h4>
 							<small>Ammount PO</small>
 						</div>
 					</div>
@@ -67,65 +69,46 @@
 	<div class="col-lg-8 col-12 order-1 order-lg-2">
 		<!-- post 1 -->
 		<div class="card">
-			<h4 class="card-header">User Activity Timeline</h4>
+			<h4 class="card-header">User Activity Log</h4>
 			<div class="card-body pt-1">
-				<ul class="timeline ms-50">
-					<li class="timeline-item">
-						<span class="timeline-point timeline-point-indicator"></span>
-						<div class="timeline-event">
-							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-								<h6>User login</h6>
-								<span class="timeline-event-time me-1">12 min ago</span>
-							</div>
-							<p>User login at 2:12pm</p>
-						</div>
-					</li>
-					<li class="timeline-item">
-						<span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
-						<div class="timeline-event">
-							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-								<h6>Meeting with john</h6>
-								<span class="timeline-event-time me-1">45 min ago</span>
-							</div>
-							<p>React Project meeting with john @10:15am</p>
-							<div class="d-flex flex-row align-items-center mb-50">
-								<div class="avatar me-50">
-									<img src="<?= base_url('assets'); ?>/images/portrait/small/avatar-s-7.jpg" alt="Avatar"
-										width="38" height="38" />
+				<div class="card-block" style="margin-top: 20px; height: 350px; overflow:auto;">
+					<ul class="timeline ms-50">
+						<?php foreach ($log->result_array() as $a) : ?>
+						<li class="timeline-item">
+							<?php if ($a['log_tipe'] == 'Login') : ?>
+							<span class="timeline-point timeline-point-indicator"></span>
+							<?php elseif ($a['log_tipe'] == 'Logout') : ?>
+							<span class="timeline-point timeline-point-indicator timeline-point-danger"></span>
+							<?php else : ?>
+							<span class="timeline-point timeline-point-indicator timeline-point-warning"></span>
+							<?php endif; ?>
+							<div class="timeline-event">
+								<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+									<h6><?= $a['log_tipe']; ?></h6>
+									<?php
+										$post_date = strtotime($a['log_time']);
+										$now = time();
+										$units = 2;
+										?>
+									<span class="timeline-event-time me-1"><?= timespan($post_date, $now); ?></span>
 								</div>
-								<div class="user-info">
-									<h6 class="mb-0">Leona Watkins (Client)</h6>
-									<p class="mb-0">CEO of pixinvent</p>
+								<p>User "<?= $a['log_desc']; ?>" at <?= date('h:i:s a', strtotime($a['log_time'])); ?></p>
+								<?php if ($this->session->userdata('id_user') == 1) : ?>
+								<div class="d-flex flex-row align-items-center mb-50">
+									<div class="avatar me-50">
+										<img src="<?= $a['image_user']; ?>" alt="Avatar" width="38" height="38" />
+									</div>
+									<div class="user-info">
+										<h6 class="mb-0"><?= $a['nickname']; ?></h6>
+										<p class="mb-0"><?= $a['role_name']; ?></p>
+									</div>
 								</div>
+								<?php endif; ?>
 							</div>
-						</div>
-					</li>
-					<li class="timeline-item">
-						<span class="timeline-point timeline-point-info timeline-point-indicator"></span>
-						<div class="timeline-event">
-							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-								<h6>Create a new react project for client</h6>
-								<span class="timeline-event-time me-1">2 day ago</span>
-							</div>
-							<p>Add files to new design folder</p>
-						</div>
-					</li>
-					<li class="timeline-item">
-						<span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
-						<div class="timeline-event">
-							<div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
-								<h6>Create Invoices for client</h6>
-								<span class="timeline-event-time me-1">12 min ago</span>
-							</div>
-							<p class="mb-0">Create new Invoices and send to Leona Watkins</p>
-							<div class="d-flex flex-row align-items-center mt-50">
-								<img class="me-1" src="<?= base_url('assets'); ?>/images/icons/pdf.png" alt="data.json"
-									height="25" />
-								<h6 class="mb-0">Invoices.pdf</h6>
-							</div>
-						</div>
-					</li>
-				</ul>
+						</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
 			</div>
 		</div>
 		<!--/ post 1 -->

@@ -15,14 +15,22 @@ class Profile extends CI_Controller
 	{
 		$data['title'] 	= 'Profile | Marak 2.0';
 		$data['profile'] 	= $this->record->myprofile();
+		$data['total'] 	= $this->record->TotalKunjungan();
+		$data['close'] 	= $this->record->TotalClose();
+		$data['log'] 		= $this->record->LogActivity();
 		$this->load->view('Profile/v_profile', $data);
 	}
+
 
 	public function Feed()
 	{
 		$data['profile'] 	= $this->record->myprofile();
+		$data['total'] 	= $this->record->TotalKunjungan();
+		$data['close'] 	= $this->record->TotalClose();
+		$data['log'] 		= $this->record->LogActivity();
 		$this->load->view('Profile/v_feed', $data);
 	}
+
 
 	public function Account()
 	{

@@ -16,6 +16,44 @@ class M_profile extends CI_Model
 		return $this->db->get('users')->row();
 	}
 
+	public function TotalKunjungan()
+	{
+		if ($this->session->userdata('role_user') == 1) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$query = $this->db->get('m_visit_history');
+			return $query->num_rows();
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$query = $this->db->get('m_visit_history');
+			return $query->num_rows();
+		}
+	}
+
+	public function TotalClose()
+	{
+		if ($this->session->userdata('role_user') == 1 || $this->session->userdata('role_user') == 22) {
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->select_sum('m_visit_po');
+			$query = $this->db->get('m_visit');
+			if ($query->num_rows() > 0) {
+				return $query->row()->m_visit_po;
+			} else {
+				return 0;
+			}
+		} else {
+			$this->db->where('m_visit_user_id', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+			$this->db->select_sum('m_visit_po');
+			$query = $this->db->get('m_visit');
+			if ($query->num_rows() > 0) {
+				return $query->row()->m_visit_po;
+			} else {
+				return 0;
+			}
+		}
+	}
+
 	public function UpdateAccount($new_data, $id_user)
 	{
 
@@ -36,6 +74,24 @@ class M_profile extends CI_Model
 		$this->db->where('username', $username);
 		$query = $this->db->get('users');
 		return $query->row();
+	}
+
+	public function LogActivity()
+	{
+		if ($this->session->userdata('id_user') == 1) {
+			$this->db->where('YEAR(log_time)', date('Y'));
+			$this->db->join('users', 'id_user=log_user', 'left');
+			$this->db->join('user_role', 'role_id=role_user', 'left');
+			$this->db->order_by('log_id', 'desc');
+			return $this->db->get('t_log');
+		} else {
+			$this->db->where('log_user', $this->session->userdata('id_user'));
+			$this->db->where('YEAR(log_time)', date('Y'));
+			$this->db->join('users', 'id_user=log_user', 'left');
+			$this->db->join('user_role', 'role_id=role_user', 'left');
+			$this->db->order_by('log_id', 'desc');
+			return $this->db->get('t_log');
+		}
 	}
 
 	public function ChangePassword($currentPassword, $newPassword, $confirmNewPassword)
