@@ -236,4 +236,24 @@ class M_orderRiwayat extends CI_Model
 			return json_encode(array('success' => false, 'msg' => 'Data tidak ditemukan!'));
 		}
 	}
+
+	public function DeleteOrder()
+	{
+		$this->db->trans_start();
+		$id = $this->input->post('id');
+
+		$kodeRequest = $this->db->get_where('t_order_po', ['t_order_kode' => $id])->row_array();
+		$this->db->where('t_req_kode', $kodeRequest['t_order_kodeReq']);
+		$this->db->update('t_order_request', array(
+			't_req_status' 	=> 'Request',
+		));
+		$this->db->delete('t_order_po', array('t_order_kode' => $id));
+		$this->db->delete('t_order_produk', array('t_order_produk_kode' => $id));
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return json_encode(array('success' => false, 'msg' => 'Hapus Order Gagal!'));
+		} else {
+			return json_encode(array('success' => true, 'msg' => 'Hapus Order Berhasil!'));
+		}
+	}
 }

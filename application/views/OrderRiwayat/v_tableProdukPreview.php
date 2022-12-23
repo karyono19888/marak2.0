@@ -21,11 +21,11 @@
 					</thead>
 					<tbody>
 						<?php if (empty($data->result_array())) : ?>
-							<tr class=" border-bottom">
-								<td colspan='9' class='text-center'>Data tidak ditemukan.</td>
-							</tr>
+						<tr class=" border-bottom">
+							<td colspan='9' class='text-center'>Data tidak ditemukan.</td>
+						</tr>
 						<?php else : ?>
-							<?php
+						<?php
 							$i = 1;
 							$jml = 0;
 							$subtotal = 0;
@@ -41,20 +41,20 @@
 								$grandtotal = $a['t_order_grandtotal'];
 								$kodePO     = $a['t_order_kode'];
 							?>
-								<tr>
-									<td><?= $i++; ?></td>
-									<td>
-										<?= $a['m_prod_kode']; ?> -
-										<?= $a['m_prod_nama']; ?>
-									</td>
-									<td width="2%"><?= $a['t_order_produk_qty']; ?></td>
-									<td><?= $a['m_uom_nama']; ?></td>
-									<td><?= number_format($a['t_order_produk_harga'], 0, '.', '.'); ?></td>
-									<td><?= number_format($a['t_order_produk_ongkir'], 0, '.', '.'); ?></td>
-									<td><?= number_format($a['t_order_grandtotal'], 0, '.', '.'); ?></td>
-									<td><?= $a['t_order_produk_catatan']; ?></td>
-								</tr>
-							<?php endforeach; ?>
+						<tr>
+							<td><?= $i++; ?></td>
+							<td>
+								<?= $a['m_prod_kode']; ?> -
+								<?= $a['m_prod_nama']; ?>
+							</td>
+							<td width="2%"><?= $a['t_order_produk_qty']; ?></td>
+							<td><?= $a['m_uom_nama']; ?></td>
+							<td><?= number_format($a['t_order_produk_harga'], 0, '.', '.'); ?></td>
+							<td><?= number_format($a['t_order_produk_ongkir'], 0, '.', '.'); ?></td>
+							<td><?= number_format($a['t_order_grandtotal'], 0, '.', '.'); ?></td>
+							<td><?= $a['t_order_produk_catatan']; ?></td>
+						</tr>
+						<?php endforeach; ?>
 						<?php endif; ?>
 					</tbody>
 				</table>
@@ -78,7 +78,8 @@
 					<div class="col-sm-4">Subtotal <span class="text-muted">Rp.</span> </div>
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
-						<b class="float-end"><?= empty($subtotal) ? '0' : '' . number_format($subtotal, 0, ".", ".") . ''; ?></b>
+						<b
+							class="float-end"><?= empty($subtotal) ? '0' : '' . number_format($subtotal, 0, ".", ".") . ''; ?></b>
 					</div>
 				</div>
 				<div class="row">
@@ -93,14 +94,20 @@
 					<div class="col-sm-4"><span class="text-muted h1">Rp.</span></div>
 					<div class="col-sm-4"></div>
 					<div class="col-sm-4">
-						<h1 class="text-center"><b id="showTotal" class="float-end"><?= number_format($grandtotal, 0, '.', '.'); ?></b></h1>
+						<h1 class="text-center"><b id="showTotal"
+								class="float-end"><?= number_format($grandtotal, 0, '.', '.'); ?></b></h1>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="card">
 			<div class="card-body">
-				<button class="btn btn-warning w-100 mb-75" id="tombol_editOrder" data-id="<?= $kodePO; ?>" type="button">Edit Order</button>
+				<button class="btn btn-warning w-100 mb-75" id="tombol_editOrder" data-id="<?= $kodePO; ?>"
+					type="button">Edit Order</button>
+				<?php if ($this->session->userdata('role_user') == 1) : ?>
+				<button class="btn btn-danger w-100 mb-75" id="tombol_hapusOrder" data-id="<?= $kodePO; ?>"
+					type="button">Hapus Order</button>
+				<?php endif; ?>
 				<a href="#" class="btn btn-outline-warning w-100" id="BacktoPreview" type="button">Back</a>
 			</div>
 		</div>

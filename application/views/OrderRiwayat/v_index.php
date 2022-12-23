@@ -327,6 +327,58 @@ function HapusValue() {
 	$('#t_produk_catatan').val("");
 }
 
+$(document).on("click", "#tombol_hapusOrder", function() {
+	let id = $(this).data('id');
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "Hapus permanent order!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('OrderRiwayat/DeleteOrder') ?>',
+				data: {
+					id: id,
+				},
+				beforeSend: function() {
+					$('#tombol_hapusOrder').prop('disabled', true);
+					$('#tombol_hapusOrder').html(
+						'<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span><span class="ms-25 align-middle">Loading...</span>'
+					);
+				},
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						Swal.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: true,
+							timer: 2000
+						});
+					}
+					setTimeout(() => {
+						window.location.assign('<?= site_url("OrderRiwayat") ?>');
+					}, 2000);
+				}
+			});
+		}
+	})
+});
+
 $(document).on("click", ".DeleteProduk", function() {
 	let id = $(this).data('id');
 	let kode = $("#hapusProduk").data('kode');

@@ -128,4 +128,9 @@ class OrderRiwayat extends CI_Controller
 		$id = $this->input->post('id');
 		echo $this->record->ViewProduk($id);
 	}
+
+	public function DeleteOrder()
+	{
+		echo $this->record->DeleteOrder();
+	}
 }
