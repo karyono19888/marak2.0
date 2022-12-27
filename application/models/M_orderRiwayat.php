@@ -247,8 +247,24 @@ class M_orderRiwayat extends CI_Model
 		$this->db->update('t_order_request', array(
 			't_req_status' 	=> 'Request',
 		));
+
+		$close_po_lama = $this->db->get_where('m_visit', ['m_visit_id' => $kodeRequest['t_order_visit_id']])->row_array();
+		if ($kodeRequest['t_order_grandtotal'] < 1000000) {
+			$konversi   = $kodeRequest['t_order_grandtotal'];
+		} else {
+			$konversi   = round($kodeRequest['t_order_grandtotal'] / 1000000);
+		}
+
+		$close_po_baru    = $close_po_lama['m_visit_po'] - $konversi;
+
+		$this->db->where('m_visit_id', $kodeRequest['t_order_visit_id']);
+		$this->db->update('m_visit', array(
+			'm_visit_po' 	=> $close_po_baru,
+		));
+
 		$this->db->delete('t_order_po', array('t_order_kode' => $id));
 		$this->db->delete('t_order_produk', array('t_order_produk_kode' => $id));
+
 		$this->db->trans_complete();
 		if ($this->db->trans_status() === FALSE) {
 			return json_encode(array('success' => false, 'msg' => 'Hapus Order Gagal!'));
