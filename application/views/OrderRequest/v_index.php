@@ -37,7 +37,8 @@
 			<div class="content-header-right text-md-end col-md-3 col-12 d-md-block d-none">
 				<div class="mb-1 breadcrumb-right">
 					<div class="dropdown">
-						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
+						<button class="btn-icon btn btn-primary btn-round btn-sm dropdown-toggle" type="button"
+							data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i data-feather="grid"></i>
 						</button>
 					</div>
 				</div>
@@ -107,72 +108,76 @@
 <?php $this->load->view('Components/v_footer'); ?>
 <script src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script>
-	$(document).ready(function() {
-		$("#show_data").load("<?= base_url('OrderRequest/ShowTableData'); ?>");
-	});
+$(document).ready(function() {
+	$("#show_data").load("<?= base_url('OrderRequest/ShowTableData'); ?>");
+});
 
-	$(document).on("click", ".Tambah", function() {
-		$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
-	});
+$(document).on("click", ".Tambah", function() {
+	$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableData'); ?>");
+});
 
-	$(document).on("click", ".EditRequest", function() {
-		let id = $(this).data('id');
-		$.ajax({
-			type: "POST",
-			url: "<?= site_url('OrderRequest/ShowDataEdit') ?>",
-			data: {
-				id: id
-			},
-			success: function(response) {
-				$("#show_data").html(response);
-			}
-		});
-	});
+$(document).on("click", ".E-commers", function() {
+	$("#show_data").load("<?= base_url('OrderRequest/ShowPilihTableEcommersData'); ?>");
+});
 
-	$(document).on("click", ".Delete", function() {
-		let id = $(this).data('id');
-		Swal.fire({
-			title: 'Are you sure?',
-			text: "Delete Data Request Order!",
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#3085d6',
-			cancelButtonColor: '#d33',
-			confirmButtonText: 'Yes, delete it!'
-		}).then((result) => {
-			if (result.isConfirmed) {
-				$.ajax({
-					type: 'POST',
-					url: '<?= site_url('OrderRequest/DeleteRequest') ?>',
-					data: {
-						id: id
-					},
-					success: function(response) {
-						var data = JSON.parse(response);
-						if (data.success) {
-							SweetAlert.fire({
-								icon: 'success',
-								title: 'Success',
-								text: data.msg,
-								showConfirmButton: false,
-								timer: 1500
-							});
-						} else {
-							SweetAlert.fire({
-								icon: 'error',
-								title: 'Error',
-								text: data.msg,
-								showConfirmButton: false,
-								timer: 1500
-							});
-						}
-						setTimeout(() => {
-							window.location.assign('<?= site_url("OrderRequest") ?>');
-						}, 1500);
+$(document).on("click", ".EditRequest", function() {
+	let id = $(this).data('id');
+	$.ajax({
+		type: "POST",
+		url: "<?= site_url('OrderRequest/ShowDataEdit') ?>",
+		data: {
+			id: id
+		},
+		success: function(response) {
+			$("#show_data").html(response);
+		}
+	});
+});
+
+$(document).on("click", ".Delete", function() {
+	let id = $(this).data('id');
+	Swal.fire({
+		title: 'Are you sure?',
+		text: "Delete Data Request Order!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#3085d6',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Yes, delete it!'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$.ajax({
+				type: 'POST',
+				url: '<?= site_url('OrderRequest/DeleteRequest') ?>',
+				data: {
+					id: id
+				},
+				success: function(response) {
+					var data = JSON.parse(response);
+					if (data.success) {
+						SweetAlert.fire({
+							icon: 'success',
+							title: 'Success',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
+					} else {
+						SweetAlert.fire({
+							icon: 'error',
+							title: 'Error',
+							text: data.msg,
+							showConfirmButton: false,
+							timer: 1500
+						});
 					}
-				});
-			}
-		})
-	});
+					setTimeout(() => {
+						window.location.assign('<?= site_url("OrderRequest") ?>');
+					}, 1500);
+				}
+			});
+		}
+	})
+});
 </script>
 <?php $this->load->view('Components/v_bottom'); ?>

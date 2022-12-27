@@ -92,7 +92,17 @@ class M_orderRequest extends CI_Model
 			$query = $this->db->get('m_visit');
 		}
 		return $query;
+	}
 
+	public function dataVisitAllEcommers()
+	{
+		$this->db->where('YEAR(m_visit_tgl)', date('Y'));
+		$this->db->where('instansi_kategori', 'E-commers');
+		$this->db->join('m_visit', 'm_visit_instansi=instansi_id', 'left');
+		$this->db->join('users', 'id_user=m_visit_user_id', 'left');
+		$this->db->order_by('instansi_id', 'desc');
+		$query = $this->db->get('m_instansi');
+		return $query;
 	}
 
 	public function DataKunjunganrequest($id)

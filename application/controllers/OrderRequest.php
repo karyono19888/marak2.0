@@ -34,6 +34,15 @@ class OrderRequest extends CI_Controller
 		$this->load->view('OrderRequest/v_pilih_table_req_order', $data);
 	}
 
+
+	public function ShowPilihTableEcommersData()
+	{
+		$data['visit'] 			= $this->record->dataVisitAllEcommers();
+		$this->load->view('OrderRequest/v_pilih_table_req_order', $data);
+	}
+
+
+
 	public function getDataShowRequest()
 	{
 		$id 			  = $this->input->post('id');
